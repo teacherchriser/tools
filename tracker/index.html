@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Class Reports</title>
+	<link rel="icon" href="https://chalkboardlp.com/radio/favicon.png" type="image/x-icon">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+		<style> 
+		@import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
+		@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+		</style>
+    
+  </head>
+  <body>
+  <div style="text-align: center;">
+  <img src="https://i.pinimg.com/originals/ca/05/d1/ca05d1cf1a034f9b2eafc644c102c551.gif" height="80px"></img> 
+  <!-- OTHER IMAGES:
+  LOGO:		https://teacherchris.gnomio.com/pluginfile.php/2/course/section/1/Banner%20Moodle%20Main%2002.png
+  HEARTS:	https://i.gifer.com/1uK8.gif
+  COINS:	https://static.wixstatic.com/media/c89ae7_68238a80bdd34055b5a5e5cb7ea3e2bf~mv2.gif
+  -->
+  <p style="font-family: 'Play', sans-serif; font-size: 8px; color: #252424; line-height: 0px; font-weight: bold;">Created & designed by: Teacher Christian Serrano</p>
+  <p style="font-family: 'Play', sans-serif; font-size: 20px; color: #74c401; line-height: 0px; font-weight: bold;">Attendance & Duolingo Report</p>
+  <p style="font-family: 'Play', sans-serif; font-size: 12px; color: #252424; line-height: 5px; text-decoration: underline; font-weight: bold;">Asistencia del: 16/OCT/24 - Duolingo del: 16/OCT/24</p>
+  <p style="font-family: 'Play', sans-serif; font-size: 11px; color: #fc3131; line-height: 5px; font-weight: bold;">Ingrese su número de identificación sin puntos, comas o espacios</p>
+  
+    <input id="searchBox" onkeydown="if(event.keyCode==13) event.keyCode=9" type="text" style="width: 110px; text-align: center; font-family: 'Play', sans-serif;"/>
+<button id="data" style="font-family: 'Play', sans-serif;">Buscar</button>
+<a href="javascript:location.reload(true)"><button style="font-family: 'Play', sans-serif;">Nueva Busqueda</button></a>
+
+<h5 style="font-family: 'Play', sans-serif; color: #252424; font-weight: bold; margin-left: 0px;; line-height: 0px;"></h5>
+</div>
+
+  </body>
+
+    <script type="text/javascript">
+<!-- INFO GOES HERE -->
+var data = [
+  {"id": 1234567890, "user": {"name": "Serrano Ramirez Christian Javier", 		"subject": "UPN - GNOMIO - 2024-2", "limit": "16", "absences": "7.5", "duolingo": "3.7",  }},
+  {"id": 3112917791, "user": {"name": "Serrano Bravo Noelia",					"subject": "UPN - MDR - 2024-2", "limit": "9", "absences": "4.5", "duolingo": "2.3",}},
+  {"id": 3104881565, "user": {"name": "Bravo Restrepo Monica Rocio",			"subject": "UPN - ARW - 2024-2", "limit": "9", "absences": "2.5", "duolingo": "4.7",}},
+  {"id": 1013276497	,"user": {"name": "	Canela Serrano Bravo	", 				"subject": "UPN - CAI3 - 2024-2","limit": "16"	,"absences": "	7.5	","duolingo": "	3.7	",}},
+  
+{"id": 	1092530815	,"user": {"name": "	ARDILA DURAN NICOLE YULIETH	", "subject": "UPN - CAI3 - 2024-2"	,"limit": "16"	,"absences": "	10,6	","duolingo": "	1,30	",}},
+{"id": 	1000933000	,"user": {"name": "	ARGUELLO RUIZ LAURA NATHALY	", "subject": "UPN - CAI3 - 2024-2"	,"limit": "16"	,"absences": "	7,2	","duolingo": "	0,00	",}},
+{"id": 	1021666043	,"user": {"name": "	BARRETO MARTINEZ ANDRES FELIPE	", "subject": "UPN - CAI3 - 2024-2"	,"limit": "16"	,"absences": "	0,7	","duolingo": "	5,10	",}},
+{"id": 	1021668929	,"user": {"name": "	CANELO PINEDA KAREN TATIANA	", "subject": "UPN - CAI3 - 2024-2"	,"limit": "16"	,"absences": "	1	","duolingo": "	4,47	",}},
+{"id": 	1072098932	,"user": {"name": "	CASTANEDA ESCOBAR JUAN CAMILO	", "subject": "UPN - CAI3 - 2024-2"	,"limit": "16"	,"absences": "	7,9	","duolingo": "	2,07	",}},
+{"id": 	1014189559	,"user": {"name": "	CELY SANCHEZ MARIANA	", "subject": "UPN - CAI3 - 2024-2"	,"limit": "16"	,"absences": "	8,2	","duolingo": "	2,58	",}},
+{"id": 	1021395299	,"user": {"name": "	CHAPARRO CORTES ALBA SOFIA	", "subject": "UPN - CAI3 - 2024-2"	,"limit": "16"	,"absences": "	3	","duolingo": "	4,45	",}},
+{"id": 	1007569574	,"user": {"name": "	GARCIA NOBOA LINA ALEJANDRA	", "subject": "UPN - CAI3 - 2024-2"	,"limit": "16"	,"absences": "	1	","duolingo": "	0,53	",}},
+{"id": 	1007403195	,"user": {"name": "	HENAO PERDOMO JOHN MAICOLL	", "subject": "UPN - CAI3 - 2024-2"	,"limit": "16"	,"absences": "	7,8	","duolingo": "	0,09	",}},
+{"id": 	1000353023	,"user": {"name": "	LOZADA VALDES KEVIN JAVIER	", "subject": "UPN - CAI3 - 2024-2"	,"limit": "16"	,"absences": "	2,5	","duolingo": "	4,43	",}},
+{"id": 	1002262447	,"user": {"name": "	MARTIN RUBIO NICOLAS	", "subject": "UPN - CAI3 - 2024-2"	,"limit": "16"	,"absences": "	1	","duolingo": "	8,34	",}},
+{"id": 	1013599201	,"user": {"name": "	MARTINEZ GOMEZ LAUREN CAMILA	", "subject": "UPN - CAI3 - 2024-2"	,"limit": "16"	,"absences": "	4,1	","duolingo": "	3,66	",}},
+{"id": 	1026555789	,"user": {"name": "	MORALES CELIS JUAN DIEGO	", "subject": "UPN - CAI3 - 2024-2"	,"limit": "16"	,"absences": "	1,2	","duolingo": "	1,90	",}},
+{"id": 	1014660513	,"user": {"name": "	RUIZ GARCIA XIMENA	", "subject": "UPN - CAI3 - 2024-2"	,"limit": "16"	,"absences": "	1	","duolingo": "	5,14	",}},
+{"id": 	1193082856	,"user": {"name": "	SALGADO CASTANO ANDREA CATALINA	", "subject": "UPN - CAI3 - 2024-2"	,"limit": "16"	,"absences": "	3	","duolingo": "	5,00	",}},
+{"id": 	1027282029	,"user": {"name": "	SEGURA AREVALO JOHAN SEBASTIAN	", "subject": "UPN - CAI3 - 2024-2"	,"limit": "16"	,"absences": "	0,9	","duolingo": "	3,95	",}},
+{"id": 	1031176368	,"user": {"name": "	ANGULO GOMEZ ANGIE VIVIANA	", "subject": "UPN - ARW - 2024-2"	,"limit": "9"	,"absences": "	7,6	","duolingo": "	0,73	",}},
+{"id": 	1012916474	,"user": {"name": "	ARISTIZABAL QUESADA DUVAN FELIPE	", "subject": "UPN - ARW - 2024-2"	,"limit": "9"	,"absences": "	1	","duolingo": "	5,71	",}},
+{"id": 	10216689290	,"user": {"name": "	CANELO PINEDA KAREN TATIANA	", "subject": "UPN - ARW - 2024-2"	,"limit": "9"	,"absences": "	1	","duolingo": "	5,74	",}},
+{"id": 	1000162687	,"user": {"name": "	CASTANEDA MANCERA MARIA CAMILA	", "subject": "UPN - ARW - 2024-2"	,"limit": "9"	,"absences": "	2,7	","duolingo": "	0,31	",}},
+{"id": 	1117542451	,"user": {"name": "	CASTELLANOS BARRERA ANDRES FELIPE	", "subject": "UPN - ARW - 2024-2"	,"limit": "9"	,"absences": "	5,2	","duolingo": "	7,47	",}},
+{"id": 	1023365033	,"user": {"name": "	CEPEDA ALDANA STEFANNY ALEXA	", "subject": "UPN - ARW - 2024-2"	,"limit": "9"	,"absences": "	5	","duolingo": "	6,26	",}},
+{"id": 	1027522255	,"user": {"name": "	CRUZ SABOGAL EVELYN DAYANA	", "subject": "UPN - ARW - 2024-2"	,"limit": "9"	,"absences": "	1	","duolingo": "	4,77	",}},
+{"id": 	1050091463	,"user": {"name": "	DELGADO FORERO KATIA	", "subject": "UPN - ARW - 2024-2"	,"limit": "9"	,"absences": "	2,3	","duolingo": "	0,68	",}},
+{"id": 	1010120006	,"user": {"name": "	ESPANA CASTRO NICOLAS	", "subject": "UPN - ARW - 2024-2"	,"limit": "9"	,"absences": "	7,3	","duolingo": "	No UPN mail	",}},
+{"id": 	1013598388	,"user": {"name": "	GAVIRIA RUIZ EVELYN DANIELA	", "subject": "UPN - ARW - 2024-2"	,"limit": "9"	,"absences": "	1,2	","duolingo": "	2,24	",}},
+{"id": 	1023367324	,"user": {"name": "	GOMEZ MESA LAURA XIMENA	", "subject": "UPN - ARW - 2024-2"	,"limit": "9"	,"absences": "	4,2	","duolingo": "	No UPN mail	",}},
+{"id": 	1025525895	,"user": {"name": "	HERNANDEZ ORENCH MARIA JOSE	", "subject": "UPN - ARW - 2024-2"	,"limit": "9"	,"absences": "	1	","duolingo": "	3,57	",}},
+{"id": 	1000036152	,"user": {"name": "	HUERTAS CARRILLO DANIEL ALEJANDRO	", "subject": "UPN - ARW - 2024-2"	,"limit": "9"	,"absences": "	5,2	","duolingo": "	0,00	",}},
+{"id": 	1013667057	,"user": {"name": "	JAIMES ALFONSO DANIEL FELIPE	", "subject": "UPN - ARW - 2024-2"	,"limit": "9"	,"absences": "	6,7	","duolingo": "	0,00	",}},
+{"id": 	1020808375	,"user": {"name": "	JIMENEZ MANRIQUE KAREN JULIETH	", "subject": "UPN - ARW - 2024-2"	,"limit": "9"	,"absences": "	0	","duolingo": "	3,95	",}},
+{"id": 	10265557890	,"user": {"name": "	MORALES CELIS JUAN DIEGO	", "subject": "UPN - ARW - 2024-2"	,"limit": "9"	,"absences": "	1,5	","duolingo": "	2,04	",}},
+{"id": 	1031644172	,"user": {"name": "	NONTOA GOMEZ LINA MARIA	", "subject": "UPN - ARW - 2024-2"	,"limit": "9"	,"absences": "	4	","duolingo": "	0,92	",}},
+{"id": 	1007614644	,"user": {"name": "	OSPINA LONDONO NINY YOJANA	", "subject": "UPN - ARW - 2024-2"	,"limit": "9"	,"absences": "	2	","duolingo": "	5,01	",}},
+{"id": 	1003517633	,"user": {"name": "	PARADA BURGOS KAREN DAYANNA	", "subject": "UPN - ARW - 2024-2"	,"limit": "9"	,"absences": "	0	","duolingo": "	2,19	",}},
+{"id": 	1000730304	,"user": {"name": "	PRADA CACERES LAURA SOFIA	", "subject": "UPN - ARW - 2024-2"	,"limit": "9"	,"absences": "	3,2	","duolingo": "	0,00	",}},
+{"id": 	1013096380	,"user": {"name": "	RAMIREZ RUIZ KAREN MELISSA	", "subject": "UPN - ARW - 2024-2"	,"limit": "9"	,"absences": "	0	","duolingo": "	4,49	",}},
+{"id": 	10146605130	,"user": {"name": "	RUIZ GARCIA XIMENA	", "subject": "UPN - ARW - 2024-2"	,"limit": "9"	,"absences": "	0	","duolingo": "	8,94	",}},
+{"id": 	1019007873	,"user": {"name": "	SANABRIA HERRENO ANA SOFIA	", "subject": "UPN - ARW - 2024-2"	,"limit": "9"	,"absences": "	1	","duolingo": "	5,06	",}},
+{"id": 	1000693002	,"user": {"name": "	SILVA SILVA JENNY NATALIA	", "subject": "UPN - ARW - 2024-2"	,"limit": "9"	,"absences": "	2	","duolingo": "	4,09	",}},
+{"id": 	1022417974	,"user": {"name": "	VARGAS GUAYARA JUAN ESTEBAN	", "subject": "UPN - ARW - 2024-2"	,"limit": "9"	,"absences": "	1	","duolingo": "	0,97	",}},
+{"id": 	1028780505	,"user": {"name": "	VIVAS CHICO NIKOLL TATIANA	", "subject": "UPN - ARW - 2024-2"	,"limit": "9"	,"absences": "	11,4	","duolingo": "	0,02	",}},
+{"id": 	1076626693	,"user": {"name": "	ALARCON MURCIA DAIRON ANDRES	", "subject": "UPN - MDR - 2024-2"	,"limit": "9"	,"absences": "	6	","duolingo": "	1,50	",}},
+{"id": 	1032796230	,"user": {"name": "	ALVAREZ BAEZ LINA	", "subject": "UPN - MDR - 2024-2"	,"limit": "9"	,"absences": "	8	","duolingo": "	5,99	",}},
+{"id": 	1030528251	,"user": {"name": "	AVILA ROA LESHLY ALEJANDRA	", "subject": "UPN - MDR - 2024-2"	,"limit": "9"	,"absences": "	4,7	","duolingo": "	0,00	",}},
+{"id": 	1025521648	,"user": {"name": "	AYALA SANTAMARIA MARIA PAULA	", "subject": "UPN - MDR - 2024-2"	,"limit": "9"	,"absences": "	3,2	","duolingo": "	4,56	",}},
+{"id": 	1002227592	,"user": {"name": "	CASTRO BLANDON ANGYE JULIANA	", "subject": "UPN - MDR - 2024-2"	,"limit": "9"	,"absences": "	7	","duolingo": "	0,00	",}},
+{"id": 	1027520086	,"user": {"name": "	CORZO CASTRO DARWIN STEVEN	", "subject": "UPN - MDR - 2024-2"	,"limit": "9"	,"absences": "	0	","duolingo": "	6,65	",}},
+{"id": 	1000225684	,"user": {"name": "	FUENTES RODRIGUEZ YERSON RODRIGO	", "subject": "UPN - MDR - 2024-2"	,"limit": "9"	,"absences": "	5	","duolingo": "	0,72	",}},
+{"id": 	1016051050	,"user": {"name": "	GALVIS SIERRA KAREN	", "subject": "UPN - MDR - 2024-2"	,"limit": "9"	,"absences": "	2,9	","duolingo": "	0,25	",}},
+{"id": 	1000381198	,"user": {"name": "	LINARES OCHOA JESUS DAVID	", "subject": "UPN - MDR - 2024-2"	,"limit": "9"	,"absences": "	4	","duolingo": "	4,45	",}},
+{"id": 	1033795284	,"user": {"name": "	MURILLO POVEDA ANGIE LIZETH	", "subject": "UPN - MDR - 2024-2"	,"limit": "9"	,"absences": "	3,3	","duolingo": "	4,96	",}},
+{"id": 	1025141145	,"user": {"name": "	NEMOGA BOGOYA SANTIAGO ANDRES	", "subject": "UPN - MDR - 2024-2"	,"limit": "9"	,"absences": "	2,7	","duolingo": "	0,20	",}},
+{"id": 	1014309204	,"user": {"name": "	PAVAJEAU NINO AMANDA DEL PILAR	", "subject": "UPN - MDR - 2024-2"	,"limit": "9"	,"absences": "	1	","duolingo": "	1,17	",}},
+{"id": 	1015992681	,"user": {"name": "	PINZON AYALA PAULA ANDREA	", "subject": "UPN - MDR - 2024-2"	,"limit": "9"	,"absences": "	0,7	","duolingo": "	5,03	",}},
+{"id": 	1001339320	,"user": {"name": "	PINZON GONZALEZ HENRY ESTEBAN	", "subject": "UPN - MDR - 2024-2"	,"limit": "9"	,"absences": "	1,1	","duolingo": "	1,94	",}},
+{"id": 	1023860156	,"user": {"name": "	QUIJANO MALAGON EIMMY DAYANA	", "subject": "UPN - MDR - 2024-2"	,"limit": "9"	,"absences": "	2,2	","duolingo": "	1,77	",}},
+{"id": 	1001273827	,"user": {"name": "	RODRIGUEZ ROJAS KAREN VANESSA	", "subject": "UPN - MDR - 2024-2"	,"limit": "9"	,"absences": "	1	","duolingo": "	5,58	",}},
+{"id": 	1000989974	,"user": {"name": "	RUEDA MENDOZA TANIA LORENA	", "subject": "UPN - MDR - 2024-2"	,"limit": "9"	,"absences": "	3,3	","duolingo": "	4,21	",}},
+{"id": 	1003565076	,"user": {"name": "	TAUTA PEREIRA DANIELA	", "subject": "UPN - MDR - 2024-2"	,"limit": "9"	,"absences": "	0	","duolingo": "	5,48	",}},
+{"id": 	1033807956	,"user": {"name": "	VIASUS CARDENAS MICHELL VANESSA	", "subject": "UPN - MDR - 2024-2"	,"limit": "9"	,"absences": "	3,7	","duolingo": "	3,66	",}},
+  
+]
+
+<!-- INFO FINISHES HERE ------------------------------------------------------->
+
+$(document).ready(function(){
+  $("#data").click(function (any_function_variable_name) {
+    
+      var searchId = parseInt($('#searchBox').val());
+ 
+      
+      data.forEach(function (any_function_variable_name) {
+        
+        if(any_function_variable_name.id === searchId){
+          
+          $("h5")
+          .append('<h4> <a style="color: grey;">Name: </a>' + any_function_variable_name.user.name)
+		  .append('<h4> <a style="color: grey;">Subject: </a>' + any_function_variable_name.user.subject)
+		  .append('<h4> <a style="color: grey;">Limit of hours to be absent: </a>' + any_function_variable_name.user.limit)
+		  .append('<h4> <a style="color: red;">Number of hours absent: </a>' + any_function_variable_name.user.absences)
+		  .append('<h4> <a style="color: #74c401;">Duolingo score: </a>' + any_function_variable_name.user.duolingo);
+           
+        }
+      });
+    
+  });
+}); 
+
+  </script>
+  
+  <script>
+document.getElementById("searchBox")
+    .addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+        document.getElementById("data").click();
+    }
+});
+</script>
+  
+
+</html>
