@@ -1,0 +1,76 @@
+<title>HTML Editor</title>
+<link rel="icon" href="https://2.bp.blogspot.com/-f6gS2PGbwoI/VH_Nrzwt0nI/AAAAAAAADwk/OFDjFsACvk4/s1600/The%2BGreen%2BChalkboard%2BFavicon.ico" type="image/x-icon" />
+
+<script type="text/javascript">
+
+var editboxHTML = 
+'<html class="expand close">' +
+'<head>' +
+'<style type="text/css">' +
+'.expand { width: 100%; height: 100%; }' +
+'.close { border: none; margin: 0px; padding: 0px; }' +
+'html,body { overflow: hidden; }' +
+'<\/style>' +
+'<\/head>' +
+'<body class="expand close" onload="document.f.ta.focus(); document.f.ta.select();">' +
+'<form class="expand close" name="f">' +
+'<textarea class="expand close" style="background: #FFFBDD; font-family: Gill Sans MT, Calibri; font-size: 15px;" name="ta" wrap="hard" spellcheck="false">' +
+'<\/textarea>' +
+'<\/form>' +
+'<\/body>' +
+'<\/html>';
+
+var defaultStuff = 
+'<html>\n' +
+'<head>\n' +
+'</head>\n' +
+'<body bgcolor="#efefef">\n' +
+'<div style="position: absolute; margin: 100px 0px 50px 350px;">\n' +
+'<a style="font-family: Gill Sans MT, Calibri; color: navy; font-size: 30px;">Welcome to my real-time HTML editor.<\/a></br>\n' +
+'<a style="font-family: Gill Sans MT, Calibri; color: #8A8A8A; font-size: 20px;">Teacher: Christian Serrano</a>\n' +
+'</div>\n' +
+'<div style="position: absolute; margin: 20px 0px 50px 10px;">\n' +
+'<img src="https://teacherchris.gnomio.com/pluginfile.php/1/core_admin/logo/0x200/1725014592/Banner%20Moodle%20Main%2002.png" width="400px"><\/img>\n' +
+'<\/div>\n' +
+'</body>\n' +
+'<html>';
+
+
+var old = '';
+         
+function init()
+{
+  window.editbox.document.write(editboxHTML);
+  window.editbox.document.close();
+  window.editbox.document.f.ta.value = defaultStuff;
+  update();
+}
+
+function update()
+{
+  var textarea = window.editbox.document.f.ta;
+  var d = dynamicframe.document; 
+
+  if (old != textarea.value) {
+    old = textarea.value;
+    d.open();
+    d.write(old);
+    if (old.replace(/[\r\n]/g,'') == defaultStuff.replace(/[\r\n]/g,''))
+      d.write();
+    d.close();
+  }
+
+  window.setTimeout(update, 150);
+}
+
+</script>
+</head>
+
+<frameset resizable="yes" rows="50%,*" onload="init();">
+  <!-- about:blank confuses opera, so use javascript: URLs instead -->
+  <frame name="editbox" src="javascript:&#39;&#39;;">
+  <frame name="dynamicframe" src="javascript:&#39;&#39;;">
+</frameset>
+
+
+</html>
