@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cleft Sentences</title>
+<link rel="icon" href="http://teacherchristian.epizy.com/Gifs/Me-Icon.gif" type="image/x-icon" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+
+<style>
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600');
+@import url('https://fonts.googleapis.com/css?family=Raleway:600,800,900');
+</style>
+
+
+<style>
+    html, body {
+    top:10%;
+    bottom:0;
+    left:3%;
+    right:3%;
+    position:fixed;
+}
+#pick {
+	width:285px;
+	height:80px;
+	font-size: 40px; 
+	color:#FFFFFF; 
+	font-family: 'Raleway', sans-serif;
+	border:7px solid #FFFEF6;
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
+	border-radius: 20px; //**para hacer cuadrados de borde redondo**//
+}
+</style>
+  
+</head>
+
+<body bgcolor="#00af5b" style="overflow-x:hidden">
+
+
+	
+	<audio id="sound">
+	<source src="https://www.myinstants.com//media/sounds/correct_VsVqwRb.mp3"/>
+	</audio>
+
+
+<script>
+function draw1() {
+    var sourceVal = document.getElementById("source1").value;
+    var names = $.trim(sourceVal).split("\n");
+    var rand = Math.floor(Math.random()*(names.length));
+    var pick = names[rand]; document.getElementById( 'sound' ).play();
+    document.getElementById("source1").value = sourceVal.replace(pick+"\n", "").replace(pick, "");
+	document.getElementById("dest1").value+=pick+"\n";
+	document.getElementById("main1").value=pick+"";
+}
+</script>
+
+
+<textarea id="source1" style="display: none;">
+Something I have always wanted to do is...
+The reason why I enjoy English is...
+The place I would most like to visit is...
+What I enjoy most about living in Bogota is...
+What I really hate about living in Bogota is...
+One thing I would like to change from me is...
+Something I like about this school is...
+One thing I don't like about this school is...
+</textarea>
+
+<div align="center" style="margin-top: 5%;">
+<textarea style="width: 100%; height: 150px; background-color:transparent; border:0px solid #FFFFFF; text-align: center; font-family: 'Raleway', sans-serif; font-size: 40px; color:#FFFFFF; line-height: 40px; font-weight: bold; resize: none;" id="main1">
+</textarea>
+</div>
+
+<textarea style="display: none; width: 385px; height: 185px; background-color:transparent; border:3px solid #000000; border-radius: 10px; text-align: center; font-size: 9px; line-height:9px; color:#000000;" id="dest1">
+</textarea>
+
+<div align="center" style="margin-top: 10px;">
+<a href="javascript://"><button id="pick" style="background:#c93838; cursor: pointer; " onClick="draw1()">ASK ME</button></a>
+</div>
+
+<div style="margin-top: 20px; text-align: center; line-height: 18px;">
+<a href="https://teacherchristian.epizy.com" target="_blank"><img style="border: 0px solid #B3B3B3;" src="https://3.bp.blogspot.com/-TtU2-IqoC18/Xr2vZgn9auI/AAAAAAAAM40/m3nIt2ap44Qsxq-UmQcfT0D8Tgf7s2SUwCK4BGAYYCw/s1600/Me-Talking-Gif-White-Bg.gif" width="30" height="30" title="Christian Serrano" /></a>
+</br>
+<a style="font-size: 17px; color:#FFFFFF; font-family: 'Raleway', sans-serif; font-weight: 800;">Designed and Created by:</a></br>
+<a style="font-size: 17px; color:#efefef; font-family: 'Raleway', sans-serif; font-weight: 800;">Teacher Christian Serrano</a></br>
+</div>
+	
+
+</body>
+</html>
