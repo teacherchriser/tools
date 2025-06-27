@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+    <title>Chalkboard Winamp Player</title>
+	<link rel="icon" href="https://chalkboardlp.com/radio/favicon.png" type="image/x-icon">
+    <script src="webamp.bundle.min.js"></script>
+
+    
+</head>
+<body style="background: #000000;">
+
+<div style="width:40px; height:40px; position:absolute; top:0px; left:50%;">
+	<div id="winamp-container"></div>
+    <script>
+const Winamp = window.Webamp;
+// All configuration options are optional.
+const webamp = new Webamp({
+    // Optional.
+    initialTracks: [
+        {
+            metaData: {
+                artist: "Daft Punk",
+                title: "One More Time",
+            },
+            url: "https://archive.org/download/DaftPunkDiscovery/01%20-%20One%20More%20Time.mp3",
+        }, {
+            metaData: {
+                artist: "A-ha",
+                title: "Take on me",
+            },
+            url: "https://archive.org/download/brastreams_protonmail_A-HA/Take%20On%20Me.mp3",
+        },
+        {
+            metaData: {
+                artist: "Kool & The Gang",
+                title: "Fresh",
+            },
+            url: "https://archive.org/download/kool-the-gang-live-concert-40th-anniversary/Kool%20%26%20The%20Gang%20-%20Fresh%20%28Official%20Music%20Video%29.mp3",
+        },
+      ],
+	  
+    // initialSkin goes here
+	initialSkin: {
+        url: "bento.wsz"
+    },
+});
+webamp.renderWhenReady(document.getElementById('winamp-container'));
+</script>
+</div>
+
+<!-- WINAMP SKINS URL:
+
+initialSkin: {
+        url: "https://teacherchriser.github.io/music/playlists/Bento_Classified.wsz"
+    },
+	
+	------------------------------------------------------------------------------------------
+	
+	
+		GET SKINS AT: https://skins.webamp.org/
+		Bento:	https://teacherchriser.github.io/music/playlists/Bento_Classified.wsz
+		-->
+
+
+</body>
+</html>
