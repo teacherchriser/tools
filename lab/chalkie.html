@@ -5,14 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Chalkboard GrammarBot</title>
   <style>
+  @import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap');
+  </style>
+
+  <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Exo 2', sans-serif;
       background-color: #fffde7;
       margin: 0;
       padding: 0;
     }
   </style>
-  <!-- Script necesario para el chatbot -->
+  <!-- style for chatbox colors -->
+  <style>
+        df-messenger {
+            --df-messenger-bot-message: #baffd9;
+            --df-messenger-button-titlebar-color: #187d5d;
+            --df-messenger-chat-background-color: #fafafa;
+            --df-messenger-font-color: #4b4b4b;
+            --df-messenger-send-icon: #187d5d;
+            --df-messenger-user-message: #baefff;
+			--df-messenger-font-family: 'Exo 2', sans-serif;
+			--df-messenger-font-size: 10px;
+        }
+    </style>
+  <!-- Script for chatbot -->
   <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
 </head>
 <body>
@@ -23,9 +40,6 @@
   chat-title="Chalkie 🤖🎓"
   agent-id="138250b0-55d2-4656-999e-492b18fde445"
   language-code="es"
-  button-titlebar-color="#187d5d"
-  title-background-color="#187d5d"
-  chat-background-color="#fffde7"
 ></df-messenger>
 </body>
 </html>
