@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Chalkboard Epub Reader</title>
-  <link rel="icon" href="https://chalkboardlp.com/img/favicon.png" type="image/x-icon" />
+  <link rel="icon" href="favicon.png" type="image/x-icon" />
 
   <script src="jszip.min.js"></script>
   <script src="epub.js"></script>
@@ -16,12 +16,16 @@
 </style>
 
 </head>
-<body>
+<body style="background: #FFFDF0;">
   <div id="title"></div>
   <center>
-  <img src="https://chalkboardlp.com/img/logo.png" height="50px"></img>
-  <p style="font-family: 'DM Serif Display', serif; font-size: 25px; line-height: 7px;">CHALKBOARD EPUB READER</p></center>
+  <img src="logo.png" height="50px" style="margin-bottom: 10px;"></img>
+  </br>
+  <a style="font-family: 'DM Serif Display', serif; font-size: 25px; line-height: 7px;">Teacher Chris' Epub Reader</a>
+  </br>
+  <a style="font-family: 'DM Serif Display', serif; font-size: 15px; line-height: 7px; color: #A7A7A7;">Created & Developed by: Teacher Christian Serrano</a></center>
   <select id="toc"></select>
+  </br></br>
   <div id="viewer" class="spreads"></div>
   <a id="prev" href="#prev" class="arrow">‹</a>
   <a id="next" href="#next" class="arrow">›</a>
