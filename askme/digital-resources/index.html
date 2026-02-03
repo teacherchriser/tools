@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Google</title>
+<link rel="icon" href="http://teacherchristian.epizy.com/Gifs/Me-Icon.gif" type="image/x-icon" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+
+<style>
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600');
+@import url('https://fonts.googleapis.com/css?family=Raleway:600,800,900');
+</style>
+
+
+<style>
+    html, body {
+    top:10%;
+    bottom:0;
+    left:3%;
+    right:3%;
+    position:fixed;
+}
+#pick {
+	width:285px;
+	height:80px;
+	font-size: 40px; 
+	color:#FFFFFF; 
+	font-family: 'Raleway', sans-serif;
+	border:7px solid #FFFEF6;
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
+	border-radius: 20px; //**para hacer cuadrados de borde redondo**//
+}
+</style>
+  
+</head>
+
+<body bgcolor="#FFFFFF" style="overflow-x:hidden">
+
+<div id="wrapper">
+	
+	<audio id="sound">
+	<source src="http://teacherchristian.epizy.com/Sounds/Drum-Roll.mp3"/>
+	</audio>
+
+
+<script>
+function draw1() {
+    var sourceVal = document.getElementById("source1").value;
+    var names = $.trim(sourceVal).split("\n");
+    var rand = Math.floor(Math.random()*(names.length));
+    var pick = names[rand]; document.getElementById( 'sound' ).play();
+    document.getElementById("source1").value = sourceVal.replace(pick+"\n", "").replace(pick, "");
+	document.getElementById("dest1").value+=pick+"\n";
+	document.getElementById("main1").value=pick+"";
+}
+</script>
+
+
+<textarea id="source1" style="display: none;">
+What digital tools or platforms do you already use in your daily life (for study, communication, or entertainment)?
+When you hear the term “digital resources for education,” what comes to your mind?
+Do you think it is necessary for future teachers/students to know how to use digital tools? Why or why not?
+What difficulties do you face when using new digital tools or websites for learning?
+How do digital resources change the way we learn compared to traditional books or printed materials?
+Have you ever created something digital for learning (a presentation, a document, a website, a video, etc.)?
+What do you think about using artificial intelligence (AI) in education?
+In your opinion, how can digital tools support students who are beginners or have learning difficulties?
+What skills do you think are more important when working with digital resources: technical skills or critical thinking? Why?
+If you could design one simple digital resource for your class, what would it be and what would it help students learn?
+</textarea>
+
+<div align="center" style="margin-top: 5%;">
+<textarea style="width: 100%; height: 150px; background-color:transparent; border:0px solid #FFFFFF; text-align: center; font-family: 'Raleway', sans-serif; font-size: 40px; color:#4280ec; line-height: 40px; font-weight: bold; resize: none;" id="main1">
+</textarea>
+</div>
+
+<textarea style="display: none; width: 385px; height: 185px; background-color:transparent; border:3px solid #000000; border-radius: 10px; text-align: center; font-size: 9px; line-height:9px; color:#000000;" id="dest1">
+</textarea>
+
+<div align="center" style="margin-top: 10px;">
+<a href="javascript://"><button id="pick" style="background:#f3b605; cursor: pointer; " onClick="draw1()">ASK ME</button></a>
+</div>
+
+<div style="margin-top: 20px; text-align: center; line-height: 18px;">
+<a href="https://teacherchristian.epizy.com" target="_blank"><img style="border: 0px solid #B3B3B3;" src="https://3.bp.blogspot.com/-TtU2-IqoC18/Xr2vZgn9auI/AAAAAAAAM40/m3nIt2ap44Qsxq-UmQcfT0D8Tgf7s2SUwCK4BGAYYCw/s1600/Me-Talking-Gif-White-Bg.gif" width="30" height="30" title="Christian Serrano" /></a>
+</br>
+<a style="font-size: 17px; color:#e34132; font-family: 'Raleway', sans-serif; font-weight: 800;">Designed and Created by:</a></br>
+<a style="font-size: 17px; color:#32a351; font-family: 'Raleway', sans-serif; font-weight: 800;">Teacher Christian Serrano</a></br>
+</div>
+	
+</div>
+</body>
+</html>
