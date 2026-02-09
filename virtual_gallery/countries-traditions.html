@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galería Virtual</title>
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      font-family: Arial, sans-serif;
+      color: #fff;
+    }
+
+    /* Encabezado de la galería */
+    .gallery-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 0px;
+      padding: 10px 20px;
+      background: #111;
+      border-bottom: 2px solid #444;
+      position: relative;
+      z-index: 1000;
+    }
+
+    .gallery-header .logo {
+      height: 40px;
+      width: auto;
+    }
+
+    .gallery-header .title {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #fff;
+      margin: 0;
+    }
+
+    .wrap {
+  width: 100%;
+  max-width: 850px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+/* Imagen */
+.slide img {
+  width: 100%;
+  max-width: 1000px;
+  height: auto;
+  object-fit: contain; /* no corta la imagen */
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+    /* Slider */
+    .slider {
+      position: relative;
+      display: flex;
+      transition: transform 0.6s ease-in-out;
+    }
+
+    .slide {
+      min-width: 100%;
+      box-sizing: border-box;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .slide.active {
+      display: flex;
+    }
+
+    /* Ajuste de iframe responsivo */
+    iframe {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9; /* mantiene proporción para no cortar */
+      border: 0px solid gold;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    figcaption {
+      margin-top: 8px;
+      font-size: 1rem;
+      color: #ddd;
+    }
+
+    /* Flechas */
+    .arrows {
+      position: absolute;
+      top: 50%;
+      left: 3%;
+      right: -2%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      padding: 0 15px;
+      pointer-events: none;
+    }
+
+    .arrowBtn {
+      background: rgba(0,0,0,0.6);
+      border: none;
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer;
+      pointer-events: all;
+      padding: 8px 12px;
+      border-radius: 8%;
+      transition: background 0.3s;
+    }
+
+    .arrowBtn:hover {
+      background: rgba(255,255,255,0.2);
+    }
+	
+  </style>
+</head>
+<body>
+
+  <!-- Encabezado con logo y título -->
+  <header class="gallery-header">
+    <img src="https://www.nicepng.com/png/full/284-2843034_source-national-geographic-logo-white.png" alt="Logo" class="logo">
+    <h1 class="title" style="text-align: center; margin-left: 33%;">Describing Cultures</h1>
+  </header>
+  
+  <audio id="bg-music" src="https://archive.org/download/1977cantodeunpueblovariosartistas/03%20-%20Mariposas.mp3" loop></audio>
+
+<!-- Botón de sonido -->
+<button id="soundBtn" style="
+  position: absolute; 
+  top: 10px; right: 10px; 
+  z-index: 999; 
+  background: #0008; 
+  color: #fff; 
+  border: 1px solid #444; 
+  border-radius: .5rem; 
+  padding: .4rem .7rem;
+  cursor: pointer;">
+🔇 Sonido
+</button>
+
+  <div class="wrap" aria-label="Galería de fotos con auto-slide">
+    <div class="slider" id="slider" role="region" aria-live="polite">
+
+      <!-- Diapositivas con iframe y título -->
+	  <figure class="slide active" data-index="0">
+		<img src="https://i.natgeofe.com/n/c9b13309-7ca4-472a-a3fa-e7dfa08039bc/GauchoLead.jpg">
+			<figcaption>Gaucho Barbecue</figcaption>
+		</figure>
+		
+		<figure class="slide active" data-index="0">
+		<img src="https://i.natgeofe.com/n/b803d81b-ed1c-4cb8-9a7d-74da5a401b1a/mexico-city-day-of-dead-parade-mexico.jpg">
+			<figcaption>Day of the Death</figcaption>
+		</figure>
+		
+		<figure class="slide active" data-index="0">
+		<img src="https://i.natgeofe.com/n/45ad4e4c-c188-4be5-9d46-e692965c102a/GettyImages-528117229.jpg">
+			<figcaption>The Big Apple</figcaption>
+		</figure>
+		
+		<figure class="slide active" data-index="0">
+		<img src="https://i.natgeofe.com/n/0d4321ef-607f-4fe2-b550-310967f096dc/coverstory_japan_GettyImages-2233253129_ukHR.jpg">
+			<figcaption>Greetings</figcaption>
+		</figure>
+		
+		<figure class="slide active" data-index="0">
+		<img src="https://i.natgeofe.com/n/ee819039-981d-40fd-a0b1-26ab8d158045/holi-india.jpg">
+			<figcaption>Festivals</figcaption>
+		</figure>
+		
+		
+	  
+
+      <!-- Flechas laterales -->
+      <div class="arrows">
+        <button class="arrowBtn" id="prevBtn" aria-label="Anterior" title="Anterior (←)">◀</button>
+        <button class="arrowBtn" id="nextBtn" aria-label="Siguiente" title="Siguiente (→)">▶</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    let current = 0;
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+      });
+    }
+
+    prevBtn.addEventListener('click', () => {
+      current = (current - 1 + slides.length) % slides.length;
+      showSlide(current);
+    });
+
+    nextBtn.addEventListener('click', () => {
+      current = (current + 1) % slides.length;
+      showSlide(current);
+    });
+
+    // Auto-slide cada 12 segundos
+    setInterval(() => {
+      current = (current + 0) % slides.length;
+      showSlide(current);
+    }, 0);
+
+    // Soporte teclado ← →
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') prevBtn.click();
+      if (e.key === 'ArrowRight') nextBtn.click();
+    });
+  </script>
+</body>
+</html>
