@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+    <title>Chalkboard Winamp Player</title>
+	<link rel="icon" href="https://chalkboardlp.com/radio/favicon.png" type="image/x-icon">
+    <script src="webamp.bundle.min.js"></script>
+
+    
+</head>
+<body style="background: #000000;">
+
+<div style="width:auto; height:auto; position:absolute; top:20px; left:auto;">
+	<div id="winamp-container"></div>
+    <script>
+const Winamp = window.Webamp;
+// All configuration options are optional.
+const webamp = new Webamp({
+    // Optional.
+    initialTracks: [
+		
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-01" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_01.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-02" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_02.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-03" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_03.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-04" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_04.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-05" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_05.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-06" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_06.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-07" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_07.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-08" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_08.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-09" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_09.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-10" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_10.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-11" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_11.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-12" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_12.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-13" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_13.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-14" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_14.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-15" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_15.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-16" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_16.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-17" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_17.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-18" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_18.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-19" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_19.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-20" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_20.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-21" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_21.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-22" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_22.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-23" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_23.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-24" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_24.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-25" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_25.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-26" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_26.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-27" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_27.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-28" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_28.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-29" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_29.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-30" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_30.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-31" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_31.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-32" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_32.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-33" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_33.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-34" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_34.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-35" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_35.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-36" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_36.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-37" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_37.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-38" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_38.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-39" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_39.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-40" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_40.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-41" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_41.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-42" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_42.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-43" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_43.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-44" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_44.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-45" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_45.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-46" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_46.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-47" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_47.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-48" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_48.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-49" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_49.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-50" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_50.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-51" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_51.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-52" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_52.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-53" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_53.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-54" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_54.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-55" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_55.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-56" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_56.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-57" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_57.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-58" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_58.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-59" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_59.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-60" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_60.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-61" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_61.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-62" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_62.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-63" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_63.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-64" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_64.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-65" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_65.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-66" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_66.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-67" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_67.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-68" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_68.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-69" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_69.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-70" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_70.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-71" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_71.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-72" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_72.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-73" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_73.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-74" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_74.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-75" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_75.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-76" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_76.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-77" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_77.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-78" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_78.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-79" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_79.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-80" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_80.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-81" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_81.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-82" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_82.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-83" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_83.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-84" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_84.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-85" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_85.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-86" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_86.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-87" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_87.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-88" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_88.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-89" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_89.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-90" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_90.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-91" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_91.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-92" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_92.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-93" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_93.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-94" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_94.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-95" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_95.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-96" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_96.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-97" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_97.mp3",
+},
+{
+    metaData: { artist: "Life Pre-Intermediate", title: "Track-98" },
+    url: "https://teacherchriser.github.io/teaching/audios/Life-PI/life_2e_pre_intermediate_sb_track_98.mp3",
+},
+
+		
+		
+		
+      ],
+	  
+    // initialSkin goes here
+	initialSkin: {
+        url: "bento.wsz"
+    },
+});
+webamp.renderWhenReady(document.getElementById('winamp-container'));
+</script>
+</div>
+
+<!-- WINAMP SKINS URL:
+
+initialSkin: {
+        url: "https://teacherchriser.github.io/music/playlists/Bento_Classified.wsz"
+    },
+	
+	------------------------------------------------------------------------------------------
+	
+	
+		GET SKINS AT: https://skins.webamp.org/
+		Bento:	https://teacherchriser.github.io/music/playlists/Bento_Classified.wsz
+		-->
+
+
+</body>
+</html>
