@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Attendance & Speaking Report</title>
+	<link rel="icon" href="https://chalkboardlp.github.io/img/favicon.png" type="image/x-icon">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://teacherchriser.github.io/tools/font-awesome/css/font-awesome.css">
+<!--
+<script src="https://kit.fontawesome.com/feede90dd1.js" crossorigin="anonymous"></script>
+-->
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
+</style>
+
+<style> <!-- PRINT -->
+@media print {
+
+    body {
+        background: white;
+    }
+
+    #searchBox, 
+    #data, 
+    #printBtn, 
+    button {
+        display: none !important;
+    }
+
+    #info {
+        margin-left: 10% !important;
+        font-size: 14px;
+    }
+
+    #speaking-table {
+        width: 90% !important;
+    }
+
+}
+</style>
+
+</head>
+
+<body style="background-color:#FFFFFF;">
+
+<div style="position:relative;margin-left:auto;margin-right:auto;text-align:center;width:650px;">
+
+<img src="https://tmb.bibliotekawszkole.pl/dd5/dd58a33c-d314-46d8-b1fd-e2a5968d0a1a.jpg" height="120px" style="border: 0px solid navy; border-radius: 3px;">
+
+<!-- OTHER IMAGES:
+  EASTER EGGS: https://i0.wp.com/bestgrafix.com/wp-content/uploads/2024/03/easter-gifs.gif - https://mir-s3-cdn-cf.behance.net/project_modules/hd/50aa8a116679015.6066a9c4b1ada.gif
+  SNOOPY EASTER: https://media.tenor.com/WiPhLlP1i1YAAAAM/easter.gif
+  SPEECH BUBBLES: https://media4.giphy.com/media/v1.Y2lkPTZjMDliOTUyNmF5YW51NDFxMWgzenhtZ21xZG9ncnczb2E3bjJ5bHJnbHo2YXV0NiZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/MZJrNkGVY7BGDH8GwU/giphy.gif
+  SPEAKING 1:	https://i.pinimg.com/originals/ba/1b/ba/ba1bba349c9b8772806a8fd8de2a86d6.gif
+  CALENDAR:		https://cdn.pixabay.com/animation/2023/06/13/15/13/15-13-19-191_512.gif
+  CLOCK:		https://media.lordicon.com/icons/wired/flat/45-clock-time.gif
+  DUOLINGO:		https://i.pinimg.com/originals/ca/05/d1/ca05d1cf1a034f9b2eafc644c102c551.gif
+  LOGO:			https://teacherchris.gnomio.com/pluginfile.php/2/course/section/1/Banner%20Moodle%20Main%2002.png
+  HEARTS:		https://i.gifer.com/1uK8.gif
+  COINS:		https://static.wixstatic.com/media/c89ae7_68238a80bdd34055b5a5e5cb7ea3e2bf~mv2.gif
+  -->
+
+  <p style="font-family: 'Play', sans-serif; font-size: 8px; color: #252424; line-height: 0px; font-weight: bold;">Created & designed by: Teacher Christian Serrano</p>
+  <p style="font-family: 'Play', sans-serif; font-size: 20px; color: #004890; line-height: 0px; font-weight: bold;">Reporte de Asistencia, Speaking y Notas</p>
+  <p style="font-family: 'Play', sans-serif; font-size: 12px; color: #252424; line-height: 5px; text-decoration: underline; font-weight: bold;">Asistencia del: 29/ABR/26</p>
+  <p style="font-family: 'Play', sans-serif; font-size: 11px; color: #fc3131; line-height: 5px; font-weight: bold;">Ingrese su número de identificación sin puntos, comas o espacios</p>
+
+<input id="searchBox" type="text" style="width: 110px; text-align: center; font-family: 'Play', sans-serif;">
+<button id="data" style="font-family: 'Play', sans-serif;">Buscar</button>
+<button style="font-family: 'Play', sans-serif;" onclick="location.reload()">Nueva Busqueda</button>
+<button id="printBtn" style="font-family: 'Play', sans-serif; display:none;" title="Save PDF/Print"><i class="fa-solid fa-print"></i></button>
+
+<h5 id="info" style="font-family: 'Play', sans-serif; color: #004890; font-weight: bold; margin-left: 0px; text-align: left; margin-top: 3px; margin-left: 30%;"></h5>
+
+</div>
+
+<!-- TABLA NUEVA AGREGADA -->
+<table id="speaking-table" border="2" width="500" align="center" style="text-align:center; display:none; margin-top: 0px;">
+<tr>
+<th style="font-family: 'Play', sans-serif; background-color:#004890; color:white; font-size: 14px">
+SPEAKING MISTAKES (Structure, Pronunciation and/or Vocabulary)
+</th>
+</tr>
+<tr>
+<td id="speaking-content" style="font-family: 'Play', sans-serif; background-color:#FFFFFF; color:#000000; font-size: 10px; text-align:left;"></td>
+</tr>
+</table>
+
+<script>
+
+var data = [
+
+	<!-- INFO STARTS HERE ------------------------------------------------------->
+	
+{"id": 	1024496008	,"user": {"name": "	ARIAS LOAIZA	JEIMMY NATHALY	", "subject": "UPN - CAI2 G3 - 2026-1"	,"limit": "16"	,"absences": "	11,5	","score1": "	4,2	","score2": "	Midterm (10%) = 	2,6	","speaking": "	minced/ mayonaisse/ its has/ it representive the country/ couples/ we're going to talking about/ 1904 (194)/ literature/ they love read/ bAkery/ love laugh/ after finish/ chilean not like that/ 	",}},
+{"id": 	1028863920	,"user": {"name": "	BALTAN BELTRAN	SARAY GABRIELA	", "subject": "UPN - CAI2 G3 - 2026-1"	,"limit": "16"	,"absences": "	7	","score1": "	4,5	","score2": "	Midterm (10%) = 	3,0	","speaking": "	because (of) her job/ right now she just study/ she want work/ supreme-super (?)/ drink it/ alcohol/ because her work/ Elon/ he grow up (past)/ 	",}},
+{"id": 	1013117249	,"user": {"name": "	CERON BELTRAN	SIMON ALEJANDRO	", "subject": "UPN - CAI2 G3 - 2026-1"	,"limit": "16"	,"absences": "	12	","score1": "	4,2	","score2": "	Midterm (10%) = 	2,5	","speaking": "	she has 18 years old/ OF her cousin/ she don't believe / she loves the rock/ near of a mall/ usa is/ is conformeit/ asia/ acti'vist/ called/ Tupac have got (past)/ for solute/ incluid/ 	",}},
+{"id": 	1031180543	,"user": {"name": "	CHAVARRO SALCEDO	YESENIA	", "subject": "UPN - CAI2 G3 - 2026-1"	,"limit": "16"	,"absences": "	11	","score1": "	3,9	","score2": "	Midterm (10%) = 	2,2	","speaking": "	plAy/ she work/ she loves cook/ a person polifacetic/ dOing/ 'important/ 'guitar/ identify/ for the other hand/ sEA/ people that is talking/ in the image they are/ reconoceit/ choco'leits/ is more buy (more bought)/ 'important/ comunitarismo/ spain/ against/ removed/ 	",}},
+{"id": 	1016020198	,"user": {"name": "	ESCANDON AVELLA	EILEN JASSAY	", "subject": "UPN - CAI2 G3 - 2026-1"	,"limit": "16"	,"absences": "	5,5	","score1": "	4,5	","score2": "	Midterm (10%) = 	2,3	","speaking": "	she live she have 3 cats/ the men has hats/ the father take a chip/ other candy/ pinne'apple/ a fruit so typical/ for the childs/ liquor/ 9014-1940/ participate(d)/ 	",}},
+{"id": 	1141114984	,"user": {"name": "	GAVIRIA GONZALEZ	ANGIE DANIELA	", "subject": "UPN - CAI2 G3 - 2026-1"	,"limit": "16"	,"absences": "	3	","score1": "	4,0	","score2": "	Midterm (10%) = 	3,3	","speaking": "	he don't have pets/ he doesn't religion/ he don't have/ he don't like homework/ the kid have/ the father take a chip/ he like(d)... suit(sweet)/ dEtails/ a sombrero/ this... represent/ actually nadie/ 	",}},
+{"id": 	1023369634	,"user": {"name": "	GUEVARA ROMERO	MARIA ALEJANDRA	", "subject": "UPN - CAI2 G3 - 2026-1"	,"limit": "16"	,"absences": "	13	","score1": "	4,0	","score2": "	Midterm (10%) = 	3,6	","speaking": "	she makes cry/ she is turn/ she usually celebrate/ she try to forget/ she ocassionally the work/ we gonna talk/ culture/ is pretty common take/ looking landscapes/ we decide(d)/ this food represent/  rUssia/ helped/ dialog/ found(ed)/ know(n)as	",}},
+{"id": 	1074811813	,"user": {"name": "	GUTIERREZ CURREA	JORGE EDUARDO	", "subject": "UPN - CAI2 G3 - 2026-1"	,"limit": "16"	,"absences": "	11	","score1": "	4,0	","score2": "	Midterm (10%) = 	2,4	","speaking": "	she live/ she have/ she love she has girlfriend/ she also is sentimental/ lonely(?)/ she love vegetables/ she like teach/ united states/ va'lues/ he become (don't read cellphone)/ successful/ legal/ united states/ received/ we start (past)/ 	",}},
+{"id": 	1031649256	,"user": {"name": "	HERNANDEZ RIANO	DANNA GABRIELA	", "subject": "UPN - CAI2 G3 - 2026-1"	,"limit": "16"	,"absences": "	3	","score1": "	4,4	","score2": "	Midterm (10%) = 	2,4	","speaking": "	she has 18 years old/ jir birthday with your (her) family/ she is focused / south/ imeish/ figures/ great/ prison/ he become (past)/ south/ (PRESENTATION 1: talk about AN amazing country/ 16-60 million/ 11 language/ colombia mainly speaker spanish/ culture/ language(s)/ simba potatoes (chips)/ bUy/ family gettings (gatherings) (?)/ fair (fire)/ with hir friends (their)/ a(n) important/ devElop/ for childs/ famous/ this image show / (good voice tone but check pronunciation)/ Mandela- they are a (great) grit leader/ they was imprisoned / he become preseident/ changEd/ extremely/)	",}},
+{"id": 	1030080758	,"user": {"name": "	HOYOS RUALES	LAURA SOFIA	", "subject": "UPN - CAI2 G3 - 2026-1"	,"limit": "16"	,"absences": "	0	","score1": "	3,4	","score2": "	Midterm (10%) = 	2,3	","speaking": "	80/18 / she is not a relationship/ burger/ she cries a lot of/ culture/ languages official/ tradition/ chus as (such us)/ de singapur/ heart (jer)/ in the man half/ also/ (PRESENTATION 1: minister/ first women (woman)/ sinyer/ ‘important/ she was (man)/ he become/ to globaliseit (Globalize)/ dUring/ massivE / research/ chAnging/ key/ (colombia is 1 million more) )	",}},
+{"id": 	1010143699	,"user": {"name": "	LUNA GONZALEZ	GABRIELA VALENTINA	", "subject": "UPN - CAI2 G3 - 2026-1"	,"limit": "16"	,"absences": "	13	","score1": "	3,3	","score2": "	Midterm (10%) = 	2,1	","speaking": "	doesn't like walk/ she make laugh.../ common see a safari/ to do turism/ she drink.../ originating (ed) from singapur)/ reconosaid/ swimmining/ awarded/ 	",}},
+{"id": 	1010962726	,"user": {"name": "	MUNOZ SIERRA	LUISA MARIA	", "subject": "UPN - CAI2 G3 - 2026-1"	,"limit": "16"	,"absences": "	2,5	","score1": "	4,0	","score2": "	Midterm (10%) = 	3,0	","speaking": "	the 11th/ she like eat cake/ she eat it/ she love her people/ and life with her family/ 2 womans/ a old couple/ in the left/ plato/ at the right/ characters/ they laifed/ 	",}},
+{"id": 	1024496454	,"user": {"name": "	PERDOMO ROMAN	LAURA VANESSA	", "subject": "UPN - CAI2 G3 - 2026-1"	,"limit": "16"	,"absences": "	13	","score1": "	4,1	","score2": "	Midterm (10%) = 	1,8	","speaking": "	her sister (miguel)/ he isn't work/ a person that make a lot of things/ he believe in../ he don't belive in church/ is very common see/ the largest package../ iconic/ nUts/ deshidratado/ nature snack/ a important thing/ cli'mate/ 1952 (?)/ he lifed/ neurona/ premio novel/ in won/ her draws (he)/ 	",}},
+{"id": 	1022954216	,"user": {"name": "	PENA MELO	LAURA NATALY	", "subject": "UPN - CAI2 G3 - 2026-1"	,"limit": "16"	,"absences": "	2,5	","score1": "	3,7	","score2": "	Midterm (10%) = 	1,6	","speaking": "	she has 20 years/ now live in Bogota/ she play with her cta/ watch novelas/ she like listen/ in this part is/ limon/ helsinki/ became/ fainland/ die(d)/ 	",}},
+{"id": 	1034660507	,"user": {"name": "	REGINO SUAREZ	MIGUEL ANGEL	", "subject": "UPN - CAI2 G3 - 2026-1"	,"limit": "16"	,"absences": "	10	","score1": "	4,4	","score2": "	Midterm (10%) = 	2,8	","speaking": "	she don't like sport/ the best of she/ costillas/ triangles/ depends of ../ (absent in speaking presentations)/ 	",}},
+{"id": 	1021675810	,"user": {"name": "	RINCON PULIDO	EHILEN DANIELA	", "subject": "UPN - CAI2 G3 - 2026-1"	,"limit": "16"	,"absences": "	11	","score1": "	4,6	","score2": "	Midterm (10%) = 	2,6	","speaking": "	august/ he don't believe in God/ before watch the movie/ near of.../ her (simon)/ pinneaple(?)/ a original/ made from.../ drunked(?)/ advertising/ for complement/ south/ he exit to the prison (past)/ died/ 	",}},
+{"id": 	1104697158	,"user": {"name": "	RODRIGUEZ TRIVINO	DIANA MARCELA	", "subject": "UPN - CAI2 G3 - 2026-1"	,"limit": "16"	,"absences": "	15	","score1": "	3,1	","score2": "	Midterm (10%) = 	2,0	","speaking": "	she study this career.../ she live../ (hablas muy muy poco)/ july/ stUdied/ technogical/ released/ successful/ sains (since) figure/ through/ sUch as/ caracterizaid/ 	",}},
+{"id": 	1125270292	,"user": {"name": "	SANCHEZ BONILLA	LORENA	", "subject": "UPN - CAI2 G3 - 2026-1"	,"limit": "16"	,"absences": "	7,5	","score1": "	4,4	","score2": "	Midterm (10%) = 	3,4	","speaking": "	she like..../ the imagen/ persons / apart of/ we choose (past)/ he grow in Hong Kong/ 	",}},
+{"id": 	1000519156	,"user": {"name": "	VILLARREAL HERNANDEZ	CATALINA	", "subject": "UPN - CAI2 G3 - 2026-1"	,"limit": "16"	,"absences": "	2	","score1": "	4,0	","score2": "	Midterm (10%) = 	3,1	","speaking": "	ugust/ she laivs/ with SAUCE/ she lOves (pronunciation)/ she have .. years/ t-shirt black or white/ representative/ senador in chaile/ daughter bUt she DIED/ mAny/ ideology/ patrones/ avocado/ mUst/ cero-zero/ listen music/ 	",}},
+{"id": 	1123805410	,"user": {"name": "	ACOSTA LOPEZ	SOFIA	", "subject": "UPN - CAI3 G3 - 2026-1"	,"limit": "16"	,"absences": "	4,5	","score1": "	4,1	","score2": "	Midterm (10%) = 	2,0	","speaking": "	doesn't like clean the house/ customs/ more shorter/ (I need you to speak more)	",}},
+{"id": 	1043159472	,"user": {"name": "	AHUMADA CARRILLO	AVRIL LAUREN	", "subject": "UPN - CAI3 G3 - 2026-1"	,"limit": "16"	,"absences": "	4	","score1": "	4,7	","score2": "	Midterm (10%) = 	3,0	","speaking": "	(I like your speaking but I need to listen to you more)	",}},
+{"id": 	1031809254	,"user": {"name": "	BRAVO VILLARRAGA	JUAN CAMILO	", "subject": "UPN - CAI3 G3 - 2026-1"	,"limit": "16"	,"absences": "	9	","score1": "	3,3	","score2": "	Midterm (10%) = 	1,8	","speaking": "	(Please speak more. I haven't listened to you enough) in 90s/ they was more conformatble/	",}},
+{"id": 	1072654447	,"user": {"name": "	CASTRO GARCIA	ANA CATALINA	", "subject": "UPN - CAI3 G3 - 2026-1"	,"limit": "16"	,"absences": "	4	","score1": "	4,6	","score2": "	Midterm (10%) = 	3,2	","speaking": "	(I like your speaking but I need to listen to you more) stationaries/ small/	",}},
+{"id": 	1015480366	,"user": {"name": "	CONTRERAS TELLEZ	VALERIA	", "subject": "UPN - CAI3 G3 - 2026-1"	,"limit": "16"	,"absences": "	6	","score1": "	4,7	","score2": "	Midterm (10%) = 	2,6	","speaking": "	(Please speak more. I haven't listened to you enough)	",}},
+{"id": 	1000856664	,"user": {"name": "	DELGADO MESA	JOSE DAVID	", "subject": "UPN - CAI3 G3 - 2026-1"	,"limit": "16"	,"absences": "	4,5	","score1": "	0,5	","score2": "	Midterm (10%) = 	1,8	","speaking": "	she laif/ she watch a lot of videos/ focus in/ era has changEd/ checked/ (hesitation in words and speaking)/	",}},
+{"id": 	1098764430	,"user": {"name": "	ECHEVERRI JIMENEZ	DANIEL DAVID	", "subject": "UPN - CAI3 G3 - 2026-1"	,"limit": "16"	,"absences": "	9	","score1": "	4,2	","score2": "	Midterm (10%) = 	1,9	","speaking": "	movie talk.../ div fav music band/ he prefer don't talk/ david born.../ social/ ECCI focus on/ interesting/ designed/ other answer/ usEd/ intersting/ for take notes/ I have other question/ what people used?/ platon/	",}},
+{"id": 	1053324907	,"user": {"name": "	FANDINO VEGA	DAVID ALEJANDRO	", "subject": "UPN - CAI3 G3 - 2026-1"	,"limit": "16"	,"absences": "	5	","score1": "	3,9	","score2": "	Midterm (10%) = 	2,6	","speaking": "	Japan/ 'routine/ he love.../ she (daniel)/ traduced to... / (Why so focused on your phone's screen or chatting to other people while we are in class?)	",}},
+{"id": 	1014863461	,"user": {"name": "	GARCIA OSORIO	MARIANA	", "subject": "UPN - CAI3 G3 - 2026-1"	,"limit": "16"	,"absences": "	1	","score1": "	4,4	","score2": "	Midterm (10%) = 	1,7	","speaking": "	(Please speak more. I haven't listened to you enough) 22 of december/ incentivar/ 'objective/ actually (Currently)/ it has have.../ sains/ is used (past)/	",}},
+{"id": 	1021314311	,"user": {"name": "	GARZON BERNAL	LAURA SOFIA	", "subject": "UPN - CAI3 G3 - 2026-1"	,"limit": "16"	,"absences": "	1	","score1": "	4,3	","score2": "	Midterm (10%) = 	4,3	","speaking": "	(I like your speaking but I need to listen to you more) cuando logro conseguir una silla/ pregnant/ think in/ wheeler/ audiovisual/ we have to wrote/ 2 thousand oh four (2004)/ bachelor/ written/ symbol/ failosophy/ chancellors / used to be in bigger space/	",}},
+{"id": 	1028863442	,"user": {"name": "	GUTIERREZ GUTIERREZ	DANNA SOFIA	", "subject": "UPN - CAI3 G3 - 2026-1"	,"limit": "16"	,"absences": "	9,5	","score1": "	4,7	","score2": "	Midterm (10%) = 	2,0	","speaking": "	she love/ she like/ she like play/ was created/ based in / started have/ it become (past)/ 	",}},
+{"id": 	1141515674	,"user": {"name": "	MORALES PRIETO	SHARON MARIA SOFIA	", "subject": "UPN - CAI3 G3 - 2026-1"	,"limit": "16"	,"absences": "	8	","score1": "	4,5	","score2": "	Midterm (10%) = 	2,2	","speaking": "	she has 18 y.o/ she made (present)/ development/ re'search/ engineer(ing)/  geography/ create(d)/ in the 20 century/	",}},
+{"id": 	1093744458	,"user": {"name": "	NOVOA PINTO	YERLY MARIAN	", "subject": "UPN - CAI3 G3 - 2026-1"	,"limit": "16"	,"absences": "	7,5	","score1": "	4,6	","score2": "	Midterm (10%) = 	2,1	","speaking": "	deserts/ he love to listen music/ to gave../ 1950(?)/ 	",}},
+{"id": 	1147485036	,"user": {"name": "	OVALLE ROZO	DANNY YULIANA	", "subject": "UPN - CAI3 G3 - 2026-1"	,"limit": "16"	,"absences": "	9,5	","score1": "	4,2	","score2": "	Midterm (10%) = 	4,1	","speaking": "	advices/ she only cook/ capture/ difficult concepts was easier/ like she explaines/ movies/  cifra/ can you go back/ intermediate/ if a student have…/ for evaluate their English/ a interesting fact/ United States/ literature/ we have more options (as a Unica student)/ inmersion/	",}},
+{"id": 	1013006363	,"user": {"name": "	PINEDA GARZON	MARIA ISABEL	", "subject": "UPN - CAI3 G3 - 2026-1"	,"limit": "16"	,"absences": "	6,5	","score1": "	4,0	","score2": "	Midterm (10%) = 	1,5	","speaking": "	is 22 oct/ she live with/ she like to play/ cable/ for project the video/ lema/ culture/ take a lunch/ portrain/ that we (took) touk/ focus in/ 4 or 5 class in english/ event/ for study/ (Kind of short speaking)	",}},
+{"id": 	1029140439	,"user": {"name": "	RAMIREZ GUTIERREZ	EVELYN VANNESA	", "subject": "UPN - CAI3 G3 - 2026-1"	,"limit": "16"	,"absences": "	11	","score1": "	4,1	","score2": "	Midterm (10%) = 	0,0	","speaking": "	Good-God/ she like walking/	",}},
+{"id": 	1019989573	,"user": {"name": "	RANGEL PERDOMO	ZAIRA NICOLE	", "subject": "UPN - CAI3 G3 - 2026-1"	,"limit": "16"	,"absences": "	7,5	","score1": "	3,6	","score2": "	Midterm (10%) = 	2,7	","speaking": "	atracted/ she like feel/ 9057/ public/ o'ffers/  encyclopedia/ 	",}},
+{"id": 	1021314332	,"user": {"name": "	RINCON GONZALEZ	JOSEPH STEVEN	", "subject": "UPN - CAI3 G3 - 2026-1"	,"limit": "16"	,"absences": "	8	","score1": "	4,3	","score2": "	Midterm (10%) = 	2,3	","speaking": "	birthday/ he doesn't like celebrate/ he likes hang out/ behavour/ careers/ o'ffers/ chaildren/ repeat/ the syllabi (syllables)/ another sentences/ my mother teach me about../ written	",}},
+{"id": 	1030542980	,"user": {"name": "	SANCHEZ MARIN	KAROL NICOLL	", "subject": "UPN - CAI3 G3 - 2026-1"	,"limit": "16"	,"absences": "	4	","score1": "	4,5	","score2": "	Midterm (10%) = 	3,4	","speaking": "	she like a lot../ how/ intergenerational/ hasn't culture 8?)	",}},
+{"id": 	1020332338	,"user": {"name": "	VALLE CADAVID	EDDY MAY	", "subject": "UPN - CAI3 G3 - 2026-1"	,"limit": "16"	,"absences": "	10,5	","score1": "	3,1	","score2": "	Midterm (10%) = 	2,9	","speaking": "	he doesn't like work/ one student do../ research/ become (past)/ for search (don't read please)/ 	",}},
+{"id": 	1032508936	,"user": {"name": "	VARGAS BOLANOS	DANIELA	", "subject": "UPN - CAI3 G3 - 2026-1"	,"limit": "16"	,"absences": "	12,5	","score1": "	3,0	","score2": "	Midterm (10%) = 	2,0	","speaking": "	she like (past) / 2 campus/ educational/ (I need you to speak more) (Why are you leaving classroom frequently while we are in class?)	",}},
+{"id": 	1138024388	,"user": {"name": "	VELASQUEZ ARTEAGA	ELENA PATRICIA	", "subject": "UPN - CAI3 G3 - 2026-1"	,"limit": "16"	,"absences": "	7	","score1": "	4,5	","score2": "	Midterm (10%) = 	1,2	","speaking": "	she live/ she practice/ mejoreit/ areas/ principal/ principal(ly)/ a vintage traditional.../ writing (I need you to speak more)	",}},
+{"id": 	1004918014	,"user": {"name": "	AMAYA PRINS	BRIGITTE ESTHER	", "subject": "UPN - MDR G1 - 2026-1"	,"limit": "9"	,"absences": "	2	","score1": "	4,5	","score2": "	2nd Blog Revision - 	4,8	","speaking": "	communicate/ hibrid/ in'teractive/ collabo'rate/ compartir pantalla/ a'ccess/ suits/ 	",}},
+{"id": 	1030681199	,"user": {"name": "	BEDOYA GUTIERREZ	CRISTIAN CAMILO	", "subject": "UPN - MDR G1 - 2026-1"	,"limit": "9"	,"absences": "	7	","score1": "	4,6	","score2": "	2nd Blog Revision - 	4,2	","speaking": "	re'search/ as Monica mention(ed-s)/ live sessions/ vynil/ memorize/ they chose/ movies that interest them/ 	",}},
+{"id": 	1015999107	,"user": {"name": "	BERMUDEZ MAHECHA	MARIA CAMILA	", "subject": "UPN - MDR G1 - 2026-1"	,"limit": "9"	,"absences": "	2	","score1": "	4,6	","score2": "	2nd Blog Revision - 	4,2	","speaking": "	University that try to.../ it also have.../ assist to the online classes/ infrastructure/ ad'jective/ of complete the sentences/ prEvious/	",}},
+{"id": 	1001286877	,"user": {"name": "	CAICEDO CUBIDES	HELLEN MILENE	", "subject": "UPN - MDR G1 - 2026-1"	,"limit": "9"	,"absences": "	0	","score1": "	4,2	","score2": "	2nd Blog Revision - 	4,5	","speaking": "	(Please speak more. I haven't listened to you enough)/ activity is find the words.../ 	",}},
+{"id": 	1014977128	,"user": {"name": "	CARVAJAL JIMENEZ	SARA DANIELA	", "subject": "UPN - MDR G1 - 2026-1"	,"limit": "9"	,"absences": "	8	","score1": "	4,3	","score2": "	2nd Blog Revision - 	5,0	","speaking": "	listen music/ computational/ chemistry/ increase/ 	",}},
+{"id": 	1025461155	,"user": {"name": "	CASTRO NINO	LUIS ALEJANDRO	", "subject": "UPN - MDR G1 - 2026-1"	,"limit": "9"	,"absences": "	3	","score1": "	3,8	","score2": "	2nd Blog Revision - 	4,0	","speaking": "	a digital resources/ it can be a difficult/ 'develop(ed)/immediate/ matching/ answer good a question/ students/ is focused to childre.../'objectives/ bAsic/ 	",}},
+{"id": 	1000621163	,"user": {"name": "	ESTRADA FRAILE	PAULA ANDREA	", "subject": "UPN - MDR G1 - 2026-1"	,"limit": "9"	,"absences": "	2	","score1": "	4,9	","score2": "	2nd Blog Revision - 	4,7	","speaking": "	(Well done. Keep talking and practising) this is lion/ 	",}},
+{"id": 	1007688820	,"user": {"name": "	FELICIANO GOMEZ	ERIKA PAOLA	", "subject": "UPN - MDR G1 - 2026-1"	,"limit": "9"	,"absences": "	3	","score1": "	4,5	","score2": "	2nd Blog Revision - 	4,2	","speaking": "	technology don't give you/ audio/ knowledge/ the people has a cellphone/ download/ publishers/ for answer/ can to start/ invoque te community/ people is include/ not all of them has the.../ ad'jective/(I can say)/ 	",}},
+{"id": 	1010962606	,"user": {"name": "	FLOREZ LANDINEZ	VALENTINA	", "subject": "UPN - MDR G1 - 2026-1"	,"limit": "9"	,"absences": "	3	","score1": "	3,8	","score2": "	2nd Blog Revision - 	4,0	","speaking": "	whiteboards/ selected/ development/ atmosphere/ limited/ identify/ 	",}},
+{"id": 	1003475464	,"user": {"name": "	GARCIA PULIDO	DIANA PAOLA	", "subject": "UPN - MDR G1 - 2026-1"	,"limit": "9"	,"absences": "	1	","score1": "	4,2	","score2": "	2nd Blog Revision - 	4,5	","speaking": "	is easier have/ programmEd/ start(ed)/ become (past)/ Aca'demy/ specific hour (time)/ adapts your needs/  for learn/ 'objective/ if you don't have motivate/ mind/  the principal expressions/ Adults/ 	",}},
+{"id": 	1000004072	,"user": {"name": "	LOPEZ ARENAS	JUAN CAMILO	", "subject": "UPN - MDR G1 - 2026-1"	,"limit": "9"	,"absences": "	6	","score1": "	2,6	","score2": "	2nd Blog Revision - 	4,9	","speaking": "	traduction/ kid that don't have/ who give (past)/ this app use/ when pandemic start(ed)/ ... what do you know about.../ (language in Genially)/ identify/ 	",}},
+{"id": 	1058847437	,"user": {"name": "	LOPEZ GIRALDO	ALBA MERY	", "subject": "UPN - MDR G1 - 2026-1"	,"limit": "9"	,"absences": "	0	","score1": "	4,4	","score2": "	2nd Blog Revision - 	4,9	","speaking": "	(Please speak more. I haven't listened to you enough)/ pioneer/ 'objective/ must create sentenves use.../ mUst	",}},
+{"id": 	1000463748	,"user": {"name": "	MARTIN DIAZ	CRISTIAN DAVID	", "subject": "UPN - MDR G1 - 2026-1"	,"limit": "9"	,"absences": "	3	","score1": "	4,9	","score2": "	2nd Blog Revision - 	4,7	","speaking": "	(Please speak more. I haven't listened to you enough) / homeworks/ guess what is the (+)/ 	",}},
+{"id": 	1012318034	,"user": {"name": "	MEDINA ARIAS	KEVIN STIVEN	", "subject": "UPN - MDR G1 - 2026-1"	,"limit": "9"	,"absences": "	3	","score1": "	4,5	","score2": "	2nd Blog Revision - 	4,6	","speaking": "	you're try to learn/ the deep of this content/ unfinished (?)/ you're used to change/ A1 	",}},
+{"id": 	1011087414	,"user": {"name": "	MIRANDA QUINTIN	LILIANA LUCIA	", "subject": "UPN - MDR G1 - 2026-1"	,"limit": "9"	,"absences": "	6	","score1": "	2,6	","score2": "	2nd Blog Revision - 	4,9	","speaking": "	(Don't be nervous when speaking. I need to listen to you more) accent/ awarness/	",}},
+{"id": 	1001283481	,"user": {"name": "	MORENO RIVEROS	DANIEL FELIPE	", "subject": "UPN - MDR G1 - 2026-1"	,"limit": "9"	,"absences": "	6	","score1": "	4,5	","score2": "	2nd Blog Revision - 	2,9	","speaking": "	(Super. I really like your speaking. Good fluency, pronunciation and structure. Keep that way)	",}},
+{"id": 	1000349856	,"user": {"name": "	ORTIZ MENDIETA	ANA MARIA	", "subject": "UPN - MDR G1 - 2026-1"	,"limit": "9"	,"absences": "	3	","score1": "	4,4	","score2": "	2nd Blog Revision - 	4,9	","speaking": "	(Please speak more. I haven't listened to you enough) didn't found/ is implement/ this mEAn/ (don't feel nervous)/ audio/ 'objective/ a 5 activities/ 	",}},
+{"id": 	1001052964	,"user": {"name": "	PANTOJA TEHERAN	CAMILA FERNANDA	", "subject": "UPN - MDR G1 - 2026-1"	,"limit": "9"	,"absences": "	3,5	","score1": "	2,6	","score2": "	2nd Blog Revision - 	4,9	","speaking": "	we don't have (past)/ make homework/ no is necessary/ .. student can has/ who is the ost important to the less../ (language in Genially)/ another thing different/ awareness/	",}},
+{"id": 	1000604542	,"user": {"name": "	PENA RAMIREZ	MIGUEL ANGEL	", "subject": "UPN - MDR G1 - 2026-1"	,"limit": "9"	,"absences": "	3	","score1": "	4,4	","score2": "	2nd Blog Revision - 	4,8	","speaking": "	many learnings/	",}},
+{"id": 	1014307347	,"user": {"name": "	RIVEROS OTAVO	NICOL JARITZA	", "subject": "UPN - MDR G1 - 2026-1"	,"limit": "9"	,"absences": "	6	","score1": "	4,3	","score2": "	2nd Blog Revision - 	5,0	","speaking": "	CAI/ programmed/ organized/ keyboard/ upload/ CAE/ he create(d)/ comprehend/ develop(ed)/ in the 20's (2000)/ according with/ agenda/ immediate/ depends in/ limited/ etc/ 'istory/ determain/ series/ icon/ genially/ cathedrals	",}},
+{"id": 	1000471771	,"user": {"name": "	SABOGAL GOMEZ	MONICA VALENTINA	", "subject": "UPN - MDR G1 - 2026-1"	,"limit": "9"	,"absences": "	8	","score1": "	4,3	","score2": "	2nd Blog Revision - 	2,9	","speaking": "	accustome to work/  online/  limited/  the authors/ Adults/ 	",}},
+{"id": 	1000157804	,"user": {"name": "	SANCHEZ DUARTE	LAURA VALENTINA	", "subject": "UPN - MDR G1 - 2026-1"	,"limit": "9"	,"absences": "	4,5	","score1": "	4,6	","score2": "	2nd Blog Revision - 	4,8	","speaking": "	(Good fluency when speaking)/ immediate/ 	",}},
+{"id": 	1006165313	,"user": {"name": "	SANCHEZ YAYA	JENNIFER ALEJANDRA	", "subject": "UPN - MDR G1 - 2026-1"	,"limit": "9"	,"absences": "	5,5	","score1": "	4,6	","score2": "	2nd Blog Revision - 	4,6	","speaking": "	(Please speak more. I haven't listened to you enough)/ era/ dynamic/ she argue that.../ he mention that../ for communicate/ the teacher have/ most of them has/ asynchronomous/ these blogs doesn't allow/ 	",}},
+{"id": 	1022966474	,"user": {"name": "	SILVA SILVA	KELLY LORENA	", "subject": "UPN - MDR G1 - 2026-1"	,"limit": "9"	,"absences": "	3	","score1": "	4,2	","score2": "	2nd Blog Revision - 	4,5	","speaking": "	usefull (in Canva)/ through/ stUdy/ must to be/ videos/ we decided select.../ but too is easy/	",}},
+{"id": 	1234567890	,"user": {"name": "	SERRANO RAMIREZ	CHRISTIAN	", "subject": "UPN SUBJECTS"	,"limit": "9"	,"absences": "	7	","score1": "	3,7	","score2": "	Midterm (10%) = 	3,7	","speaking": "	archive/ hyena/ hierarchy/ publishers/ literature/ 	",}},
+	
+<!-- INFO FINISHES HERE ------------------------------------------------------->
+
+];
+
+$("#data").click(function(){
+
+var searchId = parseInt($("#searchBox").val());
+
+$("#info").html("");
+$("#speaking-content").html("");
+$("#speaking-table").hide();
+data.forEach(function(item){
+
+if(item.id === searchId){
+
+
+$("#info")
+.append("<br> <a style='color: grey;'> Nombre: </a>" + item.user.name)
+.append("<br> <a style='color: grey;'> Asignatura: </a>" + item.user.subject)
+.append("<br> <a style='color: grey;'> Límite de horas de inasistencia: </a>" + item.user.limit)
+.append("<br> <a style='color: grey;'> Número de horas de inasistencia: </a> <span style='color: #fc3131; text-decoration: underline;'>" + item.user.absences + "</span>")
+.append("<br> <a style='color: grey;'> Score 1: </a> <span style='color: #fc3131; text-decoration: underline;'>" + item.user.score1 + "</span>")
+.append("<br> <a style='color: grey;'> Score 2: </a> <span style='color: #fc3131; text-decoration: underline;'>" + item.user.score2 + "</span>");
+
+$("#speaking-content").append(item.user.speaking);
+
+$("#speaking-table").show();
+
+}
+
+});
+
+});
+
+document.getElementById("searchBox").addEventListener("keyup", function(event){
+if(event.keyCode === 13){
+document.getElementById("data").click();
+}
+});
+
+$("#printBtn").show();
+
+</script>
+
+<script>
+$("#printBtn").click(function(){
+
+    // Optional: Hide elements you don't want in PDF
+    $("#searchBox, #data, #printBtn, button[onclick]").hide();
+
+    // Trigger print (browser will allow "Save as PDF")
+    window.print();
+
+    // Show elements again after printing
+    setTimeout(function(){
+        $("#searchBox, #data, #printBtn, button[onclick]").show();
+    }, 1000);
+
+});
+</script>
+
+<script> 
+document.oncontextmenu = function() { 
+    return false; 
+};
+</script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
