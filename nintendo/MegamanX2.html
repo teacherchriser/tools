@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Megaman X2 SNES</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background: black;
+        }
+        #game {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="game"></div>
+
+    <script>
+        EJS_player = "#game";
+        EJS_core = "snes";
+        EJS_gameName = "Megaman X2";
+        EJS_color = "#27F5AD";
+
+        // IMPORTANTE: ruta correcta al ROM
+        EJS_gameUrl = "./MegamanX2.zip";
+
+        // CDN del emulador
+        EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
+
+        // Inicia automáticamente
+        EJS_startOnLoaded = true;
+    </script>
+
+    <script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
+</body>
+</html>
