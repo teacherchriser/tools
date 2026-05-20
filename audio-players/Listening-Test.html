@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Audio Player</title>
+
+  <style>
+    body{
+      font-family: Arial, sans-serif;
+      background:#f0f0f0;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      height:100vh;
+      margin:0;
+    }
+
+    .contenedor{
+      background:white;
+      padding:20px;
+      border-radius:15px;
+      box-shadow:0 0 15px rgba(0,0,0,0.2);
+      text-align:center;
+      width:300px;
+    }
+
+    button{
+      padding:12px 25px;
+      font-size:16px;
+      border:none;
+      border-radius:10px;
+      background:#f17c12;
+      color:white;
+      cursor:pointer;
+    }
+
+    button:hover{
+      background:#8b7e79;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="contenedor">
+  <img src="https://3.bp.blogspot.com/-TtU2-IqoC18/Xr2vZgn9auI/AAAAAAAAM40/m3nIt2ap44Qsxq-UmQcfT0D8Tgf7s2SUwCK4BGAYYCw/s1600/Me-Talking-Gif-White-Bg.gif" width="40"></img>
+    <h2>Test Audio Player</h2>
+    <p>El audio se reproducirá 3 veces seguidas</p>
+
+    <button id="startBtn">Start audio</button>
+
+    <!-- MP3 ROUTE -->
+    <audio id="miAudio">
+      <source src="https://teacherchriser.github.io/teaching/audios/life-intermediate-test-2.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+  <!-- MP3 ROUTE -->
+
+  <script>
+    const audio = document.getElementById("miAudio");
+    const boton = document.getElementById("startBtn");
+
+    let contador = 0;
+    const maxRepeticiones = 3;
+
+    boton.addEventListener("click", () => {
+
+      // desactiva el botón
+      boton.disabled = true;
+      boton.innerText = "Playing...";
+
+      audio.play();
+
+      audio.addEventListener("ended", repetirAudio);
+    });
+
+    function repetirAudio() {
+      contador++;
+
+      if (contador < maxRepeticiones) {
+        audio.currentTime = 0;
+        audio.play();
+      } else {
+        boton.innerText = "Audio finalizado";
+      }
+    }
+  </script>
+  
+  <script> 
+document.oncontextmenu = function() { 
+    return false; 
+};
+</script>
+
+</body>
+</html>
