@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Audio en Bucle</title>
+
+  <style>
+    body{
+      font-family: Arial, sans-serif;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      height:100vh;
+      background:#f2f2f2;
+    }
+
+    .box{
+      background:white;
+      padding:30px;
+      border-radius:12px;
+      box-shadow:0 0 10px rgba(0,0,0,0.2);
+      text-align:center;
+    }
+
+    audio{
+      width:300px;
+      pointer-events: none; /* bloquea interacción */
+    }
+
+    .mensaje{
+      margin-top:15px;
+      color:#555;
+      font-size:14px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="box">
+    <h2>Escucha el audio</h2>
+
+    <!-- Reemplaza "audio.mp3" por tu archivo -->
+    <audio id="miAudio" autoplay>
+      <source src="https://teacherchriser.github.io/teaching/audios/life-intermediate-test-2.mp3" type="audio/mpeg">
+      Tu navegador no soporta audio HTML5.
+    </audio>
+
+    <div class="mensaje">
+      El audio se reproducirá automáticamente 3 veces.
+    </div>
+  </div>
+
+  <script>
+    const audio = document.getElementById("miAudio");
+
+    let contador = 0;
+    const repeticiones = 3;
+
+    // Oculta completamente los controles
+    audio.removeAttribute("controls");
+
+    // Cuando termina el audio
+    audio.addEventListener("ended", () => {
+      contador++;
+
+      if (contador < repeticiones) {
+        audio.currentTime = 0;
+        audio.play();
+      }
+    });
+
+    // Intenta reproducir automáticamente
+    window.addEventListener("load", () => {
+      audio.play().catch(() => {
+        console.log("El navegador bloqueó el autoplay.");
+      });
+    });
+  </script>
+
+</body>
+</html>
