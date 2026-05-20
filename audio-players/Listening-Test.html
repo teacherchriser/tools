@@ -8,7 +8,7 @@
   <style>
     body{
       font-family: Arial, sans-serif;
-      background:#f0f0f0;
+      background:transparent;
       display:flex;
       justify-content:center;
       align-items:center;
@@ -45,7 +45,7 @@
   <div class="contenedor">
   <img src="https://3.bp.blogspot.com/-TtU2-IqoC18/Xr2vZgn9auI/AAAAAAAAM40/m3nIt2ap44Qsxq-UmQcfT0D8Tgf7s2SUwCK4BGAYYCw/s1600/Me-Talking-Gif-White-Bg.gif" width="40"></img>
     <h2>Test Audio Player</h2>
-    <p>El audio se reproducirá 3 veces seguidas</p>
+    <p>El audio se reproducirá 2 veces seguidas</p>
 
     <button id="startBtn">Start audio</button>
 
@@ -61,7 +61,7 @@
     const boton = document.getElementById("startBtn");
 
     let contador = 0;
-    const maxRepeticiones = 3;
+    const maxRepeticiones = 2;
 
     boton.addEventListener("click", () => {
 
@@ -81,7 +81,7 @@
         audio.currentTime = 0;
         audio.play();
       } else {
-        boton.innerText = "Audio finalizado";
+        boton.innerText = "Audio finished";
       }
     }
   </script>
