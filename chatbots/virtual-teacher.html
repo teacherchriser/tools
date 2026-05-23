@@ -353,7 +353,7 @@ ${userMessage}`
                 <img class="avatar" src="Professor-Christian.png">
 
                 <div class="message">
-					${marked.parse(botReply)}
+					${marked.parse(botReply).replace(/<a /g, '<a target="_blank" rel="noopener noreferrer" ')}
 				</div>
 
             </div>
