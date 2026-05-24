@@ -251,10 +251,11 @@ async function sendMessage(){
 
     chatBox.scrollTop = chatBox.scrollHeight;
 
-    typing.style.display = "block";
+   let typingDiv;
 
-    try{
-		const typingDiv = document.createElement("div");
+try{
+
+    typingDiv = document.createElement("div");
 
 		typingDiv.className = "message bot typing";
 
@@ -386,7 +387,9 @@ ${userMessage}`
         });
 
         const data = await response.json();
-		typingDiv.remove();
+		if (typingDiv) {
+    	typingDiv.remove();
+		}
 
         console.log(data);
 
@@ -411,7 +414,9 @@ data.candidates?.[0]?.content?.parts?.[0]?.text
         chatBox.scrollTop = chatBox.scrollHeight;
 
     }catch(error){
-		typingDiv.remove();
+		if (typingDiv) {
+        typingDiv.remove();
+    	}
 
 		console.error(error);
 
