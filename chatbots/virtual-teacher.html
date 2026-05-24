@@ -378,9 +378,8 @@ ${userMessage}`
         console.log(data);
 
         const botReply =
-        data.candidates?.[0]?.content?.parts?.[0]?.text
-        || data.error?.message
-        || "The tutor is currently busy. Please try again in a moment.";
+data.candidates?.[0]?.content?.parts?.[0]?.text
+|| "The virtual teacher is currently busy due to high demand. Please try again in a moment.";
 
         typing.style.display = "none";
 
