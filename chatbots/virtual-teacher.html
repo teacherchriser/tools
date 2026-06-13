@@ -212,7 +212,7 @@ button:hover{
 
     <div id="chat-header">
         <img src="Professor-Christian.png">
-        Virtual Teacher Christian - Available 24/7
+        Virtual Teacher Christian Serrano
     </div>
 
     <div id="chat-box">
@@ -447,6 +447,15 @@ async function sendMessage(){
         text: botReply
     }]
 });
+
+		if (conversationHistory.length > 30) {
+
+    conversationHistory = [
+        conversationHistory[0],
+        ...conversationHistory.slice(-29)
+    ];
+
+}
 		
         // BOT MESSAGE
         chatBox.innerHTML += `
