@@ -353,6 +353,17 @@ async function sendMessage(){
 
     if(!userMessage) return;
 
+	if (conversationHistory.length === 0) {
+
+    conversationHistory.push({
+        role: "user",
+        parts: [{
+            text: SYSTEM_PROMPT
+        }]
+    });
+
+}
+
 	conversationHistory.push({
     role: "user",
     parts: [{
