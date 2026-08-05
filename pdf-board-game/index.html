@@ -1,0 +1,129 @@
+<html>
+<head>
+<title>PDF BoardGame</title>
+<link rel="icon" href="https://2.bp.blogspot.com/-f6gS2PGbwoI/VH_Nrzwt0nI/AAAAAAAADwk/OFDjFsACvk4/s1600/The%2BGreen%2BChalkboard%2BFavicon.ico" type="image/x-icon" />
+
+<style xmlns="https://www.w3.org/2000/svg" type="text/css">
+  @import url(https://fonts.googleapis.com/css?family=Patua+One);
+  @import url(https://fonts.googleapis.com/css?family=Bowlby+One+SC);
+</style>
+
+<!-- Prototype y Scriptaculous-->
+<script src='jsapi'></script>
+<script>
+google.load("prototype","1.7.0.0");
+google.load("scriptaculous", "1.9.0");
+</script>
+<!-- Prototype y Scriptaculous-->
+
+<style>
+.Piece {
+	display: block;
+	float: left;
+	width: 20px;
+	height: 20px;
+	cursor: move;
+	font-family: 'Patua One', cursive;
+	color: #FFFFFF;
+	font-size: 11px;
+	text-shadow: 1px 1px 1px #3C3C3C;
+	text-align: center;
+	line-height: 20px;
+	border: 3px solid #000000;
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
+	border-radius: 20px; //**para hacer cuadrados de borde redondo**//
+}
+
+.dice {
+	width: 230px;
+	height: 230px;
+	cursor: move;
+	border:5px solid #000000;
+
+}
+.icono{
+    width:40px;
+    height:40px;
+    display:inline-block;
+
+    -webkit-mask:url("car.svg") center/contain no-repeat;
+            mask:url("car.svg") center/contain no-repeat;
+}
+
+.azul{background:#2196F3;}
+.rojo{background:#F44336;}
+.verde{background:#4CAF50;}
+</style>
+
+</head>
+
+<body background="#" bgcolor="323639">
+<!--https://3.bp.blogspot.com/-M_-ciOviLmQ/VYwZWKUYUcI/AAAAAAAAEJI/uXJgpfEfGRI/s1600/TGC-Gameboard-Bg-Yellow.jpg-->
+
+<div style="width:1002px;position:relative;margin-left:auto;margin-right:auto;">
+
+
+<div style="position: absolute; margin: 0px 0px 0px 0px;">
+<!--  <img src="https://i.pinimg.com/564x/f4/5a/ee/f45aee64d2220195f969e5b389cb4ad8.jpg" width="1000px" height="1400"></img> -->
+<iframe style="border: 0px solid #B3B3B3;" src="Frequency.pdf" width="1000px" height="1400"></iframe>
+</div>
+
+<div id="drag0" class="dice" style="position: absolute; margin: 200px 0px 0px 750px;">
+<script type="text/javascript">new Draggable('drag0');</script>
+<iframe style="border: 1px solid #B3B3B3; resize:both; overflow:auto;" src="Dice/single.html" width="230px" height="230"></iframe>
+</div>
+
+<div style="position: absolute; margin: 80px 0px 0px 300px;">
+
+<div id="drag1" class="Piece" style="background: #fffb00;">1
+<script type="text/javascript">new Draggable('drag1');</script>
+</div>
+
+<div id="drag2" class="Piece" style="background: #2eafff;">2
+<script type="text/javascript">new Draggable('drag2');</script>
+</div>
+
+<div id="drag3" class="Piece" style="background: #9cf065;">3
+<script type="text/javascript">new Draggable('drag3');</script>
+</div>
+
+<div id="drag4" class="Piece" style="background: #ff3030;">4
+<script type="text/javascript">new Draggable('drag4');</script>
+</div>
+
+<div id="drag5" class="Piece" style="background: #c07dff;">5
+<script type="text/javascript">new Draggable('drag5');</script>
+</div>
+
+<div id="drag6" class="Piece" style="background: #30ffdd;">6
+<script type="text/javascript">new Draggable('drag6');</script>
+</div>
+
+<div id="drag7" class="Piece" style="background: #ffc745;">7
+<script type="text/javascript">new Draggable('drag7');</script>
+</div>
+
+<div id="drag8" class="Piece" style="background: #9c7e33;">8
+<script type="text/javascript">new Draggable('drag8');</script>
+</div>
+
+<div id="drag9" class="Piece" style="background: #BDBDBD;">9
+<script type="text/javascript">new Draggable('drag9');</script>
+</div>
+
+<div id="drag10" class="Piece" style="background: #000000;">10
+<script type="text/javascript">new Draggable('drag10');</script>
+</div>
+
+
+<div style="position: absolute; margin: 50px 500px;">
+<img id="drag11" style="cursor:move; border:0px;" src="https://1.bp.blogspot.com/-PHi8Cj4Trpc/VYo2kusuk-I/AAAAAAAAEIc/J1DuNaMRVr8/s1600/Teacher-Christian.png" title="Teacher Christian"></img>
+<script type="text/javascript">new Draggable('drag11');</script>
+</div>
+</div>
+
+
+</div>
+</body>
+</html>
