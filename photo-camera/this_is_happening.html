@@ -76,10 +76,16 @@ async function openCamera() {
 
     stream = await navigator.mediaDevices.getUserMedia({
       video: {
-        facingMode: {
-          ideal: facing
-        }
-      },
+  facingMode: {
+    ideal: facing
+  },
+  width: {
+    ideal: 1920
+  },
+  height: {
+    ideal: 1080
+  }
+},
       audio: false
     });
 
@@ -138,11 +144,11 @@ shot.onclick = () => {
   // FORMATO FINAL 4:5
   // ========================================
 
-  const finalWidth = vw;
-  const finalHeight = Math.round(vw * 1.25);
+	const finalWidth = 1600;
+	const finalHeight = 2000;
 
-  canvas.width = finalWidth;
-  canvas.height = finalHeight;
+	canvas.width = finalWidth;
+	canvas.height = finalHeight;
 
   const ctx = canvas.getContext('2d');
 
@@ -165,11 +171,8 @@ shot.onclick = () => {
   // DIMENSIONES DE LA FOTO
   // ========================================
 
-  const border = Math.round(vw * 0.035);
-
-  // Parte inferior más grande
-  // para el efecto instantánea
-  const bottomSpace = Math.round(vw * 0.16);
+  const border = Math.round(finalWidth * 0.035);
+const bottomSpace = Math.round(finalWidth * 0.16);
 
   const photoX = border;
   const photoY = border;
