@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Recibos ILUD Generados</title>
+<link rel="icon" href="http://teacherchristian.epizy.com/Gifs/Me-Icon.gif" type="image/x-icon" />
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: #f2f2f2;
+    color: white;
+    font-family: Arial, sans-serif;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.container {
+    width: 90%;
+}
+
+.titulo {
+    font-size: 1.4rem;
+	font-weight: bold;
+    margin-bottom: 20px;
+	color: #943a45;
+	
+}
+
+.numero {
+    font-size: 9rem;
+    font-weight: bold;
+    line-height: 1;
+	color: #943a45;
+}
+
+.estado {
+    margin-top: 25px;
+    font-size: .85rem;
+    color: #626568;
+}
+
+.error {
+    color: #f66;
+}
+
+@media (max-width: 600px) {
+    .numero {
+        font-size: 6rem;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<img src="https://iludlenguas.simte.org/wp-content/uploads/2024/08/logo-ilud.svg" width="100px" style="margin-bottom: 30px;">
+</br>
+
+    <div class="titulo">
+        RECIBOS ILUD GENERADOS
+    </div>
+
+    <div id="numero" class="numero">—</div>
+
+    <div id="estado" class="estado">
+        Consultando...
+    </div>
+
+</div>
+
+
+<script>
+
+/* ==================================================
+   CONFIGURACIÓN
+================================================== */
+
+const PAGINA_RECIBOS =
+    "http://ilud.udistrital.edu.co/recibos/recibos_generados/";
+
+
+/*
+   PROXIES
+   El sistema probará uno y luego otro
+   si el primero falla.
+*/
+
+const PROXIES = [
+
+    "https://api.allorigins.win/raw?url=",
+
+    "https://corsproxy.io/?url="
+
+];
+
+
+/*
+   Consulta normal cada 30 segundos.
+*/
+
+const INTERVALO_NORMAL = 30000;
+
+
+/*
+   Tiempo máximo que esperamos por cada consulta.
+*/
+
+const TIEMPO_MAXIMO = 8000;
+
+
+/*
+   Tiempos de reintento.
+
+   2 segundos
+   4 segundos
+   8 segundos
+   15 segundos
+*/
+
+const REINTENTOS = [
+    2000,
+    4000,
+    8000,
+    15000
+];
+
+
+/* ==================================================
+   VARIABLES
+================================================== */
+
+let numeroActual = null;
+
+let consultando = false;
+
+let proxyAnterior = 0;
+
+
+/* ==================================================
+   FUNCIÓN PARA ESPERAR
+================================================== */
+
+function esperar(ms) {
+
+    return new Promise(resolve => {
+
+        setTimeout(
+            resolve,
+            ms
+        );
+
+    });
+
+}
+
+
+/* ==================================================
+   CONSULTAR CON UN PROXY
+================================================== */
+
+async function consultarConProxy(proxy) {
+
+    /*
+       Parámetro aleatorio para evitar caché.
+    */
+
+    const urlDestino =
+        PAGINA_RECIBOS +
+        "?nocache=" +
+        Date.now() +
+        "-" +
+        Math.random();
+
+
+    const url =
+        proxy +
+        encodeURIComponent(
+            urlDestino
+        );
+
+
+    /*
+       Creamos un controlador para
+       cancelar la consulta si tarda demasiado.
+    */
+
+    const controlador =
+        new AbortController();
+
+
+    const temporizador =
+        setTimeout(() => {
+
+            controlador.abort();
+
+        }, TIEMPO_MAXIMO);
+
+
+    try {
+
+        const respuesta =
+            await fetch(url, {
+
+                method: "GET",
+
+                cache: "no-store",
+
+                signal:
+                    controlador.signal
+
+            });
+
+
+        clearTimeout(
+            temporizador
+        );
+
+
+        if (!respuesta.ok) {
+
+            throw new Error(
+                "HTTP " +
+                respuesta.status
+            );
+
+        }
+
+
+        const html =
+            await respuesta.text();
+
+
+        if (!html || html.length < 100) {
+
+            throw new Error(
+                "Respuesta vacía"
+            );
+
+        }
+
+
+        return html;
+
+    }
+
+    catch (error) {
+
+        clearTimeout(
+            temporizador
+        );
+
+        throw error;
+
+    }
+
+}
+
+
+/* ==================================================
+   CONTAR LOS PDF
+================================================== */
+
+function contarRecibos(html) {
+
+    const parser =
+        new DOMParser();
+
+
+    const documento =
+        parser.parseFromString(
+            html,
+            "text/html"
+        );
+
+
+    const enlaces =
+        documento.querySelectorAll(
+            "a"
+        );
+
+
+    let cantidad = 0;
+
+
+    enlaces.forEach(enlace => {
+
+        const nombre =
+            enlace.textContent
+            .trim()
+            .toLowerCase();
+
+
+        /*
+           Cada archivo PDF representa
+           un recibo.
+        */
+
+        if (
+            nombre.endsWith(".pdf")
+        ) {
+
+            cantidad++;
+
+        }
+
+    });
+
+
+    /*
+       Si no encontramos ningún PDF,
+       consideramos que algo pudo salir mal.
+
+       Esto evita mostrar accidentalmente 0
+       si el proxy devuelve una página de error.
+    */
+
+    if (
+        cantidad === 0 &&
+        !html.toLowerCase().includes(
+            "index of /recibos/recibos_generados"
+        )
+    ) {
+
+        throw new Error(
+            "Respuesta no válida"
+        );
+
+    }
+
+
+    return cantidad;
+
+}
+
+
+/* ==================================================
+   ACTUALIZAR PANTALLA
+================================================== */
+
+function mostrarResultado(cantidad) {
+
+    const numero =
+        document.getElementById(
+            "numero"
+        );
+
+
+    const estado =
+        document.getElementById(
+            "estado"
+        );
+
+
+    numero.textContent =
+        cantidad;
+
+
+    numeroActual =
+        cantidad;
+
+
+    const ahora =
+        new Date();
+
+
+    estado.className =
+        "estado";
+
+
+    estado.textContent =
+        "Actualizado " +
+        ahora.toLocaleTimeString(
+            "es-CO"
+        );
+
+}
+
+
+/* ==================================================
+   MOSTRAR ERROR TEMPORAL
+================================================== */
+
+function mostrarReintentando(texto) {
+
+    const estado =
+        document.getElementById(
+            "estado"
+        );
+
+
+    estado.className =
+        "estado";
+
+
+    estado.textContent =
+        texto;
+
+}
+
+
+/* ==================================================
+   CONSULTA COMPLETA
+================================================== */
+
+async function actualizar() {
+
+    /*
+       No permitimos consultas simultáneas.
+    */
+
+    if (consultando) {
+
+        return;
+
+    }
+
+
+    consultando = true;
+
+
+    try {
+
+        /*
+           Probamos primero el proxy utilizado
+           anteriormente.
+
+           Si falla, probamos el siguiente.
+        */
+
+        const cantidad =
+            await intentarTodosLosProxies();
+
+
+        /*
+           Consulta exitosa.
+        */
+
+        mostrarResultado(
+            cantidad
+        );
+
+
+        /*
+           Liberamos el bloqueo.
+        */
+
+        consultando = false;
+
+
+        return true;
+
+    }
+
+    catch (error) {
+
+        console.warn(
+            "Consulta fallida:",
+            error
+        );
+
+
+        /*
+           Si ya tenemos un número,
+           lo conservamos.
+        */
+
+        if (
+            numeroActual !== null
+        ) {
+
+            mostrarReintentando(
+                "Sin cambios · intentando actualizar"
+            );
+
+        }
+
+
+        consultando = false;
+
+
+        return false;
+
+    }
+
+}
+
+
+/* ==================================================
+   PROBAR TODOS LOS PROXIES
+================================================== */
+
+async function intentarTodosLosProxies() {
+
+    /*
+       Empezamos por el proxy que funcionó
+       en la consulta anterior.
+    */
+
+    const orden = [];
+
+
+    orden.push(
+        proxyAnterior
+    );
+
+
+    for (
+        let i = 0;
+        i < PROXIES.length;
+        i++
+    ) {
+
+        if (
+            !orden.includes(i)
+        ) {
+
+            orden.push(i);
+
+        }
+
+    }
+
+
+    let ultimoError =
+        null;
+
+
+    /*
+       Probamos cada proxy.
+    */
+
+    for (
+        const indice of orden
+    ) {
+
+        try {
+
+            const html =
+                await consultarConProxy(
+                    PROXIES[indice]
+                );
+
+
+            const cantidad =
+                contarRecibos(
+                    html
+                );
+
+
+            /*
+               Guardamos el proxy que funcionó.
+            */
+
+            proxyAnterior =
+                indice;
+
+
+            return cantidad;
+
+        }
+
+        catch (error) {
+
+            console.warn(
+                "Proxy " +
+                indice +
+                " falló:",
+                error
+            );
+
+
+            ultimoError =
+                error;
+
+        }
+
+    }
+
+
+    throw ultimoError;
+
+}
+
+
+/* ==================================================
+   SISTEMA DE REINTENTOS
+================================================== */
+
+async function actualizarConReintentos() {
+
+    /*
+       Primer intento.
+    */
+
+    const correcto =
+        await actualizar();
+
+
+    if (correcto) {
+
+        return;
+
+    }
+
+
+    /*
+       Si falla, hacemos varios reintentos
+       con tiempos progresivos.
+    */
+
+    for (
+        let i = 0;
+        i < REINTENTOS.length;
+        i++
+    ) {
+
+        mostrarReintentando(
+            "Reintentando..."
+        );
+
+
+        await esperar(
+            REINTENTOS[i]
+        );
+
+
+        const resultado =
+            await actualizar();
+
+
+        if (resultado) {
+
+            return;
+
+        }
+
+    }
+
+}
+
+
+/* ==================================================
+   PRIMERA CONSULTA
+================================================== */
+
+actualizarConReintentos();
+
+
+/* ==================================================
+   ACTUALIZACIÓN AUTOMÁTICA
+================================================== */
+
+setInterval(
+
+    () => {
+
+        actualizarConReintentos();
+
+    },
+
+    INTERVALO_NORMAL
+
+);
+
+</script>
+
+</body>
+</html>
