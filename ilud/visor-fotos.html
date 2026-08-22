@@ -1,0 +1,666 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Docentes ILUD</title>
+<link rel="icon" href="https://teacherchriser.github.io/images/me.gif" type="image/x-icon" />
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f1f1f1;
+    color: #943a45;
+}
+
+header {
+    background: #f1f1f1;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    margin: 0 0 6px;
+    font-size: 1.5rem;
+	color: #943a45;
+}
+
+.subtitulo {
+    opacity: .75;
+    font-size: .9rem;
+	color: #2a2a2a;
+}
+
+.controles {
+    background: white;
+    padding: 18px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+button {
+    background: #333;
+    color: white;
+    border: 0;
+    border-radius: 6px;
+    padding: 11px 20px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #555;
+}
+
+#contador {
+    margin-top: 12px;
+    color: #666;
+    font-size: 14px;
+}
+
+#galeria {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fill, minmax(180px, 1fr));
+
+    gap: 15px;
+
+    padding: 20px;
+
+    max-width: 1400px;
+
+    margin: auto;
+}
+
+.foto {
+
+    background: white;
+
+    border-radius: 8px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 2px 8px rgba(0,0,0,.15);
+
+    cursor: pointer;
+
+    transition: transform .2s;
+}
+
+.foto:hover {
+    transform: scale(1.03);
+}
+
+.foto img {
+
+    width: 100%;
+
+    height: 180px;
+
+    object-fit: cover;
+
+    display: block;
+
+    background: #ddd;
+}
+
+.nombre {
+
+    padding: 9px;
+
+    text-align: center;
+
+    font-size: 13px;
+
+    word-break: break-all;
+}
+
+#mensaje {
+
+    text-align: center;
+
+    padding: 40px 20px;
+
+    color: #777;
+}
+
+
+/* VISOR */
+
+#visor {
+
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        rgba(0,0,0,.92);
+
+    z-index: 1000;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+}
+
+#visor img {
+
+    max-width: 95%;
+
+    max-height: 90vh;
+
+    object-fit: contain;
+}
+
+#cerrar {
+
+    position: absolute;
+
+    right: 20px;
+
+    top: 8px;
+
+    color: white;
+
+    font-size: 40px;
+
+    cursor: pointer;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+<img src="https://iludlenguas.simte.org/wp-content/uploads/2024/08/logo-ilud.svg" width="70px" style="margin-bottom: 10px;">
+<h1>Docentes ILUD</h1>
+
+<div class="subtitulo">
+Visor de Docentes
+</div>
+
+</header>
+
+
+<div class="controles">
+
+<button onclick="cargarFotos()">
+🔄 Actualizar fotografías
+</button>
+
+<div id="contador">
+Cargando...
+</div>
+
+</div>
+
+
+<div id="mensaje">
+Cargando fotografías...
+</div>
+
+
+<div id="galeria"></div>
+
+
+<!-- VISOR DE IMAGEN -->
+
+<div id="visor"
+     onclick="cerrarVisor()">
+
+<span id="cerrar">&times;</span>
+
+<img id="imagenGrande">
+
+</div>
+
+
+<script>
+
+
+/*
+==================================================
+CONFIGURACIÓN
+==================================================
+*/
+
+/*
+El archivo ilud.html está en la misma
+carpeta que este index.html.
+*/
+
+const ARCHIVO_ILUD = "ilud.html";
+
+
+/*
+URL base de las fotografías originales.
+*/
+
+const BASE_URL =
+"http://ilud.udistrital.edu.co/disponibilidad/fotos/";
+
+
+
+/*
+==================================================
+CARGAR ILUD.HTML
+==================================================
+*/
+
+async function cargarFotos() {
+
+    const galeria =
+        document.getElementById("galeria");
+
+    const mensaje =
+        document.getElementById("mensaje");
+
+    const contador =
+        document.getElementById("contador");
+
+
+    galeria.innerHTML = "";
+
+    mensaje.style.display = "block";
+
+    mensaje.textContent =
+        "Cargando fotografías...";
+
+    contador.textContent =
+        "Conectando con ilud.html...";
+
+
+    try {
+
+
+        /*
+        Leer ilud.html desde GitHub Pages
+        */
+
+        const respuesta =
+            await fetch(
+                ARCHIVO_ILUD + "?t=" + Date.now()
+            );
+
+
+        if (!respuesta.ok) {
+
+            throw new Error(
+                "No se pudo cargar ilud.html"
+            );
+
+        }
+
+
+        const codigo =
+            await respuesta.text();
+
+
+        procesarHTML(codigo);
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        mensaje.style.display =
+            "block";
+
+
+        mensaje.innerHTML = `
+            <strong>
+            No se pudo cargar ilud.html
+            </strong>
+            <br><br>
+            Verifica que el archivo
+            <strong>ilud.html</strong>
+            esté en la misma carpeta
+            que este index.html.
+        `;
+
+
+        contador.textContent =
+            "Error al cargar los datos.";
+
+    }
+
+}
+
+
+
+/*
+==================================================
+PROCESAR ILUD.HTML
+==================================================
+*/
+
+function procesarHTML(codigo) {
+
+    const galeria =
+        document.getElementById("galeria");
+
+    const mensaje =
+        document.getElementById("mensaje");
+
+    const contador =
+        document.getElementById("contador");
+
+
+    galeria.innerHTML = "";
+
+    mensaje.style.display =
+        "none";
+
+
+    const parser =
+        new DOMParser();
+
+
+    const documento =
+        parser.parseFromString(
+            codigo,
+            "text/html"
+        );
+
+
+    const enlaces =
+        documento.querySelectorAll("a");
+
+
+    let fotos = [];
+
+
+    enlaces.forEach(enlace => {
+
+
+        const href =
+            enlace.getAttribute("href");
+
+
+        if (!href) return;
+
+
+        const nombre =
+            enlace.textContent.trim();
+
+
+        /*
+        Buscar archivos de imagen
+        */
+
+        if (
+            /\.(jpg|jpeg|png|gif|webp)$/i
+            .test(href)
+        ) {
+
+
+            let url;
+
+
+            if (
+                href.startsWith("http://") ||
+                href.startsWith("https://")
+            ) {
+
+                url = href;
+
+            } else {
+
+                url =
+                    BASE_URL +
+                    href.replace(/^\/+/, "");
+
+            }
+
+
+            fotos.push({
+
+                nombre: nombre,
+
+                url: url
+
+            });
+
+        }
+
+    });
+
+
+
+    /*
+    Eliminar duplicados
+    */
+
+    const mapa =
+        new Map();
+
+
+    fotos.forEach(foto => {
+
+        mapa.set(
+            foto.url,
+            foto
+        );
+
+    });
+
+
+    fotos =
+        [...mapa.values()];
+
+
+
+    /*
+    Mostrar contador
+    */
+
+    contador.textContent =
+        fotos.length +
+        " fotografías encontradas";
+
+
+
+    if (fotos.length === 0) {
+
+        mensaje.style.display =
+            "block";
+
+        mensaje.textContent =
+            "No se encontraron fotografías.";
+
+        return;
+
+    }
+
+
+
+    /*
+    Crear las tarjetas
+    */
+
+    fotos.forEach(foto => {
+
+
+        const tarjeta =
+            document.createElement("div");
+
+
+        tarjeta.className =
+            "foto";
+
+
+        const imagen =
+            document.createElement("img");
+
+
+        imagen.src =
+            foto.url;
+
+
+        imagen.loading =
+            "lazy";
+
+
+        imagen.alt =
+            foto.nombre;
+
+
+        imagen.onerror =
+            function() {
+
+                this.style.opacity =
+                    ".3";
+
+            };
+
+
+        const nombre =
+            document.createElement("div");
+
+
+        nombre.className =
+            "nombre";
+
+
+        nombre.textContent =
+            foto.nombre;
+
+
+        tarjeta.appendChild(
+            imagen
+        );
+
+
+        tarjeta.appendChild(
+            nombre
+        );
+
+
+        tarjeta.onclick =
+            function() {
+
+                abrirVisor(
+                    foto.url
+                );
+
+            };
+
+
+        galeria.appendChild(
+            tarjeta
+        );
+
+    });
+
+}
+
+
+
+/*
+==================================================
+VISOR GRANDE
+==================================================
+*/
+
+function abrirVisor(url) {
+
+    const visor =
+        document.getElementById(
+            "visor"
+        );
+
+    const imagen =
+        document.getElementById(
+            "imagenGrande"
+        );
+
+
+    imagen.src =
+        url;
+
+
+    visor.style.display =
+        "flex";
+
+}
+
+
+
+function cerrarVisor() {
+
+    document.getElementById(
+        "visor"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "imagenGrande"
+    ).src =
+        "";
+
+}
+
+
+
+/*
+ESC PARA CERRAR
+*/
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Escape"
+        ) {
+
+            cerrarVisor();
+
+        }
+
+    }
+);
+
+
+
+/*
+==================================================
+CARGAR AUTOMÁTICAMENTE
+==================================================
+*/
+
+cargarFotos();
+
+
+</script>
+
+
+</body>
+
+</html>
