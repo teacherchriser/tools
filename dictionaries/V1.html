@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Simple English-Spanish and Spanish-English dictionary">
+<title>Classic English ↔ Spanish Dictionary</title>
+<style>
+  :root{
+    --green:#026f4d;
+    --green-dark:#01583d;
+    --cream:#f8f5ed;
+    --paper:#fffdf8;
+    --ink:#292929;
+    --muted:#6d6d6d;
+    --line:#d9d3c7;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:"Times New Roman",Times,serif;
+  }
+  .wrap{max-width:850px;margin:auto;padding:22px 16px 45px}
+  header{text-align:center;padding:15px 0 22px}
+  h1{margin:0;color:var(--green);font-size:clamp(2rem,7vw,3.1rem)}
+  .subtitle{margin:7px 0 0;color:var(--muted);font-size:1.05rem}
+  .search-box{
+    background:var(--paper);border:1px solid var(--line);border-radius:14px;
+    padding:15px;box-shadow:0 4px 14px rgba(0,0,0,.06);
+  }
+  .search-row{display:flex;gap:8px}
+  input{
+    flex:1;min-width:0;padding:12px 14px;border:1px solid #bbb;
+    border-radius:9px;font:inherit;font-size:1.05rem;background:white;
+  }
+  button{
+    border:0;border-radius:9px;background:var(--green);color:white;
+    font:inherit;cursor:pointer;padding:10px 15px;
+  }
+  button:hover{background:var(--green-dark)}
+  .direction{
+    display:flex;justify-content:center;gap:8px;margin-top:12px;flex-wrap:wrap
+  }
+  .direction button{background:#e7eee9;color:var(--green);border:1px solid #b8ccc2}
+  .direction button.active{background:var(--green);color:white}
+  #status{text-align:center;color:var(--muted);margin:18px 0 0}
+  .card{
+    margin-top:18px;background:var(--paper);border:1px solid var(--line);
+    border-radius:14px;padding:20px;box-shadow:0 4px 14px rgba(0,0,0,.05)
+  }
+  .word-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .word{font-size:2.2rem;color:var(--green);margin:0}
+  .speaker{
+    width:42px;height:42px;border-radius:50%;padding:0;
+    display:inline-flex;align-items:center;justify-content:center;font-size:1.2rem
+  }
+  .ipa{font-size:1.05rem;color:var(--muted);font-style:italic}
+  .pos{
+    display:inline-block;margin-top:10px;padding:3px 9px;border-radius:20px;
+    background:#e7eee9;color:var(--green);font-size:.95rem;font-weight:bold
+  }
+  .translation{font-size:1.2rem;margin:13px 0 5px}
+  .definition{margin:14px 0;padding-left:16px;border-left:3px solid var(--green)}
+  .definition strong{color:var(--green)}
+  .example{margin:5px 0 0;color:#555;font-style:italic}
+  .number{color:var(--green);font-weight:bold}
+  .hidden{display:none}
+  footer{text-align:center;color:var(--muted);font-size:.9rem;margin-top:25px}
+  @media(max-width:520px){
+    .wrap{padding:14px 11px 35px}
+    .search-row{flex-direction:column}
+    .search-row button{width:100%}
+    .card{padding:16px}
+    .word{font-size:1.9rem}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>English ↔ Spanish</h1>
+    <p class="subtitle">A simple classic dictionary for learners</p>
+  </header>
+
+  <section class="search-box">
+    <div class="search-row">
+      <input id="search" type="search" placeholder="Search a word..." autocomplete="off">
+      <button id="searchBtn">Search</button>
+    </div>
+    <div class="direction">
+      <button class="active" data-direction="en-es">English → Spanish</button>
+      <button data-direction="es-en">Spanish → English</button>
+    </div>
+  </section>
+
+  <p id="status">Try: hello, book, run, beautiful, casa, comer</p>
+  <main id="results"></main>
+
+  <footer>Classic Dictionary • Designed for mobile and desktop</footer>
+</div>
+
+<script>
+/*
+  Add more entries to the "dictionary" object below.
+  The speaker uses the browser's built-in Speech Synthesis API,
+  so no audio files or external services are required.
+*/
+const dictionary = {
+  "hello": {
+    en: "hello", es: "hola", ipa: "/həˈloʊ/", pos: "interjection",
+    definitions: [
+      {en:"Used as a greeting.", es:"Se usa como saludo.", example:"Hello! How are you?"}
+    ]
+  },
+  "book": {
+    en:"book", es:"libro", ipa:"/bʊk/", pos:"noun",
+    definitions:[
+      {en:"A set of written or printed pages bound together.", es:"Conjunto de páginas escritas o impresas unidas.", example:"I am reading a book."},
+      {en:"A written work about a particular subject.", es:"Una obra escrita sobre un tema determinado.", example:"She wrote a book about history."}
+    ]
+  },
+  "run": {
+    en:"run", es:"correr", ipa:"/rʌn/", pos:"verb",
+    definitions:[
+      {en:"To move quickly on foot.", es:"Moverse rápidamente a pie.", example:"I run every morning."},
+      {en:"To operate or function.", es:"Operar o funcionar.", example:"The computer is running."}
+    ]
+  },
+  "beautiful": {
+    en:"beautiful", es:"hermoso, hermoso/a", ipa:"/ˈbjuːtɪfəl/", pos:"adjective",
+    definitions:[
+      {en:"Very attractive or pleasing to look at.", es:"Muy atractivo o agradable de ver.", example:"It is a beautiful day."}
+    ]
+  },
+  "quickly": {
+    en:"quickly", es:"rápidamente", ipa:"/ˈkwɪkli/", pos:"adverb",
+    definitions:[
+      {en:"At a fast speed or in a short time.", es:"A gran velocidad o en poco tiempo.", example:"She finished the work quickly."}
+    ]
+  },
+  "casa": {
+    en:"house; home", es:"casa", ipa:"/haʊs/; /hoʊm/", pos:"noun",
+    definitions:[
+      {en:"A building where people live.", es:"Edificio donde viven las personas.", example:"My house is near the school."},
+      {en:"The place where someone lives and feels they belong.", es:"El lugar donde alguien vive y siente que pertenece.", example:"I am going home."}
+    ]
+  },
+  "comer": {
+    en:"eat", es:"comer", ipa:"/iːt/", pos:"verb",
+    definitions:[
+      {en:"To put food into your mouth and swallow it.", es:"Poner comida en la boca y tragarla.", example:"We eat lunch at noon."}
+    ]
+  },
+  "agua": {
+    en:"water", es:"agua", ipa:"/ˈwɔːtər/", pos:"noun",
+    definitions:[
+      {en:"The clear liquid that people, animals and plants need to live.", es:"Líquido transparente que las personas, animales y plantas necesitan para vivir.", example:"Drink some water."}
+    ]
+  }
+};
+
+let direction = "en-es";
+
+const input = document.getElementById("search");
+const results = document.getElementById("results");
+const status = document.getElementById("status");
+
+document.querySelectorAll(".direction button").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll(".direction button").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    direction = btn.dataset.direction;
+    search();
+    input.focus();
+  });
+});
+
+document.getElementById("searchBtn").addEventListener("click", search);
+input.addEventListener("keydown", e=>{ if(e.key==="Enter") search(); });
+
+function findEntries(term){
+  term = term.toLowerCase().trim();
+  if(!term) return [];
+
+  return Object.values(dictionary).filter(item=>{
+    if(direction==="en-es")
+      return item.en.toLowerCase().includes(term);
+    return item.es.toLowerCase().includes(term);
+  });
+}
+
+function search(){
+  const term = input.value.trim();
+  if(!term){
+    results.innerHTML="";
+    status.textContent="Type a word to search.";
+    return;
+  }
+
+  const entries = findEntries(term);
+  results.innerHTML="";
+
+  if(!entries.length){
+    status.textContent=`No entry found for "${term}".`;
+    return;
+  }
+
+  status.textContent=`${entries.length} result${entries.length>1?"s":""} found.`;
+
+  entries.forEach(item=>{
+    const card=document.createElement("article");
+    card.className="card";
+
+    const word = direction==="en-es" ? item.en : item.es;
+    const translation = direction==="en-es" ? item.es : item.en;
+    const language = direction==="en-es" ? "en-US" : "es-ES";
+
+    card.innerHTML=`
+      <div class="word-head">
+        <h2 class="word">${escapeHTML(word)}</h2>
+        <button class="speaker" title="Listen" aria-label="Listen to ${escapeHTML(word)}">🔊</button>
+        <span class="ipa">${escapeHTML(item.ipa)}</span>
+      </div>
+      <div class="pos">${escapeHTML(item.pos)}</div>
+      <p class="translation"><strong>Translation:</strong> ${escapeHTML(translation)}</p>
+      ${item.definitions.map((d,i)=>`
+        <div class="definition">
+          <strong><span class="number">${i+1}.</span> Definition</strong>
+          <div>${escapeHTML(direction==="en-es"?d.en:d.es)}</div>
+          <p class="example">“${escapeHTML(d.example)}”</p>
+        </div>
+      `).join("")}
+    `;
+
+    card.querySelector(".speaker").addEventListener("click",()=>{
+      speak(word, language);
+    });
+    results.appendChild(card);
+  });
+}
+
+function speak(text, lang){
+  if(!("speechSynthesis" in window)){
+    alert("Speech synthesis is not supported by this browser.");
+    return;
+  }
+  speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = lang;
+  utterance.rate = .85;
+  speechSynthesis.speak(utterance);
+}
+
+function escapeHTML(text){
+  return String(text).replace(/[&<>"']/g, char=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+  }[char]));
+}
+</script>
+</body>
+</html>
