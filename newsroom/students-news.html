@@ -667,22 +667,27 @@ function openModal(index) {
         document.getElementById("modalImage");
 
 
-    if (item["Picture"]) {
+    const imageURL =
+    getDriveImageURL(item["Picture"]);
 
-        image.src =
-            item["Picture"];
 
-        image.style.display =
-            "block";
+if (imageURL) {
 
-    }
+    image.src =
+        imageURL;
 
-    else {
+    image.style.display =
+        "block";
 
-        image.style.display =
-            "none";
+}
 
-    }
+else {
+
+    image.style.display =
+        "none";
+
+}
+
 
 
     document.getElementById("modal")
@@ -713,6 +718,60 @@ window.onclick = function(event) {
     }
 
 };
+
+/* =====================================
+   GOOGLE DRIVE IMAGE
+===================================== */
+
+function getDriveImageURL(value) {
+
+    if (!value) {
+        return "";
+    }
+
+    const url = String(value).trim();
+
+    // Google Drive:
+    // https://drive.google.com/open?id=FILE_ID
+
+    let match =
+        url.match(/[?&]id=([^&]+)/);
+
+    if (match) {
+
+        return "https://drive.google.com/uc?export=view&id=" + match[1];
+
+    }
+
+
+    // Google Drive:
+    // https://drive.google.com/file/d/FILE_ID/view
+
+    match =
+        url.match(/\/file\/d\/([^/]+)/);
+
+    if (match) {
+
+        return "https://drive.google.com/uc?export=view&id=" + match[1];
+
+    }
+
+
+    // If it is already a direct image URL
+
+    if (
+        url.startsWith("http://") ||
+        url.startsWith("https://")
+    ) {
+
+        return url;
+
+    }
+
+
+    return "";
+
+}
 
 
 /* =====================================
