@@ -714,7 +714,7 @@ function displayNews(news) {
 
                     👤
                     ${escapeHTML(
-                        item["Author:"]
+                        item["Author"]
                         || "Unknown"
                     )}
 
@@ -825,7 +825,7 @@ function filterNews() {
                 item["News Title"],
                 item["Summary"],
                 item["Content"],
-                item["Author:"],
+                item["Author"],
                 item["Category"],
                 item["Borough"]
 
@@ -921,7 +921,7 @@ function openModal(item) {
     ).textContent =
 
         `By ${
-            item["Author:"]
+            item["Author"]
             || "Unknown"
         } · ${
             item["Borough"]
