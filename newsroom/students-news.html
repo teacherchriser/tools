@@ -536,7 +536,7 @@ const imageHTML =
 
                 <div
                     class="read-button"
-                    onclick="openModal(${index})"
+                    onclick='openModal(${JSON.stringify(item)})'
                 >
                     Read full report →
                 </div>
@@ -583,7 +583,7 @@ function filterNews() {
                 item["News Title"],
                 item["Summary"],
                 item["Content"],
-                item["Author"]
+                item["Author:"]
 
             ]
             .join(" ")
@@ -642,10 +642,7 @@ document
    MODAL
 ===================================== */
 
-function openModal(index) {
-
-    const item =
-        allNews[index];
+function openModal(item) {
 
 
     document.getElementById("modalTitle")
@@ -655,7 +652,7 @@ function openModal(index) {
 
     document.getElementById("modalMeta")
         .textContent =
-        `By ${item["Author"] || "Unknown"} · ${item["Borough"] || ""} · ${item["Category"] || ""}`;
+        `By ${item["Author:"] || "Unknown"} · ${item["Borough"] || ""} · ${item["Category"] || ""}`;
 
 
     document.getElementById("modalText")
@@ -723,55 +720,7 @@ window.onclick = function(event) {
    GOOGLE DRIVE IMAGE
 ===================================== */
 
-function getDriveImageURL(value) {
-
-    if (!value) {
-        return "";
-    }
-
-    const url = String(value).trim();
-
-    // Google Drive:
-    // https://drive.google.com/open?id=FILE_ID
-
-    let match =
-        url.match(/[?&]id=([^&]+)/);
-
-    if (match) {
-
-        return "https://drive.google.com/uc?export=view&id=" + match[1];
-
-    }
-
-
-    // Google Drive:
-    // https://drive.google.com/file/d/FILE_ID/view
-
-    match =
-        url.match(/\/file\/d\/([^/]+)/);
-
-    if (match) {
-
-        return "https://drive.google.com/uc?export=view&id=" + match[1];
-
-    }
-
-
-    // If it is already a direct image URL
-
-    if (
-        url.startsWith("http://") ||
-        url.startsWith("https://")
-    ) {
-
-        return url;
-
-    }
-
-
-    return "";
-
-}
+function getDriveImageURL(value) { if (!value) { return ""; } const url = String(value).trim(); let fileId = ""; // Format: // https://drive.google.com/open?id=FILE_ID let match = url.match(/[?&]id=([^&]+)/); if (match) { fileId = match[1]; } // Format: // https://drive.google.com/file/d/FILE_ID/view if (!fileId) { match = url.match(/\/file\/d\/([^/]+)/); if (match) { fileId = match[1]; } } // If a Google Drive file ID was found, // use Google's thumbnail service. if (fileId) { return "https://drive.google.com/thumbnail?id=" + fileId + "&sz=w1200"; } // If it is already a normal image URL if ( url.startsWith("http://") || url.startsWith("https://") ) { return url; } return ""; }
 
 
 /* =====================================
