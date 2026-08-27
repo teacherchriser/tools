@@ -491,20 +491,19 @@ function displayNews(news) {
             "news-card";
 
 
-        const image =
-            item["Picture"];
+        const imageURL = getDriveImageURL(item["Picture"]);
 
-
-        const imageHTML =
-            image
-            ?
-            `<img
-                class="news-image"
-                src="${image}"
-                alt=""
-            >`
-            :
-            `<div class="news-image"></div>`;
+const imageHTML =
+    imageURL
+    ?
+    `<img
+        class="news-image"
+        src="${imageURL}"
+        alt="News photograph"
+        onerror="this.style.display='none'"
+    >`
+    :
+    `<div class="news-image"></div>`;
 
 
         card.innerHTML = `
