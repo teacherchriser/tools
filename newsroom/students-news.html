@@ -1,193 +1,323 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
 
 <title>Student Newsroom</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400..700;1,400..700&family=Special+Elite&display=swap');
+</style>
+
 
 <style>
+
+/* =====================================
+   GENERAL
+===================================== */
 
 * {
     box-sizing: border-box;
 }
 
 body {
+
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #f3f4f6;
+
+    font-family: "Libre Baskerville", serif;
+
+    background: #F4F1E8;
+
     color: #222;
 }
 
-/* HEADER */
+
+/* =====================================
+   HEADER
+===================================== */
 
 header {
-    background: #111827;
+
+    background: #011e62;
+
     color: white;
+
     padding: 25px 20px;
+
 }
 
 .header-container {
+
     max-width: 1200px;
+
     margin: auto;
+
 }
 
 .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
     font-size: 34px;
     font-weight: bold;
     letter-spacing: 1px;
 }
 
-.tagline {
-    margin-top: 6px;
-    color: #cbd5e1;
-    font-size: 15px;
+.logo img {
+    width: 48px;
+    height: 48px;
+
+    object-fit: contain;
+
+    display: block;
 }
 
-/* CONTROLS */
+.tagline {
+
+    margin-top: 6px;
+
+    color: #cbd5e1;
+
+    font-size: 15px;
+
+}
+
+
+/* =====================================
+   CONTROLS
+===================================== */
 
 .controls {
+
     max-width: 1200px;
+
     margin: 25px auto;
+
     padding: 0 20px;
 
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
+
+    grid-template-columns:
+        2fr 1fr 1fr;
+
     gap: 12px;
+
 }
 
 input,
 select {
+
     width: 100%;
+
     padding: 12px;
-    border: 1px solid #d1d5db;
+
+    border:
+        1px solid #d1d5db;
+
     border-radius: 6px;
+
     font-size: 15px;
+
     background: white;
+
 }
 
-/* NEWS GRID */
+
+/* =====================================
+   NEWS GRID
+===================================== */
 
 .news-container {
+
     max-width: 1200px;
+
     margin: auto;
-    padding: 0 20px 40px;
+
+    padding:
+        0 20px 40px;
 
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
     gap: 22px;
+
 }
 
-/* CARD */
+
+/* =====================================
+   NEWS CARD
+===================================== */
 
 .news-card {
+
     background: white;
+
     border-radius: 10px;
+
     overflow: hidden;
 
     box-shadow:
         0 2px 8px rgba(0,0,0,0.08);
 
-    transition: transform 0.2s;
+    transition:
+        transform 0.2s;
+
 }
 
 .news-card:hover {
-    transform: translateY(-3px);
+
+    transform:
+        translateY(-3px);
+
 }
 
 .news-image {
+
     width: 100%;
+
     height: 190px;
+
     object-fit: cover;
+
     background: #e5e7eb;
+
 }
 
 .news-content {
+
     padding: 18px;
+
 }
 
 .category {
+
     display: inline-block;
 
     font-size: 12px;
+
     font-weight: bold;
 
     background: #e5e7eb;
+
     color: #374151;
 
     padding: 5px 8px;
+
     border-radius: 4px;
 
     margin-bottom: 10px;
+
 }
 
 .news-title {
+
     font-size: 21px;
+
     line-height: 1.25;
-    margin: 5px 0 10px;
+
+    margin:
+        5px 0 10px;
+
 }
 
 .summary {
+
     color: #4b5563;
+
     line-height: 1.5;
+
     font-size: 15px;
+
 }
 
 .meta {
+
     margin-top: 15px;
+
     padding-top: 12px;
 
-    border-top: 1px solid #e5e7eb;
+    border-top:
+        1px solid #e5e7eb;
 
     font-size: 13px;
+
     color: #6b7280;
+
 }
 
 .read-button {
+
     margin-top: 15px;
 
     display: inline-block;
 
     background: #111827;
+
     color: white;
 
-    padding: 9px 13px;
+    padding:
+        9px 13px;
 
     border-radius: 5px;
 
     text-decoration: none;
 
     cursor: pointer;
+
 }
 
-/* EMPTY / LOADING */
+
+/* =====================================
+   LOADING / MESSAGES
+===================================== */
 
 .message {
+
     max-width: 1200px;
+
     margin: 40px auto;
+
     padding: 20px;
+
     text-align: center;
+
     color: #6b7280;
+
 }
 
-/* MODAL */
+
+/* =====================================
+   MODAL
+===================================== */
 
 .modal {
+
     display: none;
 
     position: fixed;
 
     inset: 0;
 
-    background: rgba(0,0,0,0.65);
+    background:
+        rgba(0,0,0,0.65);
 
     z-index: 1000;
 
     overflow-y: auto;
+
 }
 
 .modal-box {
+
     background: white;
 
     max-width: 850px;
@@ -197,34 +327,53 @@ select {
     border-radius: 10px;
 
     overflow: hidden;
+
 }
 
 .modal-image {
+
     width: 100%;
+
     max-height: 400px;
+
     object-fit: cover;
+
 }
 
 .modal-content {
+
     padding: 30px;
+
 }
 
 .modal-title {
+
     font-size: 32px;
+
     margin-bottom: 10px;
+
 }
 
 .modal-meta {
+
     color: #6b7280;
+
     margin-bottom: 25px;
+
 }
 
 .modal-text {
+
     line-height: 1.7;
+
     font-size: 17px;
+
+    white-space: pre-line;
+
 }
 
 .close {
+
     float: right;
 
     font-size: 28px;
@@ -232,30 +381,44 @@ select {
     cursor: pointer;
 
     color: #555;
+
 }
 
-/* RESPONSIVE */
+
+/* =====================================
+   RESPONSIVE
+===================================== */
 
 @media (max-width: 900px) {
 
     .news-container {
-        grid-template-columns: repeat(2, 1fr);
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
     }
 
 }
 
+
 @media (max-width: 650px) {
 
     .controls {
+
         grid-template-columns: 1fr;
+
     }
 
     .news-container {
+
         grid-template-columns: 1fr;
+
     }
 
     .logo {
+
         font-size: 27px;
+
     }
 
 }
@@ -264,18 +427,21 @@ select {
 
 </head>
 
+
 <body>
+
 
 <header>
 
 <div class="header-container">
 
-<div class="logo">
-📰 Student Newsroom
+<div class="logo" style="font-family: 'Special Elite', system-ui;">
+<img src="https://estilos.upn.edu.co/userfiles/header_externo/5.png" alt="Logo">
+ The UPN Paper
 </div>
 
 <div class="tagline">
-News reported, written and shared by our students
+News reported, written and shared by CAI2 students - Directed by: Professor Christian Serrano
 </div>
 
 </div>
@@ -292,36 +458,60 @@ News reported, written and shared by our students
 >
 
 <select id="category">
-    <option value="">All categories</option>
+
+    <option value="">
+        All categories
+    </option>
+
 </select>
 
+
 <select id="borough">
-    <option value="">All boroughs</option>
+
+    <option value="">
+        All boroughs
+    </option>
+
 </select>
 
 </div>
 
 
-<div id="message" class="message">
+<div
+    id="message"
+    class="message"
+>
 Loading student news...
 </div>
 
 
-<div id="newsContainer" class="news-container"></div>
+<div
+    id="newsContainer"
+    class="news-container"
+></div>
 
 
-<!-- MODAL -->
+<!-- =====================================
+     MODAL
+===================================== -->
 
-<div id="modal" class="modal">
+<div
+    id="modal"
+    class="modal"
+>
 
 <div class="modal-box">
+
 
 <img
     id="modalImage"
     class="modal-image"
+    alt="News photograph"
 >
 
+
 <div class="modal-content">
+
 
 <span
     class="close"
@@ -330,20 +520,24 @@ Loading student news...
 ×
 </span>
 
+
 <div
     id="modalTitle"
     class="modal-title"
 ></div>
+
 
 <div
     id="modalMeta"
     class="modal-meta"
 ></div>
 
+
 <div
     id="modalText"
     class="modal-text"
 ></div>
+
 
 </div>
 
@@ -362,7 +556,13 @@ const API_URL =
 "https://script.google.com/macros/s/AKfycbyW1FekBlGlOWcpA1va9Hks3At9zip_--Z9_ZQR4TUHxf4D7Bbzu6cz9DP66Hd3PY8jWA/exec";
 
 
+/* =====================================
+   GLOBAL DATA
+===================================== */
+
 let allNews = [];
+
+let displayedNews = [];
 
 
 /* =====================================
@@ -371,22 +571,46 @@ let allNews = [];
 
 async function loadNews() {
 
+    const message =
+        document.getElementById("message");
+
     try {
 
         const response =
             await fetch(API_URL);
 
         if (!response.ok) {
-            throw new Error("Network error");
+
+            throw new Error(
+                "HTTP error: " +
+                response.status
+            );
+
         }
 
-        allNews =
+
+        const data =
             await response.json();
 
-        document.getElementById("message")
-            .style.display = "none";
+
+        if (!Array.isArray(data)) {
+
+            throw new Error(
+                "The API did not return an array."
+            );
+
+        }
+
+
+        allNews = data;
+
+
+        message.style.display =
+            "none";
+
 
         createFilters();
+
 
         displayNews(allNews);
 
@@ -394,11 +618,25 @@ async function loadNews() {
 
     catch(error) {
 
-        console.error(error);
+        console.error(
+            "Student Newsroom error:",
+            error
+        );
 
-        document.getElementById("message")
-            .innerHTML =
-            "Sorry. The student news could not be loaded right now.";
+
+        message.style.display =
+            "block";
+
+
+        message.innerHTML =
+
+            "Sorry. The student news could not be loaded right now." +
+
+            "<br><br>" +
+
+            "<small>" +
+            "Please check the browser console for details." +
+            "</small>";
 
     }
 
@@ -411,51 +649,95 @@ async function loadNews() {
 
 function createFilters() {
 
+
     const categories =
-        [...new Set(
-            allNews
-            .map(item => item["Category"])
-            .filter(Boolean)
-        )];
+        [
+            ...new Set(
+
+                allNews
+
+                    .map(
+                        item =>
+                        item["Category"]
+                    )
+
+                    .filter(Boolean)
+
+            )
+        ];
+
 
     const boroughs =
-        [...new Set(
-            allNews
-            .map(item => item["Borough"])
-            .filter(Boolean)
-        )];
+        [
+            ...new Set(
+
+                allNews
+
+                    .map(
+                        item =>
+                        item["Borough"]
+                    )
+
+                    .filter(Boolean)
+
+            )
+        ];
 
 
     const categorySelect =
-        document.getElementById("category");
-
-    categories.sort().forEach(category => {
-
-        const option =
-            document.createElement("option");
-
-        option.value = category;
-        option.textContent = category;
-
-        categorySelect.appendChild(option);
-
-    });
+        document.getElementById(
+            "category"
+        );
 
 
     const boroughSelect =
-        document.getElementById("borough");
+        document.getElementById(
+            "borough"
+        );
 
-    boroughs.sort().forEach(borough => {
 
-        const option =
-            document.createElement("option");
+    categories
+        .sort()
+        .forEach(category => {
 
-        option.value = borough;
-        option.textContent = borough;
+            const option =
+                document.createElement(
+                    "option"
+                );
 
-        boroughSelect.appendChild(option);
+            option.value =
+                category;
 
-    });
+            option.textContent =
+                category;
+
+            categorySelect.appendChild(
+                option
+            );
+
+        });
+
+
+    boroughs
+        .sort()
+        .forEach(borough => {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+            option.value =
+                borough;
+
+            option.textContent =
+                borough;
+
+            boroughSelect.appendChild(
+                option
+            );
+
+        });
 
 }
 
@@ -466,45 +748,88 @@ function createFilters() {
 
 function displayNews(news) {
 
+
+    displayedNews =
+        news;
+
+
     const container =
-        document.getElementById("newsContainer");
+        document.getElementById(
+            "newsContainer"
+        );
 
-    container.innerHTML = "";
+
+    container.innerHTML =
+        "";
 
 
-    if (news.length === 0) {
+    if (!news.length) {
 
         container.innerHTML =
-            "<div class='message'>No news found.</div>";
+
+            "<div class='message'>" +
+            "No news found." +
+            "</div>";
 
         return;
 
     }
 
 
-    news.forEach((item, index) => {
+    news.forEach(
+        (item, index) => {
+
 
         const card =
-            document.createElement("article");
+            document.createElement(
+                "article"
+            );
+
 
         card.className =
             "news-card";
 
 
-        const imageURL = getDriveImageURL(item["Picture"]);
+        /* IMAGE */
 
-const imageHTML =
-    imageURL
-    ?
-    `<img
-        class="news-image"
-        src="${imageURL}"
-        alt="News photograph"
-        onerror="this.style.display='none'"
-    >`
-    :
-    `<div class="news-image"></div>`;
+        const imageURL =
+            getDriveImageURL(
+                item["Picture"]
+            );
 
+
+        let imageHTML = "";
+
+
+        if (imageURL) {
+
+            imageHTML = `
+
+                <img
+                    class="news-image"
+                    src="${imageURL}"
+                    alt="News photograph"
+                    onerror="this.style.display='none'"
+                >
+
+            `;
+
+        }
+
+        else {
+
+            imageHTML = `
+
+                <div
+                    class="news-image"
+                ></div>
+
+            `;
+
+        }
+
+
+        /* CARD */
 
         card.innerHTML = `
 
@@ -513,32 +838,61 @@ const imageHTML =
             <div class="news-content">
 
                 <div class="category">
-                    ${escapeHTML(item["Category"] || "News")}
+
+                    ${escapeHTML(
+                        item["Category"]
+                        || "News"
+                    )}
+
                 </div>
+
 
                 <h2 class="news-title">
-                    ${escapeHTML(item["News Title"] || "Untitled")}
+
+                    ${escapeHTML(
+                        item["News Title"]
+                        || "Untitled"
+                    )}
+
                 </h2>
 
+
                 <div class="summary">
-                    ${escapeHTML(item["Summary"] || "")}
+
+                    ${escapeHTML(
+                        item["Summary"]
+                        || ""
+                    )}
+
                 </div>
+
 
                 <div class="meta">
 
-                    👤 ${escapeHTML(item["Author:"] || "Unknown")}
+                    👤
+                    ${escapeHTML(
+                        item["Author:"]
+                        || "Unknown"
+                    )}
 
                     <br>
 
-                    📍 ${escapeHTML(item["Borough"] || "")}
+                    📍
+                    ${escapeHTML(
+                        item["Borough"]
+                        || ""
+                    )}
 
                 </div>
 
+
                 <div
                     class="read-button"
-                    onclick='openModal(${JSON.stringify(item)})'
+                    data-index="${index}"
                 >
+
                     Read full report →
+
                 </div>
 
             </div>
@@ -546,7 +900,42 @@ const imageHTML =
         `;
 
 
-        container.appendChild(card);
+        /*
+         * IMPORTANT:
+         * We attach the click event with JavaScript
+         * instead of inserting the entire JSON object
+         * inside an HTML onclick attribute.
+         */
+
+        const button =
+            card.querySelector(
+                ".read-button"
+            );
+
+
+        button.addEventListener(
+            "click",
+            function() {
+
+                const newsIndex =
+                    Number(
+                        this.dataset.index
+                    );
+
+
+                openModal(
+                    displayedNews[
+                        newsIndex
+                    ]
+                );
+
+            }
+        );
+
+
+        container.appendChild(
+            card
+        );
 
     });
 
@@ -554,39 +943,53 @@ const imageHTML =
 
 
 /* =====================================
-   SEARCH & FILTER
+   SEARCH AND FILTER
 ===================================== */
 
 function filterNews() {
 
+
     const search =
-        document.getElementById("search")
+        document.getElementById(
+            "search"
+        )
         .value
-        .toLowerCase();
+        .toLowerCase()
+        .trim();
 
 
     const category =
-        document.getElementById("category")
+        document.getElementById(
+            "category"
+        )
         .value;
 
 
     const borough =
-        document.getElementById("borough")
+        document.getElementById(
+            "borough"
+        )
         .value;
 
 
     const filtered =
-        allNews.filter(item => {
+        allNews.filter(
+            item => {
+
 
             const text = [
 
                 item["News Title"],
                 item["Summary"],
                 item["Content"],
-                item["Author:"]
+                item["Author:"],
+                item["Category"],
+                item["Borough"]
 
             ]
+
             .join(" ")
+
             .toLowerCase();
 
 
@@ -596,23 +999,40 @@ function filterNews() {
 
                 &&
 
-                (!category ||
-                 item["Category"] === category)
+                (
+                    !category
+                    ||
+                    item["Category"]
+                    ===
+                    category
+                )
 
                 &&
 
-                (!borough ||
-                 item["Borough"] === borough)
+                (
+                    !borough
+                    ||
+                    item["Borough"]
+                    ===
+                    borough
+                )
 
             );
 
-        });
+        }
+    );
 
 
-    displayNews(filtered);
+    displayNews(
+        filtered
+    );
 
 }
 
+
+/* =====================================
+   FILTER EVENTS
+===================================== */
 
 document
     .getElementById("search")
@@ -645,82 +1065,232 @@ document
 function openModal(item) {
 
 
-    document.getElementById("modalTitle")
-        .textContent =
-        item["News Title"] || "";
+    document.getElementById(
+        "modalTitle"
+    ).textContent =
+
+        item["News Title"]
+        || "";
 
 
-    document.getElementById("modalMeta")
-        .textContent =
-        `By ${item["Author:"] || "Unknown"} · ${item["Borough"] || ""} · ${item["Category"] || ""}`;
+    document.getElementById(
+        "modalMeta"
+    ).textContent =
+
+        `By ${
+            item["Author:"]
+            || "Unknown"
+        } · ${
+            item["Borough"]
+            || ""
+        } · ${
+            item["Category"]
+            || ""
+        }`;
 
 
-    document.getElementById("modalText")
-        .textContent =
-        item["Content"] || item["Summary"] || "";
+    document.getElementById(
+        "modalText"
+    ).textContent =
+
+        item["Content"]
+        ||
+        item["Summary"]
+        ||
+        "";
 
 
     const image =
-        document.getElementById("modalImage");
+        document.getElementById(
+            "modalImage"
+        );
 
 
     const imageURL =
-    getDriveImageURL(item["Picture"]);
+        getDriveImageURL(
+            item["Picture"]
+        );
 
 
-if (imageURL) {
+    if (imageURL) {
 
-    image.src =
-        imageURL;
+        image.src =
+            imageURL;
 
-    image.style.display =
-        "block";
-
-}
-
-else {
-
-    image.style.display =
-        "none";
-
-}
-
-
-
-    document.getElementById("modal")
-        .style.display =
-        "block";
-
-}
-
-
-function closeModal() {
-
-    document.getElementById("modal")
-        .style.display =
-        "none";
-
-}
-
-
-window.onclick = function(event) {
-
-    const modal =
-        document.getElementById("modal");
-
-    if (event.target === modal) {
-
-        closeModal();
+        image.style.display =
+            "block";
 
     }
 
-};
+    else {
+
+        image.removeAttribute(
+            "src"
+        );
+
+        image.style.display =
+            "none";
+
+    }
+
+
+    document.getElementById(
+        "modal"
+    ).style.display =
+        "block";
+
+}
+
+
+/* =====================================
+   CLOSE MODAL
+===================================== */
+
+function closeModal() {
+
+    document.getElementById(
+        "modal"
+    ).style.display =
+        "none";
+
+}
+
+
+window.addEventListener(
+    "click",
+    function(event) {
+
+        const modal =
+            document.getElementById(
+                "modal"
+            );
+
+
+        if (
+            event.target === modal
+        ) {
+
+            closeModal();
+
+        }
+
+    }
+);
+
 
 /* =====================================
    GOOGLE DRIVE IMAGE
 ===================================== */
 
-function getDriveImageURL(value) { if (!value) { return ""; } const url = String(value).trim(); let fileId = ""; // Format: // https://drive.google.com/open?id=FILE_ID let match = url.match(/[?&]id=([^&]+)/); if (match) { fileId = match[1]; } // Format: // https://drive.google.com/file/d/FILE_ID/view if (!fileId) { match = url.match(/\/file\/d\/([^/]+)/); if (match) { fileId = match[1]; } } // If a Google Drive file ID was found, // use Google's thumbnail service. if (fileId) { return "https://drive.google.com/thumbnail?id=" + fileId + "&sz=w1200"; } // If it is already a normal image URL if ( url.startsWith("http://") || url.startsWith("https://") ) { return url; } return ""; }
+function getDriveImageURL(value) {
+
+
+    if (!value) {
+
+        return "";
+
+    }
+
+
+    const url =
+        String(value).trim();
+
+
+    let fileId =
+        "";
+
+
+    /*
+     * Format:
+     * https://drive.google.com/open?id=FILE_ID
+     */
+
+    let match =
+        url.match(
+            /[?&]id=([^&]+)/
+        );
+
+
+    if (match) {
+
+        fileId =
+            match[1];
+
+    }
+
+
+    /*
+     * Format:
+     * https://drive.google.com/file/d/FILE_ID/view
+     */
+
+    if (!fileId) {
+
+        match =
+            url.match(
+                /\/file\/d\/([^/]+)/
+            );
+
+
+        if (match) {
+
+            fileId =
+                match[1];
+
+        }
+
+    }
+
+
+    /*
+     * Google Drive thumbnail
+     */
+
+    if (fileId) {
+
+        return (
+
+            "https://drive.google.com/thumbnail" +
+
+            "?id=" +
+
+            encodeURIComponent(
+                fileId
+            ) +
+
+            "&sz=w1200"
+
+        );
+
+    }
+
+
+    /*
+     * Already a normal image URL
+     */
+
+    if (
+
+        url.startsWith(
+            "http://"
+        )
+
+        ||
+
+        url.startsWith(
+            "https://"
+        )
+
+    ) {
+
+        return url;
+
+    }
+
+
+    return "";
+
+}
 
 
 /* =====================================
@@ -731,15 +1301,30 @@ function escapeHTML(text) {
 
     return String(text)
 
-        .replace(/&/g, "&amp;")
+        .replace(
+            /&/g,
+            "&amp;"
+        )
 
-        .replace(/</g, "&lt;")
+        .replace(
+            /</g,
+            "&lt;"
+        )
 
-        .replace(/>/g, "&gt;")
+        .replace(
+            />/g,
+            "&gt;"
+        )
 
-        .replace(/"/g, "&quot;")
+        .replace(
+            /"/g,
+            "&quot;"
+        )
 
-        .replace(/'/g, "&#039;");
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
 }
 
@@ -752,5 +1337,7 @@ loadNews();
 
 </script>
 
+
 </body>
+
 </html>
