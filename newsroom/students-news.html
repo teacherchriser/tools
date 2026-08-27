@@ -1,16 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Student Newsroom</title>
+<link rel="icon" href="https://teacherchriser.github.io/images/me.gif" type="image/x-icon">
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400..700;1,400..700&family=Special+Elite&display=swap');
 </style>
@@ -25,108 +20,66 @@
 * {
     box-sizing: border-box;
 }
-
 body {
-
     margin: 0;
-
     font-family: "Libre Baskerville", serif;
-
     background: #F4F1E8;
-
     color: #222;
 }
-
 
 /* =====================================
    HEADER
 ===================================== */
 
 header {
-
     background: #011e62;
-
     color: white;
-
     padding: 25px 20px;
-
 }
-
 .header-container {
-
     max-width: 1200px;
-
     margin: auto;
-
 }
-
 .logo {
     display: flex;
     align-items: center;
     gap: 12px;
-
     font-size: 34px;
     font-weight: bold;
     letter-spacing: 1px;
 }
-
 .logo img {
     width: 48px;
     height: 48px;
-
     object-fit: contain;
-
     display: block;
 }
-
 .tagline {
-
     margin-top: 6px;
-
     color: #cbd5e1;
-
     font-size: 15px;
-
 }
-
 
 /* =====================================
    CONTROLS
 ===================================== */
 
 .controls {
-
     max-width: 1200px;
-
     margin: 25px auto;
-
     padding: 0 20px;
-
     display: grid;
-
-    grid-template-columns:
-        2fr 1fr 1fr;
-
+    grid-template-columns: 2fr 1fr 1fr;
     gap: 12px;
-
 }
-
 input,
 select {
-
     width: 100%;
-
     padding: 12px;
-
-    border:
-        1px solid #d1d5db;
-
+    border: 1px solid #d1d5db;
     border-radius: 6px;
-
     font-size: 15px;
-
     background: white;
-
 }
 
 
@@ -135,21 +88,12 @@ select {
 ===================================== */
 
 .news-container {
-
     max-width: 1200px;
-
     margin: auto;
-
-    padding:
-        0 20px 40px;
-
+    padding: 0 20px 40px;
     display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
+    grid-template-columns: repeat(3, 1fr);
     gap: 22px;
-
 }
 
 
@@ -158,121 +102,67 @@ select {
 ===================================== */
 
 .news-card {
-
     background: white;
-
     border-radius: 10px;
-
     overflow: hidden;
-
-    box-shadow:
-        0 2px 8px rgba(0,0,0,0.08);
-
-    transition:
-        transform 0.2s;
-
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: transform 0.2s;
 }
 
 .news-card:hover {
-
-    transform:
-        translateY(-3px);
-
+    transform: translateY(-3px);
 }
-
 .news-image {
-
     width: 100%;
-
     height: 190px;
-
     object-fit: cover;
-
     background: #e5e7eb;
-
 }
 
 .news-content {
-
     padding: 18px;
-
 }
 
 .category {
-
     display: inline-block;
-
     font-size: 12px;
-
     font-weight: bold;
-
     background: #e5e7eb;
-
     color: #374151;
-
     padding: 5px 8px;
-
     border-radius: 4px;
-
     margin-bottom: 10px;
-
 }
 
 .news-title {
-
     font-size: 21px;
-
     line-height: 1.25;
-
-    margin:
-        5px 0 10px;
-
+    margin: 5px 0 10px;
 }
 
 .summary {
-
     color: #4b5563;
-
     line-height: 1.5;
-
     font-size: 15px;
-
 }
 
 .meta {
-
     margin-top: 15px;
-
     padding-top: 12px;
-
-    border-top:
-        1px solid #e5e7eb;
-
+    border-top: 1px solid #e5e7eb;
     font-size: 13px;
-
     color: #6b7280;
-
 }
 
 .read-button {
-
     margin-top: 15px;
-
     display: inline-block;
-
-    background: #111827;
-
+    background: #011e62;
     color: white;
-
-    padding:
-        9px 13px;
-
+    padding: 9px 13px;
     border-radius: 5px;
-
     text-decoration: none;
-
     cursor: pointer;
-
 }
 
 
@@ -281,17 +171,11 @@ select {
 ===================================== */
 
 .message {
-
     max-width: 1200px;
-
     margin: 40px auto;
-
     padding: 20px;
-
     text-align: center;
-
     color: #6b7280;
-
 }
 
 
@@ -300,88 +184,53 @@ select {
 ===================================== */
 
 .modal {
-
     display: none;
-
     position: fixed;
-
     inset: 0;
-
-    background:
-        rgba(0,0,0,0.65);
-
+    background: rgba(0,0,0,0.65);
     z-index: 1000;
-
     overflow-y: auto;
-
 }
 
 .modal-box {
-
     background: white;
-
     max-width: 850px;
-
     margin: 50px auto;
-
     border-radius: 10px;
-
     overflow: hidden;
-
 }
 
 .modal-image {
-
     width: 100%;
-
     max-height: 400px;
-
     object-fit: cover;
-
 }
 
 .modal-content {
-
     padding: 30px;
-
 }
 
 .modal-title {
-
     font-size: 32px;
-
     margin-bottom: 10px;
-
 }
 
 .modal-meta {
-
     color: #6b7280;
-
     margin-bottom: 25px;
-
 }
 
 .modal-text {
-
     line-height: 1.7;
-
     font-size: 17px;
-
     white-space: pre-line;
-
 }
 
 .close {
-
     float: right;
-
     font-size: 28px;
-
     cursor: pointer;
-
     color: #555;
-
 }
 
 
@@ -390,21 +239,15 @@ select {
 ===================================== */
 
 @media (max-width: 900px) {
-
     .news-container {
-
         grid-template-columns:
             repeat(2, 1fr);
-
     }
 
 }
 
-
 @media (max-width: 650px) {
-
     .controls {
-
         grid-template-columns: 1fr;
 
     }
