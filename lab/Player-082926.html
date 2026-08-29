@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M3U8 Player</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #111;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .player-container {
+            width: 95%;
+            max-width: 1000px;
+        }
+
+        h1 {
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+
+        video {
+            width: 100%;
+            background: black;
+            display: block;
+        }
+
+        .controls {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        input {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            background: #222;
+            color: white;
+        }
+
+        button {
+            padding: 12px 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background: #1976d2;
+            color: white;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #1565c0;
+        }
+
+        #status {
+            margin-top: 12px;
+            font-size: 14px;
+            color: #aaa;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="player-container">
+
+    <h1>M3U8 Player</h1>
+
+    <video id="video" controls playsinline></video>
+
+    <div class="controls">
+        <input
+            type="text"
+            id="url"
+            value="https://jmp2.uk/plu-65652f7fc0fc88000883537a.m3u8"
+            placeholder="Enter M3U8 URL"
+        >
+
+        <button onclick="loadStream()">PLAY</button>
+    </div>
+
+    <div id="status">Ready</div>
+
+</div>
+
+<script>
+
+const video = document.getElementById('video');
+const urlInput = document.getElementById('url');
+const status = document.getElementById('status');
+
+let hls;
+
+function loadStream() {
+
+    const url = urlInput.value.trim();
+
+    if (!url) {
+        status.textContent = "Please enter an M3U8 URL.";
+        return;
+    }
+
+    status.textContent = "Loading stream...";
+
+    // Destroy previous HLS instance
+    if (hls) {
+        hls.destroy();
+        hls = null;
+    }
+
+    // Native HLS support (Safari, some mobile browsers)
+    if (video.canPlayType('application/vnd.apple.mpegurl')) {
+
+        video.src = url;
+
+        video.addEventListener('loadedmetadata', function () {
+            status.textContent = "Stream loaded.";
+        }, { once: true });
+
+        video.play().catch(() => {});
+
+    }
+
+    // HLS.js support (Chrome, Edge, Firefox, etc.)
+    else if (Hls.isSupported()) {
+
+        hls = new Hls({
+            enableWorker: true,
+            lowLatencyMode: true
+        });
+
+        hls.loadSource(url);
+        hls.attachMedia(video);
+
+        hls.on(Hls.Events.MANIFEST_PARSED, function () {
+
+            status.textContent = "Stream loaded.";
+
+            video.play().catch(() => {});
+
+        });
+
+        hls.on(Hls.Events.ERROR, function (event, data) {
+
+            console.error("HLS error:", data);
+
+            if (data.fatal) {
+
+                switch (data.type) {
+
+                    case Hls.ErrorTypes.NETWORK_ERROR:
+                        status.textContent = "Network error. Retrying...";
+                        hls.startLoad();
+                        break;
+
+                    case Hls.ErrorTypes.MEDIA_ERROR:
+                        status.textContent = "Media error. Recovering...";
+                        hls.recoverMediaError();
+                        break;
+
+                    default:
+                        status.textContent =
+                            "Fatal error: stream could not be played.";
+                        hls.destroy();
+                        break;
+                }
+            }
+        });
+
+    }
+
+    else {
+
+        status.textContent =
+            "This browser does not support HLS playback.";
+
+    }
+}
+
+// Load the default stream automatically
+window.addEventListener('load', loadStream);
+
+</script>
+
+</body>
+</html>
