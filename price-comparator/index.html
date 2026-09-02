@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Price Comparator</title>
+  <link rel="icon" href="https://teacherchriser.github.io/images/me.gif" type="image/x-icon">
+  <style>
+	@import url('https://fonts.googleapis.com/css2?family=Doppio+One&family=Handlee&display=swap');
+	</style>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Doppio One", sans-serif;
+      background: #f3f4f6;
+      color: #1f2937;
+    }
+
+    /* ==========================================
+       HEADER
+    ========================================== */
+
+    header {
+      background: #1f2937;
+      color: white;
+      padding: 35px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 42px;
+      font-weight: 700;
+    }
+
+    header p {
+      margin: 10px 0 0;
+      font-size: 16px;
+      opacity: 0.85;
+    }
+
+    /* ==========================================
+       MAIN CONTAINER
+    ========================================== */
+
+    .container {
+      max-width: 1150px;
+      margin: auto;
+      padding: 25px 15px 50px;
+    }
+
+    /* ==========================================
+       CONTROLS
+    ========================================== */
+
+    .controls {
+      background: white;
+      padding: 18px;
+      border-radius: 14px;
+      box-shadow:0 3px 12px rgba(0,0,0,0.08);
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .search {
+      flex: 1;
+      min-width: 230px;
+    }
+
+    .search input {
+      width: 100%;
+      padding: 13px 15px;
+      border:1px solid #d1d5db;
+      border-radius: 9px;
+      font-size: 16px;
+      outline: none;
+	  font-family: "Doppio One", sans-serif;
+    }
+
+    .search input:focus {
+      border-color: #6b7280;
+    }
+
+    .sort {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sort label {
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .sort select {
+      padding: 12px;
+      border:1px solid #d1d5db;
+      border-radius: 9px;
+      background: white;
+      font-size: 14px;
+	  font-family: "Doppio One", sans-serif;
+    }
+
+
+    .refresh {
+      border: none;
+      background: #374151;
+      color: white;
+      padding: 12px 17px;
+      border-radius: 9px;
+      cursor: pointer;
+      font-size: 14px;
+	  font-family: "Doppio One", sans-serif;
+    }
+
+    .refresh:hover {
+      background: #111827;
+    }
+
+    /* ==========================================
+       RESULTS INFORMATION
+    ========================================== */
+
+    .results-info {
+      margin-bottom: 15px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    /* ==========================================
+       PRODUCT GRID
+    ========================================== */
+
+    .products {
+      display: grid;
+      grid-template-columns:
+        repeat(
+          auto-fit,
+          minmax(300px, 1fr)
+        );
+      gap: 20px;
+    }
+
+    /* ==========================================
+       PRODUCT CARD
+    ========================================== */
+
+    .card {
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow:0 3px 12px rgba(0,0,0,0.07);
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform:
+        translateY(-3px);
+      box-shadow:
+        0 8px 22px rgba(0,0,0,0.10);
+    }
+
+    /* ==========================================
+       IMAGE
+    ========================================== */
+
+    .image {
+      height: 210px;
+      background: #f9fafb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .image img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .no-image {
+      color: #9ca3af;
+      font-size: 14px;
+    }
+
+    /* ==========================================
+       CARD CONTENT
+    ========================================== */
+
+    .content {
+      padding: 20px;
+    }
+
+    .product-name {
+      margin: 0 0 18px;
+      font-size: 19px;
+      line-height: 1.35;
+      font-weight: 700;
+    }
+
+    /* ==========================================
+       PRICE ROWS
+    ========================================== */
+
+    .prices {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 12px;
+      background: #f9fafb;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    .store {
+      font-weight: 600;
+    }
+
+    .amount {
+      font-weight: 700;
+    }
+
+    /* ==========================================
+       CHEAPEST
+    ========================================== */
+
+    .cheapest {
+      background: #ecfdf5;
+      border:
+        1px solid #a7f3d0;
+    }
+
+
+    .cheapest .store::after {
+      content: " 🏆";
+    }
+
+    /* ==========================================
+       SUMMARY
+    ========================================== */
+
+    .summary {
+      margin-top: 18px;
+      padding-top: 15px;
+      border-top:1px solid #e5e7eb;
+      font-size: 14px;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 7px;
+    }
+
+    .summary-label {
+      color: #6b7280;
+    }
+
+    .summary-value {
+      font-weight: 700;
+    }
+
+    /* ==========================================
+       STATES
+    ========================================== */
+
+    .state {
+      grid-column:
+        1 / -1;
+      text-align: center;
+      padding: 60px 20px;
+      color: #6b7280;
+    }
+
+
+    .error {
+      color: #b91c1c;
+    }
+
+    /* ==========================================
+       FOOTER
+    ========================================== */
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #9ca3af;
+      font-size: 12px;
+    }
+
+    /* ==========================================
+       MOBILE
+    ========================================== */
+
+    @media (max-width: 600px) {
+
+      header h1 {
+        font-size: 25px;
+      }
+
+      header p {
+        font-size: 14px;
+      }
+
+      .controls {
+        margin-top: 5px;
+      }
+
+      .sort {
+        width: 100%;
+      }
+
+      .sort select {
+        flex: 1;
+      }
+
+      .refresh {
+        width: 100%;
+      }
+
+      .products {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ==========================================
+     HEADER
+========================================== -->
+
+<header>
+
+  <h1>
+    "I buy cheaper"
+  </h1>
+
+  <p>
+    🛒 A Price Comparator to find cheaper options
+  </p>
+
+</header>
+
+
+
+<!-- ==========================================
+     MAIN
+========================================== -->
+
+<div class="container">
+
+
+  <!-- CONTROLS -->
+
+  <section class="controls">
+
+
+    <div class="search">
+
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="🔎 Search for a product..."
+      >
+
+    </div>
+
+
+    <div class="sort">
+
+      <label for="sortSelect">
+        Sort:
+      </label>
+
+      <select id="sortSelect">
+
+        <option value="default">
+          Default
+        </option>
+
+        <option value="cheap">
+          Cheapest → Most Expensive
+        </option>
+
+        <option value="expensive">
+          Most Expensive → Cheapest
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <button
+      class="refresh"
+      id="refreshButton"
+    >
+      🔄 Refresh
+    </button>
+
+
+  </section>
+
+
+
+  <!-- RESULTS -->
+
+  <div
+    class="results-info"
+    id="resultsInfo"
+  >
+    Loading products...
+  </div>
+
+
+
+  <!-- PRODUCTS -->
+
+  <main
+    class="products"
+    id="products"
+  >
+
+    <div class="state">
+      Loading products...
+    </div>
+
+  </main>
+
+
+</div>
+
+
+
+<footer>
+
+  This is a Price Comparator Created by Professor Christian Serrano
+</footer>
+
+
+
+<script>
+
+
+// =====================================================
+// GOOGLE APPS SCRIPT API
+// =====================================================
+
+const API_URL =
+  "https://script.google.com/macros/s/AKfycbzeTNyQF-LgNQt11FBqfXpMssLTT3vIod-8XmtGKYB1eC0cV9i4TiWbEriJ09LIabFJ/exec";
+
+
+
+// =====================================================
+// GLOBAL DATA
+// =====================================================
+
+let allProducts = [];
+
+let displayedProducts = [];
+
+
+
+// =====================================================
+// LOAD DATA
+// =====================================================
+
+async function loadProducts() {
+
+  const productsContainer =
+    document.getElementById("products");
+
+  const resultsInfo =
+    document.getElementById("resultsInfo");
+
+
+  productsContainer.innerHTML = `
+    <div class="state">
+      Loading products...
+    </div>
+  `;
+
+
+  resultsInfo.textContent =
+    "Loading products...";
+
+
+  try {
+
+
+    const response =
+      await fetch(API_URL);
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        "HTTP error: " +
+        response.status
+      );
+
+    }
+
+
+    const result =
+      await response.json();
+
+
+    if (!result.success) {
+
+      throw new Error(
+        result.error ||
+        "The API returned an error."
+      );
+
+    }
+
+
+    allProducts =
+      result.data || [];
+
+
+    displayedProducts =
+      [...allProducts];
+
+
+    applyFilters();
+
+
+  }
+
+  catch (error) {
+
+
+    console.error(error);
+
+
+    productsContainer.innerHTML = `
+
+      <div class="state error">
+
+        <h3>
+          ⚠️ Unable to load products
+        </h3>
+
+        <p>
+          ${escapeHTML(error.message)}
+        </p>
+
+      </div>
+
+    `;
+
+
+    resultsInfo.textContent =
+      "There was a problem connecting to the data source.";
+
+  }
+
+}
+
+
+
+// =====================================================
+// FILTER
+// =====================================================
+
+function applyFilters() {
+
+
+  const search =
+    document
+      .getElementById("searchInput")
+      .value
+      .trim()
+      .toLowerCase();
+
+
+  if (search === "") {
+
+    displayedProducts =
+      [...allProducts];
+
+  }
+
+  else {
+
+    displayedProducts =
+      allProducts.filter(
+        function(product) {
+
+          return normalizeText(
+            product.item
+          ).includes(
+            normalizeText(search)
+          );
+
+        }
+      );
+
+  }
+
+
+  applySort();
+
+
+}
+
+
+
+// =====================================================
+// SORT
+// =====================================================
+
+function applySort() {
+
+
+  const sort =
+    document
+      .getElementById("sortSelect")
+      .value;
+
+
+  if (sort === "cheap") {
+
+    displayedProducts.sort(
+      function(a, b) {
+
+        return comparePrices(
+          a.minPrice,
+          b.minPrice
+        );
+
+      }
+    );
+
+  }
+
+
+  else if (sort === "expensive") {
+
+    displayedProducts.sort(
+      function(a, b) {
+
+        return comparePrices(
+          b.minPrice,
+          a.minPrice
+        );
+
+      }
+    );
+
+  }
+
+
+  renderProducts();
+
+}
+
+
+
+// =====================================================
+// PRICE COMPARISON
+// =====================================================
+
+function comparePrices(a, b) {
+
+  if (a === null && b === null)
+    return 0;
+
+  if (a === null)
+    return 1;
+
+  if (b === null)
+    return -1;
+
+  return a - b;
+
+}
+
+
+
+// =====================================================
+// RENDER PRODUCTS
+// =====================================================
+
+function renderProducts() {
+
+
+  const container =
+    document.getElementById("products");
+
+
+  const resultsInfo =
+    document.getElementById("resultsInfo");
+
+
+  container.innerHTML = "";
+
+
+  resultsInfo.textContent =
+    displayedProducts.length +
+    (
+      displayedProducts.length === 1
+        ? " product found"
+        : " products found"
+    );
+
+
+  if (
+    displayedProducts.length === 0
+  ) {
+
+    container.innerHTML = `
+
+      <div class="state">
+
+        <h3>
+          🔎 No products found
+        </h3>
+
+        <p>
+          Try another search.
+        </p>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  displayedProducts.forEach(
+    function(product) {
+
+
+      const card =
+        document.createElement("article");
+
+
+      card.className =
+        "card";
+
+
+      // ----------------------------------------------
+      // IMAGE
+      // ----------------------------------------------
+
+      const image =
+        createImage(
+          product.image,
+          product.item
+        );
+
+
+      // ----------------------------------------------
+      // DIFFERENCE
+      // ----------------------------------------------
+
+      let difference = "—";
+
+
+      if (
+        product.priceDifference !== null &&
+        product.priceDifference !== undefined
+      ) {
+
+        difference =
+          formatPrice(
+            product.priceDifference
+          );
+
+      }
+
+
+      // ----------------------------------------------
+      // AVERAGE
+      // ----------------------------------------------
+
+      let average = "—";
+
+
+      if (
+        product.averagePrice !== null &&
+        product.averagePrice !== undefined
+      ) {
+
+        average =
+          formatPrice(
+            product.averagePrice
+          );
+
+      }
+
+
+      card.innerHTML = `
+
+        <div class="image">
+
+          ${image}
+
+        </div>
+
+
+        <div class="content">
+
+          <h2 class="product-name">
+
+            ${escapeHTML(
+              product.item
+            )}
+
+          </h2>
+
+
+          <div class="prices">
+
+            ${priceRow(
+              "D1",
+              product.d1,
+              product.minPrice
+            )}
+
+            ${priceRow(
+              "ARA",
+              product.ara,
+              product.minPrice
+            )}
+
+            ${priceRow(
+              "OLÍMPICA",
+              product.olimpica,
+              product.minPrice
+            )}
+
+            ${priceRow(
+              "CARULLA",
+              product.carulla,
+              product.minPrice
+            )}
+
+          </div>
+
+
+          <div class="summary">
+
+
+            <div class="summary-row">
+
+              <span class="summary-label">
+                Cheapest:
+              </span>
+
+              <span class="summary-value">
+                🏆 ${escapeHTML(
+                  product.cheapestStore || "—"
+                )}
+              </span>
+
+            </div>
+
+
+            <div class="summary-row">
+
+              <span class="summary-label">
+                Average price:
+              </span>
+
+              <span class="summary-value">
+                ${average}
+              </span>
+
+            </div>
+
+
+            <div class="summary-row">
+
+              <span class="summary-label">
+                Price difference:
+              </span>
+
+              <span class="summary-value">
+                ${difference}
+              </span>
+
+            </div>
+
+
+          </div>
+
+        </div>
+
+      `;
+
+
+      container.appendChild(card);
+
+    }
+  );
+
+}
+
+
+
+// =====================================================
+// PRICE ROW
+// =====================================================
+
+function priceRow(
+  store,
+  price,
+  minPrice
+) {
+
+
+  if (
+    price === null ||
+    price === undefined
+  ) {
+
+    return `
+
+      <div class="price-row">
+
+        <span class="store">
+          ${store}
+        </span>
+
+        <span class="amount">
+          —
+        </span>
+
+      </div>
+
+    `;
+
+  }
+
+
+  const cheapest =
+    price === minPrice;
+
+
+  return `
+
+    <div
+      class="price-row ${
+        cheapest ? "cheapest" : ""
+      }"
+    >
+
+      <span class="store">
+        ${store}
+      </span>
+
+      <span class="amount">
+        ${formatPrice(price)}
+      </span>
+
+    </div>
+
+  `;
+
+}
+
+
+
+// =====================================================
+// IMAGE
+// =====================================================
+
+function createImage(
+  image,
+  alt
+) {
+
+
+  if (!image) {
+
+    return `
+      <div class="no-image">
+        No image available
+      </div>
+    `;
+
+  }
+
+
+  /*
+   * If IMAGE contains a complete <img> tag,
+   * use the tag provided in Google Sheets.
+   */
+
+  if (
+    image
+      .trim()
+      .toLowerCase()
+      .startsWith("<img")
+  ) {
+
+    return image;
+
+  }
+
+
+  /*
+   * Otherwise assume IMAGE contains
+   * a normal image URL.
+   */
+
+  if (
+    image.startsWith("http://") ||
+    image.startsWith("https://")
+  ) {
+
+    return `
+
+      <img
+        src="${escapeAttribute(image)}"
+        alt="${escapeAttribute(alt)}"
+        loading="lazy"
+        onerror="this.style.display='none';"
+      >
+
+    `;
+
+  }
+
+
+  return `
+    <div class="no-image">
+      Invalid image
+    </div>
+  `;
+
+}
+
+
+
+// =====================================================
+// FORMAT PRICE
+// =====================================================
+
+function formatPrice(price) {
+
+  if (
+    price === null ||
+    price === undefined ||
+    isNaN(price)
+  ) {
+
+    return "—";
+
+  }
+
+
+  return "$" +
+    Math.round(price)
+      .toLocaleString("es-CO");
+
+}
+
+
+
+// =====================================================
+// NORMALIZE TEXT
+// =====================================================
+
+function normalizeText(text) {
+
+  return String(text || "")
+    .normalize("NFD")
+    .replace(
+      /[\u0300-\u036f]/g,
+      ""
+    )
+    .toLowerCase();
+
+}
+
+
+
+// =====================================================
+// ESCAPE HTML
+// =====================================================
+
+function escapeHTML(text) {
+
+  const div =
+    document.createElement("div");
+
+  div.textContent =
+    text;
+
+  return div.innerHTML;
+
+}
+
+
+
+// =====================================================
+// ESCAPE ATTRIBUTE
+// =====================================================
+
+function escapeAttribute(text) {
+
+  return String(text || "")
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    );
+
+}
+
+
+
+// =====================================================
+// EVENTS
+// =====================================================
+
+document
+  .getElementById("searchInput")
+  .addEventListener(
+    "input",
+    applyFilters
+  );
+
+
+document
+  .getElementById("sortSelect")
+  .addEventListener(
+    "change",
+    applySort
+  );
+
+
+document
+  .getElementById("refreshButton")
+  .addEventListener(
+    "click",
+    loadProducts
+  );
+
+
+
+// =====================================================
+// START
+// =====================================================
+
+loadProducts();
+
+
+</script>
+
+
+</body>
+
+</html>
