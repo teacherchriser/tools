@@ -4,10 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Price Comparator</title>
-  <link rel="icon" href="https://teacherchriser.github.io/images/me.gif" type="image/x-icon">
+
+  <link
+    rel="icon"
+    href="https://teacherchriser.github.io/images/me.gif"
+    type="image/x-icon"
+  >
+
   <style>
-	@import url('https://fonts.googleapis.com/css2?family=Doppio+One&family=Handlee&display=swap');
-	</style>
+    @import url('https://fonts.googleapis.com/css2?family=Doppio+One&family=Handlee&display=swap');
+  </style>
 
   <style>
 
@@ -63,7 +69,7 @@
       background: white;
       padding: 18px;
       border-radius: 14px;
-      box-shadow:0 3px 12px rgba(0,0,0,0.08);
+      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
@@ -79,11 +85,11 @@
     .search input {
       width: 100%;
       padding: 13px 15px;
-      border:1px solid #d1d5db;
+      border: 1px solid #d1d5db;
       border-radius: 9px;
       font-size: 16px;
       outline: none;
-	  font-family: "Doppio One", sans-serif;
+      font-family: "Doppio One", sans-serif;
     }
 
     .search input:focus {
@@ -103,13 +109,12 @@
 
     .sort select {
       padding: 12px;
-      border:1px solid #d1d5db;
+      border: 1px solid #d1d5db;
       border-radius: 9px;
       background: white;
       font-size: 14px;
-	  font-family: "Doppio One", sans-serif;
+      font-family: "Doppio One", sans-serif;
     }
-
 
     .refresh {
       border: none;
@@ -119,7 +124,7 @@
       border-radius: 9px;
       cursor: pointer;
       font-size: 14px;
-	  font-family: "Doppio One", sans-serif;
+      font-family: "Doppio One", sans-serif;
     }
 
     .refresh:hover {
@@ -158,17 +163,15 @@
       background: white;
       border-radius: 15px;
       overflow: hidden;
-      box-shadow:0 3px 12px rgba(0,0,0,0.07);
+      box-shadow: 0 3px 12px rgba(0,0,0,0.07);
       transition:
         transform 0.2s ease,
         box-shadow 0.2s ease;
     }
 
     .card:hover {
-      transform:
-        translateY(-3px);
-      box-shadow:
-        0 8px 22px rgba(0,0,0,0.10);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 22px rgba(0,0,0,0.10);
     }
 
     /* ==========================================
@@ -177,7 +180,7 @@
 
     .image {
       height: 210px;
-      background: #f9fafb;
+      background: #FFFFFF;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -248,7 +251,6 @@
         1px solid #a7f3d0;
     }
 
-
     .cheapest .store::after {
       content: " 🏆";
     }
@@ -260,7 +262,7 @@
     .summary {
       margin-top: 18px;
       padding-top: 15px;
-      border-top:1px solid #e5e7eb;
+      border-top: 1px solid #e5e7eb;
       font-size: 14px;
     }
 
@@ -283,13 +285,11 @@
     ========================================== */
 
     .state {
-      grid-column:
-        1 / -1;
+      grid-column: 1 / -1;
       text-align: center;
       padding: 60px 20px;
       color: #6b7280;
     }
-
 
     .error {
       color: #b91c1c;
@@ -460,6 +460,7 @@
 <footer>
 
   This is a Price Comparator Created by Professor Christian Serrano
+
 </footer>
 
 
@@ -472,7 +473,7 @@
 // =====================================================
 
 const API_URL =
-  "https://script.google.com/macros/s/AKfycbzeTNyQF-LgNQt11FBqfXpMssLTT3vIod-8XmtGKYB1eC0cV9i4TiWbEriJ09LIabFJ/exec";
+  "https://script.google.com/macros/s/AKfycbyc4YjEL_GKN1BARoZ-Y5x8qplUHfeMEbOjmvwuV7jCBLEYCGtcF9whR43Pme84UtrM/exec";
 
 
 
@@ -483,6 +484,8 @@ const API_URL =
 let allProducts = [];
 
 let displayedProducts = [];
+
+let storeNames = [];
 
 
 
@@ -541,8 +544,72 @@ async function loadProducts() {
     }
 
 
+    // ----------------------------------------------
+    // PRODUCTS
+    // ----------------------------------------------
+
     allProducts =
       result.data || [];
+
+
+    // ----------------------------------------------
+    // DETECT STORES AUTOMATICALLY
+    // ----------------------------------------------
+    //
+    // We look at the properties of each product.
+    //
+    // Store properties are everything except:
+    //
+    // item
+    // image
+    // minPrice
+    // maxPrice
+    // averagePrice
+    // priceDifference
+    // cheapestStore
+    //
+    // ----------------------------------------------
+
+    const excludedProperties = [
+
+      "item",
+      "image",
+      "minPrice",
+      "maxPrice",
+      "averagePrice",
+      "priceDifference",
+      "cheapestStore"
+
+    ];
+
+
+    const detectedStores = [];
+
+
+    allProducts.forEach(
+      function(product) {
+
+        Object.keys(product).forEach(
+          function(key) {
+
+            if (
+              !excludedProperties.includes(key) &&
+              !detectedStores.includes(key)
+            ) {
+
+              detectedStores.push(key);
+
+            }
+
+          }
+        );
+
+      }
+    );
+
+
+    storeNames =
+      detectedStores;
 
 
     displayedProducts =
@@ -569,7 +636,9 @@ async function loadProducts() {
         </h3>
 
         <p>
-          ${escapeHTML(error.message)}
+          ${escapeHTML(
+            error.message
+          )}
         </p>
 
       </div>
@@ -627,7 +696,6 @@ function applyFilters() {
 
 
   applySort();
-
 
 }
 
@@ -690,14 +758,29 @@ function applySort() {
 
 function comparePrices(a, b) {
 
-  if (a === null && b === null)
+  if (
+    a === null &&
+    b === null
+  ) {
+
     return 0;
 
-  if (a === null)
+  }
+
+
+  if (a === null) {
+
     return 1;
 
-  if (b === null)
+  }
+
+
+  if (b === null) {
+
     return -1;
+
+  }
+
 
   return a - b;
 
@@ -720,7 +803,8 @@ function renderProducts() {
     document.getElementById("resultsInfo");
 
 
-  container.innerHTML = "";
+  container.innerHTML =
+    "";
 
 
   resultsInfo.textContent =
@@ -784,7 +868,8 @@ function renderProducts() {
       // DIFFERENCE
       // ----------------------------------------------
 
-      let difference = "—";
+      let difference =
+        "—";
 
 
       if (
@@ -804,7 +889,8 @@ function renderProducts() {
       // AVERAGE
       // ----------------------------------------------
 
-      let average = "—";
+      let average =
+        "—";
 
 
       if (
@@ -819,6 +905,20 @@ function renderProducts() {
 
       }
 
+
+      // ----------------------------------------------
+      // DYNAMIC PRICE ROWS
+      // ----------------------------------------------
+
+      const priceRows =
+        createDynamicPriceRows(
+          product
+        );
+
+
+      // ----------------------------------------------
+      // CARD
+      // ----------------------------------------------
 
       card.innerHTML = `
 
@@ -842,29 +942,7 @@ function renderProducts() {
 
           <div class="prices">
 
-            ${priceRow(
-              "D1",
-              product.d1,
-              product.minPrice
-            )}
-
-            ${priceRow(
-              "ARA",
-              product.ara,
-              product.minPrice
-            )}
-
-            ${priceRow(
-              "OLÍMPICA",
-              product.olimpica,
-              product.minPrice
-            )}
-
-            ${priceRow(
-              "CARULLA",
-              product.carulla,
-              product.minPrice
-            )}
+            ${priceRows}
 
           </div>
 
@@ -879,9 +957,11 @@ function renderProducts() {
               </span>
 
               <span class="summary-value">
+
                 🏆 ${escapeHTML(
                   product.cheapestStore || "—"
                 )}
+
               </span>
 
             </div>
@@ -894,7 +974,9 @@ function renderProducts() {
               </span>
 
               <span class="summary-value">
+
                 ${average}
+
               </span>
 
             </div>
@@ -907,7 +989,9 @@ function renderProducts() {
               </span>
 
               <span class="summary-value">
+
                 ${difference}
+
               </span>
 
             </div>
@@ -920,10 +1004,64 @@ function renderProducts() {
       `;
 
 
-      container.appendChild(card);
+      container.appendChild(
+        card
+      );
 
     }
   );
+
+}
+
+
+
+// =====================================================
+// CREATE DYNAMIC PRICE ROWS
+// =====================================================
+
+function createDynamicPriceRows(product) {
+
+
+  if (
+    storeNames.length === 0
+  ) {
+
+    return `
+
+      <div class="price-row">
+
+        <span class="store">
+          Stores
+        </span>
+
+        <span class="amount">
+          —
+        </span>
+
+      </div>
+
+    `;
+
+  }
+
+
+  return storeNames
+    .map(
+      function(store) {
+
+        const price =
+          product[store];
+
+
+        return priceRow(
+          store,
+          price,
+          product.minPrice
+        );
+
+      }
+    )
+    .join("");
 
 }
 
@@ -942,7 +1080,8 @@ function priceRow(
 
   if (
     price === null ||
-    price === undefined
+    price === undefined ||
+    price === ""
   ) {
 
     return `
@@ -950,7 +1089,11 @@ function priceRow(
       <div class="price-row">
 
         <span class="store">
-          ${store}
+
+          ${formatStoreName(
+            store
+          )}
+
         </span>
 
         <span class="amount">
@@ -965,28 +1108,68 @@ function priceRow(
 
 
   const cheapest =
-    price === minPrice;
+    Number(price) ===
+    Number(minPrice);
 
 
   return `
 
     <div
       class="price-row ${
-        cheapest ? "cheapest" : ""
+        cheapest
+          ? "cheapest"
+          : ""
       }"
     >
 
       <span class="store">
-        ${store}
+
+        ${formatStoreName(
+          store
+        )}
+
       </span>
 
       <span class="amount">
-        ${formatPrice(price)}
+
+        ${formatPrice(
+          price
+        )}
+
       </span>
 
     </div>
 
   `;
+
+}
+
+
+
+// =====================================================
+// FORMAT STORE NAME
+// =====================================================
+//
+// Converts:
+//
+// d1       → D1
+// ara      → ARA
+// olimpica → OLIMPICA
+// carulla  → CARULLA
+//
+// Also works with future stores:
+//
+// exito    → EXITO
+// jumbo    → JUMBO
+//
+// =====================================================
+
+function formatStoreName(store) {
+
+  return escapeHTML(
+    String(store || "")
+      .toUpperCase()
+  );
 
 }
 
@@ -1096,12 +1279,27 @@ function formatPrice(price) {
 function normalizeText(text) {
 
   return String(text || "")
+
     .normalize("NFD")
+
     .replace(
       /[\u0300-\u036f]/g,
       ""
     )
-    .toLowerCase();
+
+    .toLowerCase()
+
+    .replace(
+      /[^a-z0-9]+/g,
+      " "
+    )
+
+    .replace(
+      /\s+/g,
+      " "
+    )
+
+    .trim();
 
 }
 
@@ -1116,8 +1314,10 @@ function escapeHTML(text) {
   const div =
     document.createElement("div");
 
+
   div.textContent =
     text;
+
 
   return div.innerHTML;
 
@@ -1132,18 +1332,22 @@ function escapeHTML(text) {
 function escapeAttribute(text) {
 
   return String(text || "")
+
     .replace(
       /&/g,
       "&amp;"
     )
+
     .replace(
       /"/g,
       "&quot;"
     )
+
     .replace(
       /</g,
       "&lt;"
     )
+
     .replace(
       />/g,
       "&gt;"
