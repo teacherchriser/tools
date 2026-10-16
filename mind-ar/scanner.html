@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2b3245">
+<title>Image Scanner</title>
+
+<!-- Librerías (versiones fijas) -->
+<script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+
+<style>
+  :root {
+    --bg: #2b3245;
+    --panel: #f4f6fb;
+    --ink: #1d2233;
+    --accent: #4f7cff;
+    --muted: #5b6480;
+  }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+
+  /* Pantalla de inicio */
+  #start {
+    position: fixed; inset: 0; z-index: 20; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 16px; padding: 24px;
+    background: var(--bg); color: #fff; text-align: center;
+  }
+  #start h1 { margin: 0; font-size: 1.6rem; }
+  #start p { margin: 0; max-width: 28ch; line-height: 1.45; color: #c9d1e8; }
+  button, .open-btn {
+    font: inherit; font-weight: 600; border: 0; border-radius: 12px;
+    padding: 14px 22px; background: var(--accent); color: #fff; cursor: pointer;
+    text-decoration: none; display: inline-block;
+  }
+  button:focus-visible, .open-btn:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+
+  /* Mensaje mientras busca */
+  #hint {
+    position: fixed; left: 0; right: 0; top: env(safe-area-inset-top, 0px);
+    z-index: 10; padding: 14px 16px; text-align: center; color: #fff;
+    background: rgba(43,50,69,.85); font-size: .95rem;
+  }
+
+  /* Tarjeta cuando se reconoce una imagen */
+  #found {
+    position: fixed; left: 12px; right: 12px; z-index: 15;
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    background: var(--panel); color: var(--ink); border-radius: 16px;
+    padding: 16px; display: none; flex-direction: column; gap: 10px;
+    box-shadow: 0 6px 24px rgba(0,0,0,.35);
+  }
+  #found.show { display: flex; }
+  #found .title { font-weight: 700; font-size: 1.05rem; }
+  #found .desc { color: var(--muted); font-size: .9rem; }
+
+  #error { color: #ffd1d1; }
+  .a-loader-title { display: none; }
+</style>
+</head>
+
+<body>
+
+<div id="start">
+  <h1>Image Scanner</h1>
+  <p>Apunta la cámara a una imagen del campus y abre la actividad.</p>
+  <button id="startBtn">Activar cámara</button>
+  <p id="error"></p>
+</div>
+
+<div id="hint" hidden>Busca una imagen con la cámara…</div>
+
+<div id="found" role="status" aria-live="polite">
+  <div class="title" id="foundTitle"></div>
+  <div class="desc" id="foundDesc"></div>
+  <a class="open-btn" id="openBtn" href="#" target="_blank" rel="noopener">Abrir actividad</a>
+</div>
+
+<!--
+  IMPORTANTE: targets.mind debe estar en la misma carpeta que este archivo.
+  El orden de las entidades (targetIndex 0, 1, 2...) debe coincidir con el
+  orden en que subiste las imágenes al compilador de MindAR.
+-->
+<a-scene
+  id="scene"
+  mindar-image="imageTargetSrc: ./targets.mind; autoStart: false; uiLoading: no; uiScanning: no; uiError: no; maxTrack: 1;"
+  color-space="sRGB"
+  renderer="colorManagement: true, physicallyCorrectLights"
+  vr-mode-ui="enabled: false"
+  device-orientation-permission-ui="enabled: false">
+
+  <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+  <a-entity id="t0" mindar-image-target="targetIndex: 0"></a-entity>
+  <a-entity id="t1" mindar-image-target="targetIndex: 1"></a-entity>
+  <a-entity id="t2" mindar-image-target="targetIndex: 2"></a-entity>
+</a-scene>
+
+<script>
+  /* =========================================================
+     CONFIGURACIÓN: una fila por imagen, en el MISMO orden en
+     que las subiste al compilador (.mind).
+     Para agregar más imágenes: añade una fila aquí y una
+     <a-entity id="tN" mindar-image-target="targetIndex: N">
+     arriba.
+     ========================================================= */
+  const ACTIVIDADES = [
+    {
+      titulo: "Phone Presentations (CAI2 2026-2)",
+      descripcion: "Toca el botón para abrir las presentaciones.",
+      url: "https://teacherchriser.github.io/upn/projects/phone-presentations/CAI2-2026-2.html"
+    },
+    {
+      titulo: "Actividad 2",
+      descripcion: "Cambia este título, descripción y URL.",
+      url: "https://example.com/"
+    },
+    {
+      titulo: "Actividad 3",
+      descripcion: "Cambia este título, descripción y URL.",
+      url: "https://example.com/"
+    }
+  ];
+
+  // true = abre la URL sola (puede ser bloqueada por el navegador).
+  // false = muestra un botón (recomendado).
+  const ABRIR_AUTOMATICO = false;
+
+  /* ========================================================= */
+
+  const scene   = document.getElementById("scene");
+  const start   = document.getElementById("start");
+  const hint    = document.getElementById("hint");
+  const found   = document.getElementById("found");
+  const errorEl = document.getElementById("error");
+
+  ACTIVIDADES.forEach((act, i) => {
+    const el = document.getElementById("t" + i);
+    if (!el) return;
+
+    el.addEventListener("targetFound", () => {
+      document.getElementById("foundTitle").textContent = act.titulo;
+      document.getElementById("foundDesc").textContent = act.descripcion;
+      document.getElementById("openBtn").href = act.url;
+      found.classList.add("show");
+      hint.hidden = true;
+      if (ABRIR_AUTOMATICO) window.open(act.url, "_blank", "noopener");
+    });
+
+    el.addEventListener("targetLost", () => {
+      // Deja la tarjeta visible un momento para poder tocar el botón.
+      setTimeout(() => {
+        found.classList.remove("show");
+        hint.hidden = false;
+      }, 4000);
+    });
+  });
+
+  document.getElementById("startBtn").addEventListener("click", async () => {
+    errorEl.textContent = "";
+    try {
+      const system = scene.systems["mindar-image-system"];
+      await system.start();
+      start.style.display = "none";
+      hint.hidden = false;
+    } catch (e) {
+      errorEl.textContent = "No se pudo activar la cámara. Revisa los permisos y que la página use https.";
+      console.error(e);
+    }
+  });
+</script>
+</body>
+</html>
