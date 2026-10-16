@@ -18,8 +18,12 @@
     --accent: #4f7cff;
     --muted: #5b6480;
   }
-  html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg);
+  /* El fondo va solo en html: si el body tuviera fondo opaco taparía el video de la cámara */
+  html { background: var(--bg); }
+  html, body { margin: 0; height: 100%; overflow: hidden; }
+  body { background: transparent;
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  a-scene { background: transparent; }
 
   /* Pantalla de inicio */
   #start {
