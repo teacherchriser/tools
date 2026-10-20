@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Traductor español–inglés</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fbfcfd;
+    --ink: #1b2a38;
+    --muted: #5a6b7a;
+    --line: #d3dde5;
+    --accent: #176b87;
+    --accent-ink: #ffffff;
+    --soft: #e8f1f5;
+    --error: #a4262c;
+    --font: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14202a;
+      --ink: #e8eef3;
+      --muted: #9fb0bf;
+      --line: #2c3f4e;
+      --accent: #5bb5d1;
+      --accent-ink: #0d1820;
+      --soft: #1d2f3c;
+      --error: #ff9ea1;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 17px; line-height: 1.5; }
+  main { max-width: 680px; margin: 0 auto; padding: 16px; }
+
+  .langbar { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+  .lang { flex: 1; font-size: 1.1rem; font-weight: 700; padding: 8px 12px; border: 1px solid var(--line); border-radius: 6px; text-align: center; background: var(--soft); }
+  button { font: inherit; cursor: pointer; }
+  .swap { border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 6px; width: 44px; height: 44px; font-size: 1.2rem; }
+  .swap:hover { background: var(--soft); }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+  textarea { width: 100%; min-height: 96px; resize: vertical; padding: 12px; font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; }
+  .row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 8px; }
+  .count { color: var(--muted); font-size: .9rem; }
+  .go { background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 6px; padding: 10px 22px; font-weight: 700; }
+  .go:disabled { opacity: .6; cursor: wait; }
+
+  #result { margin-top: 20px; }
+  .answer { border-left: 4px solid var(--accent); padding: 4px 0 4px 14px; }
+  .answer .text { font-size: 1.6rem; font-weight: 700; line-height: 1.3; overflow-wrap: anywhere; }
+  .answer .also { color: var(--muted); margin-top: 6px; }
+  .listen { margin-top: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 6px; padding: 6px 12px; }
+  .listen:hover { background: var(--soft); }
+
+  .dict { margin-top: 24px; border-top: 1px solid var(--line); padding-top: 14px; }
+  .dict h2 { font-size: 1.05rem; margin: 0 0 6px; }
+  .word { font-size: 1.3rem; font-weight: 700; }
+  .ipa { color: var(--muted); margin-left: 8px; }
+  .pos { font-style: italic; color: var(--accent); margin: 12px 0 2px; font-weight: 700; }
+  ol { margin: 0; padding-left: 22px; }
+  li { margin: 4px 0; }
+  .ex { color: var(--muted); }
+  .msg { color: var(--muted); }
+  .err { color: var(--error); }
+</style>
+</head>
+<body>
+<main>
+  <div class="langbar">
+    <div class="lang" id="from">Español</div>
+    <button class="swap" id="swap" type="button" aria-label="Cambiar dirección de traducción">⇄</button>
+    <div class="lang" id="to">English</div>
+  </div>
+
+  <label for="input" class="count" id="label" style="display:block;margin-bottom:4px">Escribe una palabra a traducir</label>
+  <textarea id="input" maxlength="500" placeholder="hola, ¿cómo estás?"></textarea>
+  <div class="row">
+    <span class="count"><span id="n">0</span>/15</span>
+    <button class="go" id="go" type="button">Traducir</button>
+  </div>
+
+  <section id="result" aria-live="polite"></section>
+</main>
+
+<script>
+  // Opcional: un correo real sube el límite diario gratuito de MyMemory.
+  const CONTACT_EMAIL = "";
+
+  const LANGS = { es: "Español", en: "English" };
+  let from = "es", to = "en";
+
+  const $ = (id) => document.getElementById(id);
+  const input = $("input"), result = $("result"), goBtn = $("go");
+
+  function el(tag, cls, text) {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text !== undefined) e.textContent = text;
+    return e;
+  }
+
+  function refreshLabels() {
+    $("from").textContent = LANGS[from];
+    $("to").textContent = LANGS[to];
+    if (from === "es") {
+      $("label").textContent = "Escribe una palabra o una frase";
+      input.placeholder = "Escribe la palabra aquí";
+    } else {
+      $("label").textContent = "Type a word or a phrase";
+      input.placeholder = "Write your word here";
+    }
+  }
+
+  $("swap").addEventListener("click", () => {
+    [from, to] = [to, from];
+    refreshLabels();
+    result.replaceChildren();
+    input.focus();
+  });
+
+  input.addEventListener("input", () => { $("n").textContent = input.value.length; });
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); run(); }
+  });
+  goBtn.addEventListener("click", run);
+
+  const WORD = /^[\p{L}][\p{L}'’-]*$/u;
+
+  async function run() {
+    const q = input.value.trim();
+    if (!q) { input.focus(); return; }
+    goBtn.disabled = true;
+    result.replaceChildren(el("p", "msg", from === "es" ? "Traduciendo…" : "Translating…"));
+    try {
+      let url = "https://api.mymemory.translated.net/get?q=" + encodeURIComponent(q) + "&langpair=" + from + "|" + to;
+      if (CONTACT_EMAIL) url += "&de=" + encodeURIComponent(CONTACT_EMAIL);
+      const res = await fetch(url);
+      const data = await res.json();
+      if (Number(data.responseStatus) !== 200) throw new Error(data.responseDetails || "Error");
+      const main = decodeEntities(data.responseData.translatedText || "");
+      renderAnswer(q, main, data.matches || []);
+
+      // English definition for single English words (typed or translated)
+      let enWord = null;
+      if (from === "en" && WORD.test(q)) enWord = q;
+      else if (to === "en" && WORD.test(main.trim())) enWord = main.trim();
+      if (enWord) await renderDefinition(enWord.toLowerCase());
+    } catch (err) {
+      result.replaceChildren(el("p", "err", "No se pudo traducir ahora. Revisa tu conexión o intenta más tarde. / Translation unavailable right now."));
+    } finally {
+      goBtn.disabled = false;
+    }
+  }
+
+  function decodeEntities(s) {
+    const t = document.createElement("textarea");
+    t.innerHTML = s;
+    return t.value;
+  }
+
+  function renderAnswer(q, main, matches) {
+    const box = el("div", "answer");
+    box.appendChild(el("div", "text", main));
+
+    if (WORD.test(q)) {
+      const seen = new Set([main.toLowerCase()]);
+      const alts = [];
+      for (const m of matches) {
+        const t = decodeEntities(m.translation || "").trim();
+        const k = t.toLowerCase();
+        if (t && !seen.has(k) && t.length <= 40 && !/\s{2,}/.test(t)) { seen.add(k); alts.push(t); }
+        if (alts.length === 4) break;
+      }
+      if (alts.length) {
+        box.appendChild(el("div", "also", (from === "es" ? "También: " : "Also: ") + alts.join(", ")));
+      }
+    }
+
+    if ("speechSynthesis" in window) {
+      const b = el("button", "listen", to === "en" ? "🔊 Listen" : "🔊 Escuchar");
+      b.type = "button";
+      b.addEventListener("click", () => {
+        speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(main);
+        u.lang = to === "en" ? "en-US" : "es-CO";
+        speechSynthesis.speak(u);
+      });
+      box.appendChild(b);
+    }
+    result.replaceChildren(box);
+  }
+
+  async function renderDefinition(word) {
+    const box = el("section", "dict");
+    box.appendChild(el("h2", "", "English definition"));
+    result.appendChild(box);
+    try {
+      const res = await fetch("https://api.dictionaryapi.dev/api/v2/entries/en/" + encodeURIComponent(word));
+      if (!res.ok) throw new Error("not found");
+      const entries = await res.json();
+      const e = entries[0];
+
+      const head = el("div");
+      head.appendChild(el("span", "word", e.word));
+      const ipa = e.phonetic || (e.phonetics.find((p) => p.text) || {}).text;
+      if (ipa) head.appendChild(el("span", "ipa", ipa));
+      box.appendChild(head);
+
+      const audio = (e.phonetics.find((p) => p.audio) || {}).audio;
+      if (audio) {
+        const b = el("button", "listen", "🔊 Pronunciation");
+        b.type = "button";
+        b.addEventListener("click", () => new Audio(audio).play());
+        box.appendChild(b);
+      }
+
+      for (const m of e.meanings.slice(0, 3)) {
+        box.appendChild(el("div", "pos", m.partOfSpeech));
+        const ol = el("ol");
+        for (const d of m.definitions.slice(0, 2)) {
+          const li = el("li", "", d.definition);
+          if (d.example) li.appendChild(el("div", "ex", "“" + d.example + "”"));
+          ol.appendChild(li);
+        }
+        box.appendChild(ol);
+      }
+    } catch (err) {
+      box.appendChild(el("p", "msg", "No English definition found for “" + word + "”."));
+    }
+  }
+
+  refreshLabels();
+</script>
+</body>
+</html>
