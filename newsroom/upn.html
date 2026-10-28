@@ -1,1206 +1,258 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Student Newsroom</title>
-<link rel="icon" href="https://teacherchriser.github.io/images/me.gif" type="image/x-icon">
-
-<!-- SITE COUNTER -->
-	<script data-goatcounter="https://teacherchriser.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Class Times</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400..700;1,400..700&family=Special+Elite&display=swap');
-@font-face {
-    font-family: 'Chomsky';
-    src: url('https://teacherchriser.github.io/tools/fonts/Chomsky.otf') format('opentype');
-    font-weight: normal;
-    font-style: normal;
-}
+:root{--ink:#17181C;--paper:#F5F4F0;--muted:#55585F;--accent:#8E1B2D;--soft:#E4E3DB}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'Source Serif 4',Georgia,serif;font-size:18px;line-height:1.55}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px 48px}
+.mast{text-align:center;padding:36px 0 14px;border-bottom:4px double var(--ink)}
+.mast h1{margin:0;font-family:'Playfair Display',Georgia,serif;font-weight:900;font-size:clamp(46px,10vw,112px);line-height:1;letter-spacing:-1px}
+.mast p{margin:8px 0 0;font-style:italic;color:var(--muted);font-size:20px}
+.bar{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--ink);font-size:16px}
+.bar button{font:inherit;font-size:16px;background:none;border:1.5px solid var(--ink);padding:4px 14px;border-radius:2px;cursor:pointer;color:var(--ink)}
+.bar button:hover{background:var(--ink);color:var(--paper)}
+button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.note{margin:18px 0;padding:14px 18px;border:1.5px solid var(--accent);color:var(--accent);background:#fff;font-size:17px}
+.lead{display:grid;grid-template-columns:1.5fr 1fr;gap:32px;padding:28px 0;border-bottom:4px double var(--ink);align-items:start}
+.lead h2{font-family:'Playfair Display',Georgia,serif;font-weight:900;font-size:clamp(30px,4.4vw,52px);line-height:1.08;margin:0 0 10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:36px 32px;padding-top:28px}
+.card{border-top:2px solid var(--ink);padding-top:14px}
+.card h3{font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:25px;line-height:1.15;margin:12px 0 6px}
+.title-btn{all:unset;cursor:pointer;display:block}
+.title-btn:hover{color:var(--accent);text-decoration:underline}
+.title-btn:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.by{color:var(--muted);font-style:italic;font-size:16px;margin:0 0 8px}
+.ex{margin:0}
+.img{aspect-ratio:16/10;background:var(--soft);overflow:hidden;cursor:pointer}
+.img img{width:100%;height:100%;object-fit:cover;display:block}
+.img.ph{display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',Georgia,serif;font-size:96px;font-weight:900;color:#B7B5A8}
+.lead .img{aspect-ratio:4/3}
+.more{margin-top:14px;font:inherit;font-weight:600;background:var(--ink);color:var(--paper);border:0;padding:9px 18px;cursor:pointer;border-radius:2px}
+.more:hover{background:var(--accent)}
+dialog{width:min(820px,94vw);max-height:94vh;padding:0;border:0;background:var(--paper);color:var(--ink);box-shadow:0 0 0 2px var(--ink)}
+dialog::backdrop{background:rgba(23,24,28,.75)}
+.read{padding:28px 36px 36px}
+.read h2{font-family:'Playfair Display',Georgia,serif;font-weight:900;font-size:clamp(30px,5vw,46px);line-height:1.1;margin:6px 0 8px}
+.read .img{aspect-ratio:auto;max-height:420px;margin:18px 0;cursor:default}
+.read .img img{max-height:420px;object-fit:contain;background:var(--soft)}
+.read .img.ph{aspect-ratio:16/7}
+.read p{max-width:66ch}
+.close{float:right;font:inherit;background:none;border:1.5px solid var(--ink);padding:4px 14px;border-radius:2px;cursor:pointer}
+.close:hover{background:var(--ink);color:var(--paper)}
+@media(max-width:760px){.lead{grid-template-columns:1fr}.read{padding:20px}}
 </style>
-<!-- src: url('./MiFuente.ttf') format('truetype'); -->
-
-
-<style>
-
-/* =====================================
-   GENERAL
-===================================== */
-
-* {
-    box-sizing: border-box;
-}
-body {
-    margin: 0;
-    font-family: "Libre Baskerville", serif;
-    background: #F4F1E8;
-    color: #222;
-}
-
-/* =====================================
-   HEADER
-===================================== */
-
-header {
-    background: #011e62;
-    color: white;
-    padding: 25px 20px;
-}
-.header-container {
-    max-width: 1200px;
-    margin: auto;
-}
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 65px;
-    font-weight: none;
-    letter-spacing: 1px;
-	color: #FFFFFF;
-}
-.logo img {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
-    display: block;
-	filter: brightness(0) invert(1);
-}
-.tagline {
-    margin-top: 6px;
-    color: #F4F1E8;
-    font-size: 15px;
-}
-
-/* =====================================
-   CONTROLS
-===================================== */
-
-.controls {
-    max-width: 1200px;
-    margin: 25px auto;
-    padding: 0 20px;
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 12px;
-}
-input,
-select {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    font-size: 15px;
-    background: white;
-}
-
-
-/* =====================================
-   NEWS GRID
-===================================== */
-
-.news-container {
-    max-width: 1200px;
-    margin: auto;
-    padding: 0 20px 40px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 22px;
-}
-
-
-/* =====================================
-   NEWS CARD
-===================================== */
-
-.news-card {
-    background: white;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    transition: transform 0.2s;
-}
-
-.news-card:hover {
-    transform: translateY(-3px);
-}
-.news-image {
-    width: 100%;
-    height: 190px;
-    object-fit: cover;
-    background: #e5e7eb;
-}
-
-.news-content {
-    padding: 18px;
-}
-
-.category {
-    display: inline-block;
-    font-size: 12px;
-    font-weight: bold;
-    background: #e5e7eb;
-    color: #374151;
-    padding: 5px 8px;
-    border-radius: 4px;
-    margin-bottom: 10px;
-}
-
-.news-title {
-    font-size: 21px;
-    line-height: 1.25;
-    margin: 5px 0 10px;
-}
-
-.summary {
-    color: #4b5563;
-    line-height: 1.5;
-    font-size: 15px;
-}
-
-.meta {
-    margin-top: 15px;
-    padding-top: 12px;
-    border-top: 1px solid #e5e7eb;
-    font-size: 13px;
-    color: #6b7280;
-}
-
-.read-button {
-    margin-top: 15px;
-    display: inline-block;
-    background: #011e62;
-    color: white;
-    padding: 9px 13px;
-    border-radius: 5px;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-
-/* =====================================
-   LOADING / MESSAGES
-===================================== */
-
-.message {
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 20px;
-    text-align: center;
-    color: #6b7280;
-}
-
-
-/* =====================================
-   MODAL
-===================================== */
-
-.modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.65);
-    z-index: 1000;
-    overflow-y: auto;
-}
-
-.modal-box {
-    background: white;
-    max-width: 850px;
-    margin: 50px auto;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.modal-image {
-    width: 100%;
-    max-height: 400px;
-    object-fit: cover;
-}
-
-.modal-content {
-    padding: 30px;
-}
-
-.modal-title {
-    font-size: 32px;
-    margin-bottom: 10px;
-}
-
-.modal-meta {
-    color: #6b7280;
-    margin-bottom: 25px;
-}
-
-.modal-text {
-    line-height: 1.7;
-    font-size: 17px;
-    white-space: pre-line;
-}
-
-.close {
-    float: right;
-    font-size: 28px;
-    cursor: pointer;
-    color: #555;
-}
-
-
-/* =====================================
-   RESPONSIVE
-===================================== */
-
-@media (max-width: 900px) {
-    .news-container {
-        grid-template-columns:
-            repeat(2, 1fr);
-    }
-
-}
-
-@media (max-width: 650px) {
-    .controls {
-        grid-template-columns: 1fr;
-
-    }
-
-    .news-container {
-
-        grid-template-columns: 1fr;
-
-    }
-
-    .logo {
-
-        font-size: 27px;
-
-    }
-
-}
-
-</style>
-
 </head>
-
-
 <body>
-
-
-<header>
-
-<div class="header-container">
-
-<div class="logo" style="font-family: 'Chomsky', serif;">
-<img src="https://www.upn.edu.co/wp-content/uploads/2025/11/UPN-2025-MARCA.webp" alt="Logo">
- The Pedagogical Paper
-</div>
-<!-- https://estilos.upn.edu.co/userfiles/header_externo/5.png -->
-
-<div class="tagline">
-News reported, written and shared by CAI2 students - Directed by: Professor Christian Serrano
+<div class="wrap">
+  <header class="mast">
+    <h1 id="paper-name">The Class Times</h1>
+    <p id="tagline"></p>
+  </header>
+  <div class="bar">
+    <span id="date"></span>
+    <span id="count"></span>
+    <button type="button" id="refresh">Refresh news</button>
+  </div>
+  <div class="note" id="note" role="status" hidden></div>
+  <main id="front"></main>
 </div>
 
-</div>
-
-</header>
-
-
-<div class="controls">
-
-<input
-    type="text"
-    id="search"
-    placeholder="Search news..."
->
-
-<select id="category">
-
-    <option value="">
-        All categories
-    </option>
-
-</select>
-
-
-<select id="borough">
-
-    <option value="">
-        All boroughs
-    </option>
-
-</select>
-
-</div>
-
-
-<div
-    id="message"
-    class="message"
->
-Loading student news...
-</div>
-
-
-<div
-    id="newsContainer"
-    class="news-container"
-></div>
-
-
-<!-- =====================================
-     MODAL
-===================================== -->
-
-<div
-    id="modal"
-    class="modal"
->
-
-<div class="modal-box">
-
-
-<img
-    id="modalImage"
-    class="modal-image"
-    alt="News photograph"
->
-
-
-<div class="modal-content">
-
-
-<span
-    class="close"
-    onclick="closeModal()"
->
-×
-</span>
-
-
-<div
-    id="modalTitle"
-    class="modal-title"
-></div>
-
-
-<div
-    id="modalMeta"
-    class="modal-meta"
-></div>
-
-
-<div
-    id="modalText"
-    class="modal-text"
-></div>
-
-
-</div>
-
-</div>
-
-</div>
-
+<dialog id="reader" aria-label="Full story"></dialog>
 
 <script>
-
-/* =====================================
-   GOOGLE APPS SCRIPT API
-===================================== */
-
-const API_URL =
-"https://script.google.com/macros/s/AKfycbyW1FekBlGlOWcpA1va9Hks3At9zip_--Z9_ZQR4TUHxf4D7Bbzu6cz9DP66Hd3PY8jWA/exec";
-
-
-/* =====================================
-   GLOBAL DATA
-===================================== */
-
-let allNews = [];
-
-let displayedNews = [];
-
-
-/* =====================================
-   LOAD NEWS
-===================================== */
-
-async function loadNews() {
-
-    const message =
-        document.getElementById("message");
-
-    try {
-
-        const response =
-            await fetch(API_URL);
-
-        if (!response.ok) {
-
-            throw new Error(
-                "HTTP error: " +
-                response.status
-            );
-
-        }
-
-
-        const data =
-            await response.json();
-
-
-        if (!Array.isArray(data)) {
-
-            throw new Error(
-                "The API did not return an array."
-            );
-
-        }
-
-
-        allNews = data;
-
-
-        message.style.display =
-            "none";
-
-
-        createFilters();
-
-
-        displayNews(allNews);
-
-    }
-
-    catch(error) {
-
-        console.error(
-            "Student Newsroom error:",
-            error
-        );
-
-
-        message.style.display =
-            "block";
-
-
-        message.innerHTML =
-
-            "Sorry. The student news could not be loaded right now." +
-
-            "<br><br>" +
-
-            "<small>" +
-            "Please check the browser console for details." +
-            "</small>";
-
-    }
-
-}
-
-
-/* =====================================
-   CREATE FILTERS
-===================================== */
-
-function createFilters() {
-
-
-    const categories =
-        [
-            ...new Set(
-
-                allNews
-
-                    .map(
-                        item =>
-                        item["Category"]
-                    )
-
-                    .filter(Boolean)
-
-            )
-        ];
-
-
-    const boroughs =
-        [
-            ...new Set(
-
-                allNews
-
-                    .map(
-                        item =>
-                        item["Borough"]
-                    )
-
-                    .filter(Boolean)
-
-            )
-        ];
-
-
-    const categorySelect =
-        document.getElementById(
-            "category"
-        );
-
-
-    const boroughSelect =
-        document.getElementById(
-            "borough"
-        );
-
-
-    categories
-        .sort()
-        .forEach(category => {
-
-            const option =
-                document.createElement(
-                    "option"
-                );
-
-            option.value =
-                category;
-
-            option.textContent =
-                category;
-
-            categorySelect.appendChild(
-                option
-            );
-
-        });
-
-
-    boroughs
-        .sort()
-        .forEach(borough => {
-
-            const option =
-                document.createElement(
-                    "option"
-                );
-
-            option.value =
-                borough;
-
-            option.textContent =
-                borough;
-
-            boroughSelect.appendChild(
-                option
-            );
-
-        });
-
-}
-
-
-/* =====================================
-   DISPLAY NEWS
-===================================== */
-
-function displayNews(news) {
-
-
-    displayedNews =
-        news;
-
-
-    const container =
-        document.getElementById(
-            "newsContainer"
-        );
-
-
-    container.innerHTML =
-        "";
-
-
-    if (!news.length) {
-
-        container.innerHTML =
-
-            "<div class='message'>" +
-            "No news found." +
-            "</div>";
-
-        return;
-
-    }
-
-
-    news.forEach(
-        (item, index) => {
-
-
-        const card =
-            document.createElement(
-                "article"
-            );
-
-
-        card.className =
-            "news-card";
-
-
-        /* IMAGE */
-
-        const imageURL =
-            getDriveImageURL(
-                item["Picture"]
-            );
-
-
-        let imageHTML = "";
-
-
-        if (imageURL) {
-
-            imageHTML = `
-
-                <img
-                    class="news-image"
-                    src="${imageURL}"
-                    alt="News photograph"
-                    onerror="this.style.display='none'"
-                >
-
-            `;
-
-        }
-
-        else {
-
-            imageHTML = `
-
-                <div
-                    class="news-image"
-                ></div>
-
-            `;
-
-        }
-
-
-        /* CARD */
-
-        card.innerHTML = `
-
-            ${imageHTML}
-
-            <div class="news-content">
-
-                <div class="category">
-
-                    ${escapeHTML(
-                        item["Category"]
-                        || "News"
-                    )}
-
-                </div>
-
-
-                <h2 class="news-title">
-
-                    ${escapeHTML(
-                        item["News Title"]
-                        || "Untitled"
-                    )}
-
-                </h2>
-
-
-                <div class="summary">
-
-                    ${escapeHTML(
-                        item["Summary"]
-                        || ""
-                    )}
-
-                </div>
-
-
-                <div class="meta">
-
-                    👤
-                    ${escapeHTML(
-                        item["Author"]
-                        || "Unknown"
-                    )}
-
-                    <br>
-
-                    📍
-                    ${escapeHTML(
-                        item["Borough"]
-                        || ""
-                    )}
-
-                </div>
-
-
-                <div
-                    class="read-button"
-                    data-index="${index}"
-                >
-
-                    Read full report →
-
-                </div>
-
-            </div>
-
-        `;
-
-
-        /*
-         * IMPORTANT:
-         * We attach the click event with JavaScript
-         * instead of inserting the entire JSON object
-         * inside an HTML onclick attribute.
-         */
-
-        const button =
-            card.querySelector(
-                ".read-button"
-            );
-
-
-        button.addEventListener(
-            "click",
-            function() {
-
-                const newsIndex =
-                    Number(
-                        this.dataset.index
-                    );
-
-
-                openModal(
-                    displayedNews[
-                        newsIndex
-                    ]
-                );
-
-            }
-        );
-
-
-        container.appendChild(
-            card
-        );
-
-    });
-
-}
-
-
-/* =====================================
-   SEARCH AND FILTER
-===================================== */
-
-function filterNews() {
-
-
-    const search =
-        document.getElementById(
-            "search"
-        )
-        .value
-        .toLowerCase()
-        .trim();
-
-
-    const category =
-        document.getElementById(
-            "category"
-        )
-        .value;
-
-
-    const borough =
-        document.getElementById(
-            "borough"
-        )
-        .value;
-
-
-    const filtered =
-        allNews.filter(
-            item => {
-
-
-            const text = [
-
-                item["News Title"],
-                item["Summary"],
-                item["Content"],
-                item["Author"],
-                item["Category"],
-                item["Borough"]
-
-            ]
-
-            .join(" ")
-
-            .toLowerCase();
-
-
-            return (
-
-                text.includes(search)
-
-                &&
-
-                (
-                    !category
-                    ||
-                    item["Category"]
-                    ===
-                    category
-                )
-
-                &&
-
-                (
-                    !borough
-                    ||
-                    item["Borough"]
-                    ===
-                    borough
-                )
-
-            );
-
-        }
-    );
-
-
-    displayNews(
-        filtered
-    );
-
-}
-
-
-/* =====================================
-   FILTER EVENTS
-===================================== */
-
-document
-    .getElementById("search")
-    .addEventListener(
-        "input",
-        filterNews
-    );
-
-
-document
-    .getElementById("category")
-    .addEventListener(
-        "change",
-        filterNews
-    );
-
-
-document
-    .getElementById("borough")
-    .addEventListener(
-        "change",
-        filterNews
-    );
-
-
-/* =====================================
-   MODAL
-===================================== */
-
-function openModal(item) {
-
-
-    document.getElementById(
-        "modalTitle"
-    ).textContent =
-
-        item["News Title"]
-        || "";
-
-
-    document.getElementById(
-        "modalMeta"
-    ).textContent =
-
-        `By ${
-            item["Author"]
-            || "Unknown"
-        } · ${
-            item["Borough"]
-            || ""
-        } · ${
-            item["Category"]
-            || ""
-        }`;
-
-
-    document.getElementById(
-        "modalText"
-    ).textContent =
-
-        item["Content"]
-        ||
-        item["Summary"]
-        ||
-        "";
-
-
-    const image =
-        document.getElementById(
-            "modalImage"
-        );
-
-
-    const imageURL =
-        getDriveImageURL(
-            item["Picture"]
-        );
-
-
-    if (imageURL) {
-
-        image.src =
-            imageURL;
-
-        image.style.display =
-            "block";
-
-    }
-
-    else {
-
-        image.removeAttribute(
-            "src"
-        );
-
-        image.style.display =
-            "none";
-
-    }
-
-
-    document.getElementById(
-        "modal"
-    ).style.display =
-        "block";
-
-}
-
-
-/* =====================================
-   CLOSE MODAL
-===================================== */
-
-function closeModal() {
-
-    document.getElementById(
-        "modal"
-    ).style.display =
-        "none";
-
-}
-
-
-window.addEventListener(
-    "click",
-    function(event) {
-
-        const modal =
-            document.getElementById(
-                "modal"
-            );
-
-
-        if (
-            event.target === modal
-        ) {
-
-            closeModal();
-
-        }
-
-    }
-);
-
-
-/* =====================================
-   GOOGLE DRIVE IMAGE
-===================================== */
-
-function getDriveImageURL(value) {
-
-
-    if (!value) {
-
-        return "";
-
-    }
-
-
-    const url =
-        String(value).trim();
-
-
-    let fileId =
-        "";
-
-
-    /*
-     * Format:
-     * https://drive.google.com/open?id=FILE_ID
-     */
-
-    let match =
-        url.match(
-            /[?&]id=([^&]+)/
-        );
-
-
-    if (match) {
-
-        fileId =
-            match[1];
-
-    }
-
-
-    /*
-     * Format:
-     * https://drive.google.com/file/d/FILE_ID/view
-     */
-
-    if (!fileId) {
-
-        match =
-            url.match(
-                /\/file\/d\/([^/]+)/
-            );
-
-
-        if (match) {
-
-            fileId =
-                match[1];
-
-        }
-
-    }
-
-
-    /*
-     * Google Drive thumbnail
-     */
-
-    if (fileId) {
-
-        return (
-
-            "https://drive.google.com/thumbnail" +
-
-            "?id=" +
-
-            encodeURIComponent(
-                fileId
-            ) +
-
-            "&sz=w1200"
-
-        );
-
-    }
-
-
-    /*
-     * Already a normal image URL
-     */
-
-    if (
-
-        url.startsWith(
-            "http://"
-        )
-
-        ||
-
-        url.startsWith(
-            "https://"
-        )
-
-    ) {
-
-        return url;
-
-    }
-
-
-    return "";
-
-}
-
-
-/* =====================================
-   SECURITY
-===================================== */
-
-function escapeHTML(text) {
-
-    return String(text)
-
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-
-        .replace(
-            /</g,
-            "&lt;"
-        )
-
-        .replace(
-            />/g,
-            "&gt;"
-        )
-
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-
-}
-
-
-/* =====================================
-   START
-===================================== */
-
-loadNews();
-
-</script>
-
-<script> 
-document.oncontextmenu = function() { 
-    return false; 
+/* ============================================================
+   CONFIGURACIÓN (lo único que normalmente tendrás que editar)
+   ============================================================
+   SHEET_URL: enlace del Google Sheet. Lo más fácil:
+     En el Sheet: Archivo > Compartir > Publicar en la web >
+     elige la hoja "Respuestas de formulario 1" y formato CSV >
+     Publicar > copia el enlace y pégalo aquí.
+   COLUMNS: normalmente vacío (el periódico detecta solo las columnas).
+     Solo si alguna columna no se detecta bien, escribe el texto
+     del encabezado (o parte de él). Ej: headline: 'Titular'
+   ============================================================ */
+var CONFIG = {
+  SHEET_URL: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTr7Nh2DPLPbkviu49jdvBJeDMlZjw0AJeLPRkVALnAoUc_2JE5QD7JeYmdP2qmVfgPq2zvS4_rWGUb/pub?gid=1173773101&single=true&output=csv',
+  NEWSPAPER_NAME: 'The Class Times',
+  TAGLINE: 'Written by our students, for our students',
+  ORDER: 'newest',            // 'newest' (último enviado primero) | 'oldest'
+  COLUMNS: { headline: '', content: '', picture: '', authors: '' }
 };
+
+(function(){
+var FIELDS=['picture','headline','authors','content'];
+var KEYS={
+  picture:['picture','image','photo','foto','imagen','upload','archivo','file','subir','cargar'],
+  headline:['headline','title','titular','titulo','heading','encabezado'],
+  authors:['author','autor','written by','name','nombre','reporter','periodista','integrante','equipo'],
+  content:['news','content','story','article','noticia','contenido','texto','body','report']
+};
+var DEMO={
+  h:['Timestamp','Headline','News content','Picture','Authors'],
+  r:[
+    ['1','Our School Wins the Science Fair','Last Friday, our school won first place at the city science fair.\nThe students built a small solar car. The judges said it was the most creative project.','','Ana and Luis'],
+    ['2','New Library Opens in Bogotá','A new library opened this week. It has quiet rooms, computers and a café for students.','','Camila R.'],
+    ['3','Football Team Prepares for the Final','The university team is training every day. The coach says the players are ready.','','Diego, Sofía']
+  ]
+};
+function $(id){return document.getElementById(id)}
+function norm(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
+
+function csvUrl(u){
+  u=u.trim().replace('output=html','output=csv');
+  if(/output=csv|tqx=out:csv/.test(u))return u;
+  var m=u.match(/spreadsheets\/d\/(?!e\/)([\w-]+)/);
+  if(m){var g=u.match(/[#&?]gid=(\d+)/);return 'https://docs.google.com/spreadsheets/d/'+m[1]+'/gviz/tq?tqx=out:csv'+(g?'&gid='+g[1]:'')}
+  return u;
+}
+function parseCSV(t){
+  t=t.replace(/^\uFEFF/,'');var rows=[],r=[],f='',q=false;
+  for(var i=0;i<t.length;i++){var c=t[i];
+    if(q){if(c==='"'){if(t[i+1]==='"'){f+='"';i++}else q=false}else f+=c}
+    else if(c==='"')q=true;
+    else if(c===','){r.push(f);f=''}
+    else if(c==='\n'||c==='\r'){if(c==='\r'&&t[i+1]==='\n')i++;r.push(f);rows.push(r);r=[];f=''}
+    else f+=c}
+  if(f!==''||r.length){r.push(f);rows.push(r)}
+  return rows.filter(function(x){return x.some(function(v){return v.trim()})});
+}
+
+/* Detecta qué columna es cada campo, sin importar el orden ni el texto exacto */
+function detect(h,rows){
+  var map={},used={};
+  function col(i){return rows.map(function(r){return (r[i]||'').trim()}).filter(Boolean)}
+  function avg(i){var c=col(i);return c.length?c.reduce(function(a,v){return a+v.length},0)/c.length:0}
+  function urlR(i){var c=col(i);return c.length?c.filter(function(v){return /https?:\/\//.test(v)}).length/c.length:0}
+  function ign(i){return /timestamp|marca temporal|e-?mail|correo|puntuac|score/.test(norm(h[i]))}
+  FIELDS.forEach(function(f){
+    var want=CONFIG.COLUMNS[f];if(!want)return;
+    var w=norm(want).trim(),i=-1;
+    h.forEach(function(x,k){if(i<0&&!used[k]&&norm(x).trim()===w)i=k});
+    h.forEach(function(x,k){if(i<0&&!used[k]&&norm(x).indexOf(w)>-1)i=k});
+    if(i>=0){map[f]=i;used[i]=1}
+  });
+  FIELDS.forEach(function(f){
+    if(map[f]!==undefined)return;
+    var best=-1,bs=0;
+    h.forEach(function(x,i){
+      if(used[i]||ign(i))return;
+      var n=norm(x),s=0;
+      KEYS[f].forEach(function(k){var p=n.search(new RegExp('\\b'+k));if(p>-1)s=Math.max(s,p===0?2:1)});
+      if(f==='picture'&&urlR(i)>0.5)s=3;
+      if(s>bs){bs=s;best=i}
+    });
+    if(best>=0){map[f]=best;used[best]=1}
+  });
+  var rest=[];
+  h.forEach(function(x,i){if(!used[i]&&!ign(i)&&avg(i)>0&&urlR(i)<0.5)rest.push(i)});
+  rest.sort(function(a,b){return avg(b)-avg(a)});
+  ['content','headline','authors'].forEach(function(f){if(map[f]===undefined&&rest.length){var i=rest.shift();map[f]=i;used[i]=1}});
+  return map;
+}
+
+function fixPic(v){
+  v=(v||'').split(/[\s,;]+/).filter(function(x){return /^https?:\/\//.test(x)})[0];
+  if(!v)return '';
+  if(/drive\.google\.com|docs\.google\.com/.test(v)){
+    var m=v.match(/[?&]id=([\w-]+)/)||v.match(/\/d\/([\w-]+)/);
+    if(m)return 'https://drive.google.com/thumbnail?id='+m[1]+'&sz=w1400';
+  }
+  return v;
+}
+function buildStories(h,rows){
+  var map=detect(h,rows);
+  function get(r,f){return map[f]===undefined?'':String(r[map[f]]||'').trim()}
+  var list=rows.map(function(r){
+    var s={headline:get(r,'headline'),content:get(r,'content'),picture:fixPic(get(r,'picture')),authors:get(r,'authors').replace(/\s*[\r\n]+\s*/g,', ')};
+    if(!s.headline&&s.content)s.headline=s.content.split(/\s+/).slice(0,8).join(' ')+'…';
+    return s;
+  }).filter(function(s){return s.headline||s.content});
+  if(CONFIG.ORDER!=='oldest')list.reverse();
+  return {list:list,map:map};
+}
+
+function excerpt(t,n){t=t.replace(/\s+/g,' ');return t.length>n?t.slice(0,n).replace(/\s+\S*$/,'')+'…':t}
+function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!==undefined)e.textContent=txt;return e}
+function imgBox(s,alt){
+  var box=el('div','img');
+  function ph(){box.innerHTML='';box.classList.add('ph');box.appendChild(el('span','',(s.headline||'?').trim().charAt(0).toUpperCase()))}
+  if(!s.picture){ph();return box}
+  var im=new Image();im.alt=alt||'';im.loading='lazy';im.referrerPolicy='no-referrer';im.onerror=ph;im.src=s.picture;box.appendChild(im);
+  return box;
+}
+function byline(s){return s.authors?el('p','by','By '+s.authors):null}
+
+function openStory(s){
+  var d=$('reader');d.innerHTML='';
+  var w=el('div','read'),c=el('button','close','Close');c.type='button';c.onclick=function(){d.close()};
+  w.appendChild(c);w.appendChild(el('h2','',s.headline));
+  var b=byline(s);if(b)w.appendChild(b);
+  w.appendChild(imgBox(s,'Picture for: '+s.headline));
+  (s.content||'').split(/\n+/).forEach(function(p){if(p.trim())w.appendChild(el('p','',p.trim()))});
+  d.appendChild(w);d.showModal();d.scrollTop=0;
+}
+function bindOpen(node,s){node.addEventListener('click',function(){openStory(s)})}
+
+function render(list){
+  var f=$('front');f.innerHTML='';
+  $('count').textContent=list.length+(list.length===1?' story':' stories');
+  if(!list.length){f.appendChild(el('p','note','No stories yet. Send yours with the class form!'));return}
+  var s=list[0],lead=el('section','lead'),txt=el('div'),im=imgBox(s,'');
+  bindOpen(im,s);
+  var h=el('h2'),hb=el('button','title-btn',s.headline);hb.type='button';bindOpen(hb,s);h.appendChild(hb);
+  txt.appendChild(h);var b=byline(s);if(b)txt.appendChild(b);
+  txt.appendChild(el('p','ex',excerpt(s.content,380)));
+  var m=el('button','more','Read the full story');m.type='button';bindOpen(m,s);txt.appendChild(m);
+  lead.appendChild(im);lead.appendChild(txt);f.appendChild(lead);
+  var g=el('section','grid');
+  list.slice(1).forEach(function(t){
+    var a=el('article','card'),i2=imgBox(t,'');bindOpen(i2,t);a.appendChild(i2);
+    var h3=el('h3'),tb=el('button','title-btn',t.headline);tb.type='button';bindOpen(tb,t);h3.appendChild(tb);a.appendChild(h3);
+    var by=byline(t);if(by)a.appendChild(by);
+    a.appendChild(el('p','ex',excerpt(t.content,170)));g.appendChild(a);
+  });
+  if(list.length>1)f.appendChild(g);
+}
+function note(msg){var n=$('note');n.textContent=msg||'';n.hidden=!msg}
+
+function show(h,rows,msg){
+  var r=buildStories(h,rows);
+  var missing=['headline','content'].filter(function(k){return r.map[k]===undefined});
+  var info=msg||'';
+  if(/[?&]debug/.test(location.search)){
+    info+=(info?' ':'')+'Columns found: '+FIELDS.map(function(k){return k+' = '+(r.map[k]===undefined?'(none)':'"'+h[r.map[k]]+'"')}).join(', ');
+  }
+  if(missing.length)info+=(info?' ':'')+'Could not find the '+missing.join(' and ')+' column. Check the sheet headers.';
+  note(info);render(r.list);
+}
+function load(){
+  var param=new URLSearchParams(location.search).get('sheet'),url=param||CONFIG.SHEET_URL;
+  if(!url){show(DEMO.h,DEMO.r,'Demo mode: these are sample stories. Add the Google Sheet link in the CONFIG section to see real stories.');return}
+  url=csvUrl(url);
+  fetch(url+(url.indexOf('?')>-1?'&':'?')+'t='+Date.now()).then(function(res){
+    if(!res.ok)throw new Error(res.status);return res.text();
+  }).then(function(t){
+    var rows=parseCSV(t);
+    if(rows.length<2){show(['Headline','News content','Picture','Authors'],[],'');return}
+    show(rows[0],rows.slice(1),'');
+  }).catch(function(){
+    note('We could not load the stories. Please check that the Google Sheet is published to the web as CSV, then press Refresh.');
+  });
+}
+
+document.title=CONFIG.NEWSPAPER_NAME;
+$('paper-name').textContent=CONFIG.NEWSPAPER_NAME;
+$('tagline').textContent=CONFIG.TAGLINE;
+$('date').textContent=new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+$('refresh').onclick=load;
+load();
+})();
 </script>
-
-
 </body>
-
 </html>
