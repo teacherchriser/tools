@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="https://teacherchriser.github.io/images/me.gif" type="image/x-icon">
+<title>Editor Cloze Moodle</title>
+<style>
+:root{--bg:#F5F5F5;--surface:#fff;--ink:#1B2430;--muted:#5B6776;--line:#D3DAE3;--accent:#f98012;--accent-ink:#1B2430;--gap:#FFF1B8;--ok:#1E7A46;--danger:#B3261E}
+@media (prefers-color-scheme:dark){:root{--bg:#141A22;--surface:#1D2530;--ink:#E8EDF3;--muted:#9AA7B6;--line:#334050;--accent:#f98012;--accent-ink:#1B2430;--gap:#4B4220;--ok:#6FD39A;--danger:#FF8A80}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:860px;margin:0 auto;padding:24px 16px 64px}
+h1{font:700 1.6rem/1.2 Georgia,serif;margin:0 0 4px}
+.by{margin:0 0 6px;font-weight:600;color:var(--muted)}
+.lead{color:var(--muted);margin:0 0 20px}
+.help{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin-bottom:20px}
+.help summary{cursor:pointer;font-weight:600}
+.help code,.code{font-family:ui-monospace,Menlo,Consolas,monospace}
+.help code{background:var(--bg);padding:1px 5px;border-radius:4px}
+.help ul{margin:8px 0 0;padding-left:20px}
+.bar{display:flex;flex-wrap:wrap;gap:12px;align-items:end;margin-bottom:20px}
+.bar label{flex:1 1 260px;font-size:.9rem;color:var(--muted)}
+input[type=text],textarea{width:100%;font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:8px 10px}
+textarea{min-height:76px;resize:vertical;font-family:Georgia,serif;font-size:1.05rem}
+button{font:inherit;cursor:pointer;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:7px 12px}
+button:hover{border-color:var(--accent)}
+button.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+button.danger{color:var(--danger)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px;margin-bottom:16px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0}
+.row .grow{flex:1 1 200px}
+.row label.chk{font-size:.9rem;color:var(--muted);display:flex;gap:6px;align-items:center}
+.preview{font:1.15rem/2 Georgia,serif;padding:10px 12px;border-left:4px solid var(--accent);background:var(--bg);border-radius:0 6px 6px 0;margin:10px 0}
+.preview .blank{background:var(--gap);border-bottom:2px solid var(--ink);padding:0 8px;margin:0 2px;font:.95rem system-ui,sans-serif;color:var(--ok);font-weight:600}
+.warn{color:var(--danger);font-size:.9rem;margin:6px 0}
+.code{font-size:.85rem;background:var(--bg);border:1px dashed var(--line);border-radius:6px;padding:8px;word-break:break-all;white-space:pre-wrap}
+.foot{position:sticky;bottom:0;background:var(--bg);padding:12px 0;display:flex;flex-wrap:wrap;gap:8px;align-items:center;border-top:1px solid var(--line)}
+.foot .count{color:var(--muted);margin-left:auto;font-size:.9rem}
+</style>
+</head>
+<body>
+<main>
+<img src="https://teacherchriser.github.io/images/Moodle-Logo-2.png" width="100" style="border-radius: 0px;">
+  <h1>Editor de preguntas Cloze para Moodle</h1>
+  <p class="by">Creado por: Profesor Christian Serrano</p>
+  <p class="lead">Escribe la oración, marca los espacios con asteriscos y descarga el archivo XML para importarlo en Moodle.</p>
+
+  <details class="help" open>
+    <summary>Cómo escribir una pregunta</summary>
+    <ul>
+      <li>Encierra cada respuesta entre asteriscos: <code>*Did* she *win* (win) the game?</code></li>
+      <li>Para aceptar varias respuestas correctas en un mismo espacio, sepáralas con <code>/</code>: <code>Please take *photographs/photos*.</code></li>
+      <li>El texto fuera de los asteriscos (como la pista <code>(win)</code>) se muestra tal cual al estudiante.</li>
+      <li>Para importar: en Moodle, Banco de preguntas &gt; Importar &gt; formato <b>Formato XML de Moodle</b>.</li>
+    </ul>
+  </details>
+
+  <div class="bar">
+    <label>Categoría en Moodle (opcional)
+      <input type="text" id="cat" placeholder="Ej: Past simple - Unidad 3">
+    </label>
+  </div>
+
+  <div id="list"></div>
+
+  <div class="foot">
+    <button id="add" class="primary" style="color: #FFFFFF;">Agregar pregunta</button>
+    <button id="dl" class="primary" style="color: #FFFFFF;">Descargar XML para Moodle</button>
+    <button id="reset" class="danger">Borrar todo</button>
+    <span class="count" id="count"></span>
+  </div>
+</main>
+
+<script>
+const KEY = 'editor-cloze-moodle-v1';
+const $ = id => document.getElementById(id);
+let state = { cat: '', qs: [] };
+
+const newQ = () => ({ name: '', text: '', cs: false });
+
+function load() {
+  try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && Array.isArray(s.qs)) state = s; } catch (e) {}
+  if (!state.qs.length) state.qs = [newQ()];
+}
+function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+
+const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const escAns = s => s.replace(/([\\}#~])/g, '\\$1');
+const BLANK = /\*([^*]+)\*/g;
+const parseAnswers = raw => raw.split('/').map(a => a.trim()).filter(Boolean);
+
+// Convierte el texto del docente en código Cloze (HTML escapado) y vista previa.
+function convert(text, cs) {
+  const type = cs ? 'SHORTANSWER_C' : 'SHORTANSWER';
+  let cloze = '', prev = '', last = 0, blanks = 0, m;
+  BLANK.lastIndex = 0;
+  while ((m = BLANK.exec(text))) {
+    const before = esc(text.slice(last, m.index));
+    const answers = parseAnswers(m[1]);
+    cloze += before; prev += before;
+    if (answers.length) {
+      cloze += '{1:' + type + ':' + answers.map(a => '=' + escAns(esc(a))).join('~') + '}';
+      prev += '<span class="blank">' + answers.map(esc).join(' / ') + '</span>';
+      blanks++;
+    } else { cloze += esc(m[0]); prev += esc(m[0]); }
+    last = BLANK.lastIndex;
+  }
+  const tail = esc(text.slice(last));
+  cloze += tail; prev += tail;
+  const br = s => s.replace(/\n/g, '<br>');
+  return { cloze: br(cloze), preview: br(prev), blanks };
+}
+
+function render() {
+  $('cat').value = state.cat;
+  const list = $('list');
+  list.innerHTML = '';
+  state.qs.forEach((q, i) => {
+    const card = document.createElement('section');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="row">
+        <strong>Pregunta ${i + 1}</strong>
+        <input type="text" class="grow" data-f="name" placeholder="Nombre (opcional; si lo dejas vacío se usa el inicio de la oración)">
+      </div>
+      <textarea data-f="text" placeholder="Ej: *Did* she *win* (win) the game last night?"></textarea>
+      <div class="row">
+        <button data-a="mark" title="Selecciona una palabra en el texto y presiona este botón">Marcar selección como espacio</button>
+        <label class="chk"><input type="checkbox" data-f="cs"> Distinguir mayúsculas</label>
+        <button data-a="del" class="danger" style="margin-left:auto">Eliminar</button>
+      </div>
+      <div class="preview" data-o="preview"></div>
+      <div class="warn" data-o="warn"></div>
+      <details><summary>Ver código Cloze</summary><div class="code" data-o="code"></div></details>`;
+    const ta = card.querySelector('[data-f=text]');
+    const nm = card.querySelector('[data-f=name]');
+    const cs = card.querySelector('[data-f=cs]');
+    ta.value = q.text; nm.value = q.name; cs.checked = q.cs;
+
+    const update = () => {
+      const r = convert(q.text, q.cs);
+      card.querySelector('[data-o=preview]').innerHTML = r.preview || '<span style="color:var(--muted)">La vista previa aparecerá aquí.</span>';
+      card.querySelector('[data-o=code]').textContent = r.cloze.replace(/<br>/g, '\n');
+      card.querySelector('[data-o=warn]').textContent =
+        q.text.trim() && !r.blanks ? 'Esta pregunta no tiene espacios: marca al menos una respuesta con *asteriscos*.' : '';
+      updateCount();
+    };
+    ta.addEventListener('input', () => { q.text = ta.value; save(); update(); });
+    nm.addEventListener('input', () => { q.name = nm.value; save(); });
+    cs.addEventListener('change', () => { q.cs = cs.checked; save(); update(); });
+    card.querySelector('[data-a=mark]').addEventListener('click', () => {
+      const a = ta.selectionStart, b = ta.selectionEnd;
+      if (a === b) { ta.focus(); return; }
+      ta.value = ta.value.slice(0, a) + '*' + ta.value.slice(a, b) + '*' + ta.value.slice(b);
+      q.text = ta.value; save(); update();
+      ta.focus(); ta.setSelectionRange(b + 2, b + 2);
+    });
+    card.querySelector('[data-a=del]').addEventListener('click', () => {
+      if (q.text.trim() && !confirm('¿Eliminar esta pregunta?')) return;
+      state.qs.splice(i, 1);
+      if (!state.qs.length) state.qs.push(newQ());
+      save(); render();
+    });
+    update();
+    list.appendChild(card);
+  });
+  updateCount();
+}
+
+function updateCount() {
+  const n = state.qs.filter(q => convert(q.text, q.cs).blanks).length;
+  $('count').textContent = n + (n === 1 ? ' pregunta lista' : ' preguntas listas') + ' para exportar';
+}
+
+function buildXml() {
+  const xe = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  let x = '<?xml version="1.0" encoding="UTF-8"?>\n<quiz>\n';
+  if (state.cat.trim()) {
+    x += '  <question type="category">\n    <category><text>$course$/top/' + xe(state.cat.trim()) + '</text></category>\n  </question>\n';
+  }
+  let n = 0;
+  state.qs.forEach(q => {
+    const r = convert(q.text, q.cs);
+    if (!r.blanks) return;
+    n++;
+    const plain = q.text.replace(/\*/g, '').replace(/\s+/g, ' ').trim();
+    const name = q.name.trim() || plain.slice(0, 60) || ('Pregunta ' + n);
+    x += '  <question type="cloze">\n' +
+      '    <name><text>' + xe(name) + '</text></name>\n' +
+      '    <questiontext format="html"><text><![CDATA[<p>' + r.cloze + '</p>]]></text></questiontext>\n' +
+      '    <generalfeedback format="html"><text></text></generalfeedback>\n' +
+      '    <penalty>0.3333333</penalty>\n    <hidden>0</hidden>\n  </question>\n';
+  });
+  return { xml: x + '</quiz>\n', n };
+}
+
+$('add').addEventListener('click', () => {
+  state.qs.push(newQ()); save(); render();
+  const t = document.querySelectorAll('textarea'); t[t.length - 1].focus();
+});
+$('cat').addEventListener('input', e => { state.cat = e.target.value; save(); });
+$('dl').addEventListener('click', () => {
+  const { xml, n } = buildXml();
+  if (!n) { alert('Aún no hay preguntas con espacios. Marca las respuestas con *asteriscos*.'); return; }
+  const blob = new Blob([xml], { type: 'application/xml' });
+  const a = document.createElement('a');
+  const slug = (state.cat || 'preguntas-cloze').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'preguntas-cloze';
+  a.href = URL.createObjectURL(blob);
+  a.download = slug + '.xml';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+});
+$('reset').addEventListener('click', () => {
+  if (!confirm('Se borrarán todas las preguntas de este editor. ¿Continuar?')) return;
+  state = { cat: '', qs: [newQ()] }; save(); render();
+});
+
+load(); render();
+</script>
+</body>
+</html>
